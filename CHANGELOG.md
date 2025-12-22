@@ -1,3 +1,9 @@
+## v0.1.3 (2025-12-22)
+
+### Fix
+
+- **deps**: bump org.pdfclown:pdfclown-common-* from 0.2.0 to 0.2.1
+
 ## v0.1.2 (2025-12-22)
 
 ### Fix
