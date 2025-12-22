@@ -38,7 +38,7 @@
       <dependency>
         <groupId>org.pdfclown</groupId>
         <artifactId>pdfclown-common-deps</artifactId>
-        <version>0.2.1-SNAPSHOT</version>
+        <version>0.1.0</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
