@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  SPDX-FileCopyrightText: 2025 Stefano Chizzolini and contributors
+
+  SPDX-License-Identifier: LGPL-3.0-only
+-->
+<project
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.pdfclown</groupId>
+    <artifactId>jada-bom</artifactId>
+    <version>${revision}</version>
+  </parent>
+
+  <artifactId>jada-parent</artifactId>
+  <packaging>pom</packaging>
+
+  <name>${project.artifactId}</name>
+  <description>Internal configuration</description>
+
+  <properties>
+    <!--
+      CUSTOM PROPERTIES
+    -->
+    <!--
+      Automatic module name (JPMS).
+
+      NOTE: Each module MUST define its own unique JPMS name. -->
+    <projectJpmsName/>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.pdfclown</groupId>
+        <artifactId>pdfclown-common-deps</artifactId>
+        <version>0.2.1-SNAPSHOT</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <dependencies>
+    <!--
+      FIXME: Logging provider should be lightweight slf4j-simple but, unfortunately, resolving the
+            transitive dependencies of Jada doclet for javadoc tool classpath, maven-javadoc-plugin
+            weirdly mangles test- and compile-scoped dependencies together, bringing log4j
+            (referenced by test-scoped pdfclown-common-build) into the classpath [sic!]; as a
+            consequence, in order to avoid warnings from SLF4J about conflicting providers, we are
+            forced to reference log4j herein instead of intended slf4j-simple, until the issue is
+            solved.
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+    </dependency>
+    -->
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-slf4j2-impl</artifactId>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <configuration>
+            <!--
+              NOTE: option name|value split <arg>s don't work on IDEA 2025.1 (see
+              <https://youtrack.jetbrains.com/issue/IDEA-371005/Maven-Invalid-compiler-parameters-generated-for-multiple-add-exports-in-pom.xml-compilerArgs>) -->
+            <compilerArgs>
+              <arg>--add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED</arg>
+              <arg>--add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED</arg>
+              <arg>--add-exports=jdk.javadoc/jdk.javadoc.internal.tool=ALL-UNNAMED</arg>
+            </compilerArgs>
+          </configuration>
+        </plugin>
+
+        <plugin>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <configuration>
+            <argLine>--add-exports jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED
+              --add-exports jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED
+              --add-exports jdk.javadoc/jdk.javadoc.internal.tool=ALL-UNNAMED</argLine>
+          </configuration>
+        </plugin>
+        <plugin>
+          <artifactId>maven-failsafe-plugin</artifactId>
+          <configuration>
+            <argLine>--add-exports jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED
+              --add-exports jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED
+              --add-exports jdk.javadoc/jdk.javadoc.internal.tool=ALL-UNNAMED</argLine>
+          </configuration>
+        </plugin>
+
+        <plugin>
+          <artifactId>maven-jar-plugin</artifactId>
+          <configuration>
+            <archive>
+              <manifestEntries>
+                <Automatic-Module-Name>${projectJpmsName}</Automatic-Module-Name>
+              </manifestEntries>
+            </archive>
+          </configuration>
+        </plugin>
+
+        <plugin>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <configuration>
+            <!--
+              SOURCES (selection and representation)
+            -->
+            <groups>
+              <group>
+                <title>Core</title>
+                <packages>org.pdfclown.jada.core*</packages>
+              </group>
+              <group>
+                <title>Maven plugin</title>
+                <packages>org.pdfclown.jada.maven*</packages>
+              </group>
+              <group>
+                <title>JadaBiblio extension</title>
+                <packages>org.pdfclown.jada.biblio*</packages>
+              </group>
+              <group>
+                <title>JadaUML extension</title>
+                <packages>org.pdfclown.jada.uml*</packages>
+              </group>
+            </groups>
+
+            <!--
+              DOCLET
+            -->
+            <!--
+              TODO: [jada-next] Enable after first release.
+            -->
+            <!--            <additionalOptions-->
+            <!--                combine.children="append">-->
+            <!--              <additionalOption>&#45;&#45;log-level INFO</additionalOption>-->
+            <!--              <additionalOption>&#45;&#45;biblio-static-entries JAVA,JAVADOC-COMMENT</additionalOption>-->
+            <!--              <additionalOption>&#45;&#45;uml-package-deps-max-count -1</additionalOption>-->
+            <!--            </additionalOptions>-->
+            <additionalJOptions
+                combine.children="append">
+              <!-- Internal APIs export for source-code reference -->
+              <additionalJOption>--add-exports</additionalJOption>
+              <additionalJOption>jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED</additionalJOption>
+              <additionalJOption>--add-exports</additionalJOption>
+              <additionalJOption>jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED</additionalJOption>
+              <additionalJOption>--add-exports</additionalJOption>
+              <additionalJOption>jdk.javadoc/jdk.javadoc.internal.tool=ALL-UNNAMED</additionalJOption>
+            </additionalJOptions>
+
+            <dependencyLinks
+                combine.children="append">
+              <dependencyLink>
+                <groupId>org.pdfclown</groupId>
+                <artifactId>jada-core</artifactId>
+                <url>https://javadoc.io/doc/org.pdfclown/jada-core/${project.version}</url>
+              </dependencyLink>
+            </dependencyLinks>
+
+            <offlineLinks>
+              <!--
+                NOTE: While building, the project's Javadoc files are, obviously, not published yet;
+                in order to generate correct cross-reference links between project modules, offline
+                links remap the corresponding online links (`dependencyLink/url`, matched by
+                `offlineLink/url`) to the local path where Javadoc files are generated
+                (`offlineLink/location`). -->
+              <offlineLink>
+                <url>https://javadoc.io/doc/org.pdfclown/jada-core/${project.version}</url>
+                <location>${rootdir}/jada-core/target/reports/apidocs</location>
+              </offlineLink>
+            </offlineLinks>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>check-deps-usage</id>
+            <configuration>
+              <ignoredUsedUndeclaredDependencies
+                  combine.children="append">
+                <!--
+                  NOTE: Omitting transitive test dependencies. -->
+                <item>org.pdfclown:pdfclown-common-build</item>
+                <item>org.testcontainers</item>
+              </ignoredUsedUndeclaredDependencies>
+              <ignoredUnusedDeclaredDependencies
+                  combine.children="append">
+                <item>org.apache.logging.log4j</item>
+                <item>org.slf4j:slf4j-api</item>
+              </ignoredUnusedDeclaredDependencies>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>

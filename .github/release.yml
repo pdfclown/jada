@@ -1,0 +1,15 @@
+#
+# See <https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes#configuring-automatically-generated-release-notes>
+#
+changelog:
+  categories:
+    - title: 📦 Features
+      labels:
+        - '*'
+      exclude:
+        labels:
+          - 'Type: CI Dependency'
+          - 'Type: Dependency'
+    - title: ⚙️ Dependencies
+      labels:
+        - 'Type: Dependency'

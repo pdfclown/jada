@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema
+  xmlns="http://www.w3.org/2001/XMLSchema"
+  targetNamespace="https://pdfclown.org/ns/biblio"
+  xmlns:s="https://pdfclown.org/ns/biblio"
+  attributeFormDefault="unqualified"
+  elementFormDefault="qualified">
+  <annotation>
+    <documentation>Technical bibliography namespace. Models bibliographic references distinguishing
+      normative from non-normative sources, and from simple references
+    </documentation>
+  </annotation>
+
+  <element name="biblio">
+    <annotation>
+      <documentation>Root element of the technical bibliography namespace</documentation>
+    </annotation>
+    <complexType>
+      <choice
+        minOccurs="0"
+        maxOccurs="unbounded">
+        <element
+          name="spec"
+          type="s:main-pub">
+          <annotation>
+            <documentation>Normative source</documentation>
+          </annotation>
+        </element>
+        <element
+          name="doc"
+          type="s:main-pub">
+          <annotation>
+            <documentation>Non-normative source</documentation>
+          </annotation>
+        </element>
+        <element
+          name="ref"
+          type="s:ref">
+          <annotation>
+            <documentation>Simple reference</documentation>
+          </annotation>
+        </element>
+      </choice>
+      <attribute
+        name="version"
+        type="string"
+        use="required"
+        fixed="1.0">
+        <annotation>
+          <documentation>Schema version of the technical bibliography namespace</documentation>
+        </annotation>
+      </attribute>
+    </complexType>
+  </element>
+
+  <complexType name="main-pub">
+    <annotation>
+      <documentation>Main publication</documentation>
+    </annotation>
+    <complexContent>
+      <extension base="s:ver-pub">
+        <sequence>
+          <element
+            name="part"
+            type="s:part"
+            minOccurs="0"
+            maxOccurs="unbounded">
+            <annotation>
+              <documentation>Publication parts</documentation>
+            </annotation>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+
+  <complexType name="part">
+    <annotation>
+      <documentation>Publication part</documentation>
+    </annotation>
+    <complexContent>
+      <extension base="s:ver-pub">
+      </extension>
+    </complexContent>
+  </complexType>
+
+  <complexType name="ver-pub">
+    <annotation>
+      <documentation>Version-aware publication</documentation>
+    </annotation>
+    <complexContent>
+      <extension base="s:pub">
+        <sequence>
+          <element
+            name="version"
+            type="s:version"
+            minOccurs="0"
+            maxOccurs="unbounded">
+            <annotation>
+              <documentation>Publication versions (specified in case this publication entry
+                references multiple versions, otherwise use "version" attribute)
+              </documentation>
+            </annotation>
+          </element>
+        </sequence>
+        <attribute
+          name="version"
+          type="string"
+          use="optional">
+          <annotation>
+            <documentation>Publication version</documentation>
+          </annotation>
+        </attribute>
+      </extension>
+    </complexContent>
+  </complexType>
+
+  <complexType name="version">
+    <annotation>
+      <documentation>Publication version</documentation>
+    </annotation>
+    <complexContent>
+      <extension base="s:pub">
+      </extension>
+    </complexContent>
+  </complexType>
+
+  <complexType name="pub">
+    <annotation>
+      <documentation>Publication</documentation>
+    </annotation>
+    <complexContent>
+      <extension base="s:entry">
+        <sequence>
+          <element
+            name="see"
+            minOccurs="0"
+            maxOccurs="unbounded">
+            <annotation>
+              <documentation>Related sources</documentation>
+            </annotation>
+            <complexType>
+              <attribute
+                name="url"
+                type="anyURI"
+                use="required">
+              </attribute>
+              <attribute
+                name="title"
+                type="string"
+                use="optional"/>
+            </complexType>
+          </element>
+        </sequence>
+        <attribute
+          name="edition"
+          type="string"
+          use="optional">
+          <annotation>
+            <documentation>Publication version</documentation>
+          </annotation>
+        </attribute>
+        <attribute
+          name="name"
+          type="string"
+          use="optional">
+          <annotation>
+            <documentation>Official codename (for example, ISO 16684-1)</documentation>
+          </annotation>
+        </attribute>
+        <attribute
+          name="author"
+          type="string"
+          use="optional"/>
+        <attribute
+          name="publisher"
+          type="string"
+          use="optional"/>
+        <attribute
+          name="src"
+          type="anyURI"
+          use="optional">
+          <annotation>
+            <documentation>Publication content</documentation>
+          </annotation>
+        </attribute>
+        <attribute
+          name="year"
+          type="string"
+          use="optional">
+          <annotation>
+            <documentation>Year of publication</documentation>
+          </annotation>
+        </attribute>
+      </extension>
+    </complexContent>
+  </complexType>
+
+  <complexType name="ref">
+    <annotation>
+      <documentation>Bibliographic reference (for example, parametric tracker system entry)</documentation>
+    </annotation>
+    <complexContent>
+      <restriction base="s:entry">
+        <attribute
+          name="url"
+          type="anyURI"
+          use="required">
+          <annotation>
+            <documentation>Reference location. Can be parameterized with curly-braced placeholders
+              ('{}')</documentation>
+          </annotation>
+        </attribute>
+      </restriction>
+    </complexContent>
+  </complexType>
+
+  <complexType name="entry">
+    <annotation>
+      <documentation>Bibliography entry</documentation>
+    </annotation>
+    <attribute
+      name="id"
+      type="string"
+      use="required">
+      <annotation>
+        <documentation>Internal identifier of the entry (version number in case of version
+          element;
+          part number in case of publication part)
+        </documentation>
+      </annotation>
+    </attribute>
+    <attribute
+      name="title"
+      type="string"
+      use="optional"/>
+    <attribute
+      name="url"
+      type="anyURI"
+      use="optional">
+      <annotation>
+        <documentation>Bibliography entry home</documentation>
+      </annotation>
+    </attribute>
+  </complexType>
+</schema>

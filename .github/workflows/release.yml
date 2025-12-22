@@ -1,0 +1,33 @@
+#
+# On demand, publishes the provided release version to Maven Central repository.
+#
+# Maintainers' post-activities:
+# 1. the RELEASE COMPONENTS are uploaded to Maven Central for validation: verify and publish them.
+# 2. the RELEASE BRANCH is automatically created to include release preparation commits: verify and
+#    merge it to `main`, and finally discard it.
+# 3. the GITHUB RELEASE is created as draft: verify and publish it.
+#
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      revision:
+        description: 'Version to release (semver2)'
+        type: string
+        required: true
+      scm_startpoint:
+        description: 'Release branch start point (by default, main HEAD)'
+        type: string
+        required: false
+
+jobs:
+  release:
+    uses: pdfclown/.github/.github/workflows/release.yml@main
+    permissions:
+      contents: write
+    with:
+      revision: ${{ inputs.revision }}
+      scm_startpoint: ${{ inputs.scm_startpoint }}
+      repo_title: 'Jada'
+    secrets: inherit

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  SPDX-FileCopyrightText: 2025 Stefano Chizzolini and contributors
+
+  SPDX-License-Identifier: LGPL-3.0-only
+-->
+<project
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.pdfclown</groupId>
+    <artifactId>pdfclown-common-base</artifactId>
+    <version>0.1.0</version>
+  </parent>
+
+  <artifactId>jada-bom</artifactId>
+  <version>${revision}</version>
+  <packaging>pom</packaging>
+
+  <name>${project.artifactId}</name>
+  <description>Bill of Materials (complete set of Jada modules). Jada is an extensible Javadoc
+doclet enabling users to combine an arbitrary doclet with multiple pre- and post-processors in order
+to transform its output in more flexible and convenient ways.</description>
+  <url>${projectRootUrl}</url>
+  <inceptionYear>2025</inceptionYear>
+
+  <developers>
+    <developer>
+      <id>stechio</id>
+      <name>Stefano Chizzolini</name>
+      <url>https://stefanochizzolini.it</url>
+      <roles>
+        <role>architect</role>
+        <role>developer</role>
+      </roles>
+    </developer>
+  </developers>
+
+  <modules>
+    <module>jada-biblio</module>
+    <module>jada-build</module>
+    <module>jada-core</module>
+    <module>jada-ext</module>
+    <module>jada-maven-plugin</module>
+    <module>jada-parent</module>
+    <module>jada-uml</module>
+  </modules>
+
+  <properties>
+    <!--
+      OVERRIDDEN PROPERTIES
+    -->
+    <projectUrlBasePath>github.com/pdfclown/jada</projectUrlBasePath>
+
+    <!--
+      CUSTOM PROPERTIES
+    -->
+
+    <!--
+      PLUGIN VERSIONS
+    -->
+    <!--
+      TODO: [jada-next] Enable after first release.
+
+    <jada.version>0.3.5-SNAPSHOT</jada.version>
+    -->
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.pdfclown</groupId>
+        <artifactId>jada-core</artifactId>
+        <version>${revision}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.pdfclown</groupId>
+        <artifactId>jada-ext</artifactId>
+        <version>${revision}</version>
+      </dependency>
+
+      <!-- Extensions -->
+      <dependency>
+        <groupId>org.pdfclown</groupId>
+        <artifactId>jada-biblio</artifactId>
+        <version>${revision}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.pdfclown</groupId>
+        <artifactId>jada-uml</artifactId>
+        <version>${revision}</version>
+      </dependency>
+
+      <!--
+        TESTING
+      -->
+      <dependency>
+        <groupId>org.pdfclown</groupId>
+        <artifactId>jada-build</artifactId>
+        <version>${revision}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.pdfclown</groupId>
+        <artifactId>jada-core</artifactId>
+        <version>${revision}</version>
+        <type>test-jar</type>
+        <scope>test</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+</project>

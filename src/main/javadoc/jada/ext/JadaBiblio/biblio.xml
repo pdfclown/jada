@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  SPDX-FileCopyrightText: 2025 Stefano Chizzolini and contributors
+
+  SPDX-License-Identifier: LGPL-3.0-only
+-->
+<biblio
+  xmlns="https://pdfclown.org/ns/biblio"
+  version="1.0">
+  <spec
+    id="JAVA-BEANS"
+    version="1.01"
+    year="1997"
+    title="JavaBeans Specification"
+    author="G. Hamilton"
+    publisher="Sun Microsystems Inc"
+    url="https://www.oracle.com/java/technologies/javase/javabeans-spec.html">
+    <see url="https://en.wikipedia.org/wiki/JavaBeans"/>
+  </spec>
+  <spec
+    id="JAVADOC-COMMENT"
+    year="2017"
+    title="Documentation Comment Specification for the Standard Doclet"
+    publisher="Oracle Inc"
+    src="https://docs.oracle.com/en/java/javase/11/docs/specs/doc-comment-spec.html">
+    <see
+      url="https://www.oracle.com/technical-resources/articles/java/javadoc-tool.html"
+      title="How to Write Doc Comments for the Javadoc Tool"/>
+  </spec>
+
+  <ref
+    id="UML-DOCLET-BUGS"
+    title="UMLDoclet Issues"
+    url="https://github.com/talsma-ict/umldoclet/issues/{}"/>
+</biblio>

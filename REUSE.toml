@@ -1,0 +1,44 @@
+version = 1
+
+# NOTE:
+#
+# - source code is deliberately excluded from the files covered herein, to force
+#   an explicit licensing header over each and every source file
+#
+# - the files covered herein are specified in order of ascending licensing
+#   strength (from more permissive to more restrictive) to ensure stronger
+#   licenses win in case of overlapping path filters
+
+# Configuration.
+[[annotations]]
+path = [".github/**", ".mvn/**", ".tool-versions",
+        "**/conf/**", "**/.gitignore", "**/*.config", "**/*.toml", "**/*.yaml", "**/*.yml"]
+SPDX-FileCopyrightText = "2025 Stefano Chizzolini and contributors"
+SPDX-License-Identifier = "MIT-0"
+
+# Documentation (licensing).
+# NOTE: The override avoids textual copyright information inside the file from
+# interfering with actual licensing metadata.
+[[annotations]]
+path = ["NOTICE.txt"]
+precedence = "override"
+SPDX-FileCopyrightText = "2025 Stefano Chizzolini and contributors"
+SPDX-License-Identifier = "CC0-1.0"
+
+# Documentation and media resources.
+[[annotations]]
+path = ["**/*.md", "**/*.jpg", "**/*.png", "**/*.svg"]
+SPDX-FileCopyrightText = "2025 Stefano Chizzolini and contributors"
+SPDX-License-Identifier = "CC-BY-SA-4.0"
+
+# Tools.
+[[annotations]]
+path = ["mvn*"]
+SPDX-FileCopyrightText = "2013-2022 The Apache Software Foundation"
+SPDX-License-Identifier = "Apache-2.0"
+
+# Source code resources.
+[[annotations]]
+path = ["**/src/*/resources/**", "**/src/*/javadoc/**"]
+SPDX-FileCopyrightText = "2025 Stefano Chizzolini and contributors"
+SPDX-License-Identifier = "LGPL-3.0-only"

@@ -1,0 +1,21 @@
+#
+# On commit push or pull request events, verifies the project builds successfully on JDK 17, 21, 25.
+# If so, its Dependency Snapshot is submitted.
+#
+name: Build
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    uses: pdfclown/.github/.github/workflows/build.yml@main
+    permissions:
+      contents: write
+      security-events: write
+    secrets: inherit

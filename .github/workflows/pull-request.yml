@@ -1,0 +1,18 @@
+#
+# On pull request events, verifies the PR conforms to project conventions.
+#
+name: Pull Request
+
+on:
+  pull_request_target:
+    types:
+      - opened
+      - reopened
+      - edited
+
+jobs:
+  main:
+    uses: pdfclown/.github/.github/workflows/pull-request.yml@main
+    permissions:
+      pull-requests: read
+    secrets: inherit

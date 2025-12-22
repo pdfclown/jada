@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  SPDX-FileCopyrightText: 2025 Stefano Chizzolini and contributors
+
+  SPDX-License-Identifier: LGPL-3.0-only
+-->
+<project
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.pdfclown</groupId>
+    <artifactId>jada-parent</artifactId>
+    <version>${revision}</version>
+    <relativePath>../jada-parent/pom.xml</relativePath>
+  </parent>
+
+  <artifactId>jada-ext</artifactId>
+
+  <name>${project.artifactId}</name>
+  <description>Supplemental Javadoc functionalities.</description>
+  <url>${projectRootUrl}</url>
+
+  <properties>
+    <!--
+      OVERRIDDEN PROPERTIES
+    -->
+    <projectJpmsName>org.pdfclown.jada.ext</projectJpmsName>
+    <rootdir>${project.basedir}/..</rootdir>
+
+    <!--
+      VERSIONS
+    -->
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.pdfclown</groupId>
+      <artifactId>jada-core</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.github.javaparser</groupId>
+      <artifactId>javaparser-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.jspecify</groupId>
+      <artifactId>jspecify</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.pdfclown</groupId>
+      <artifactId>pdfclown-common-util</artifactId>
+    </dependency>
+
+    <!--
+      TESTING
+    -->
+    <dependency>
+      <groupId>org.pdfclown</groupId>
+      <artifactId>jada-build</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.pdfclown</groupId>
+      <artifactId>jada-core</artifactId>
+      <type>test-jar</type>
+    </dependency>
+  </dependencies>
+</project>

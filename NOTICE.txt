@@ -1,0 +1,21 @@
+Jada <https://github.com/pdfclown/jada>
+Copyright 2025 Stefano Chizzolini and others
+License LGPL-3.0-only <https://spdx.org/licenses/LGPL-3.0-only>
+
+
+This product reuses source code from third-party projects [1]:
+
+Resources Optimizer Maven Plugin <https://github.com/primefaces-extensions/resources-optimizer-maven-plugin>
+Copyright 2011-2015 PrimeFaces Extensions
+License Apache-2.0 <https://spdx.org/licenses/Apache-2.0>
+
+UMLDoclet <https://github.com/talsma-ict/umldoclet>
+Copyright 2016-2022 Talsma ICT
+License Apache-2.0 <https://spdx.org/licenses/Apache-2.0>
+
+YUI Compressor <https://github.com/yui/yuicompressor/>
+Copyright 2013 Yahoo! Inc.
+License YUI Compressor Copyright License Agreement (BSD License) <https://github.com/yui/yuicompressor/blob/cf0497e53fffe4ddbd50e71518c40e0c07d120de/LICENSE.TXT>
+
+---
+[1] Traceable via SPDX tags (glob: SPDX-*CopyrightText:*)

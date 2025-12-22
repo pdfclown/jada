@@ -1,0 +1,16 @@
+#
+# On a daily basis, publishes SNAPSHOT artifacts to Maven Central Portal Snapshots repository.
+#
+name: Nightly Build
+
+on:
+  schedule:
+    - cron: '0 4 * * *'  # Once a day, at 4:00 UTC
+  workflow_dispatch:
+
+jobs:
+  build:
+    uses: pdfclown/.github/.github/workflows/build-nightly.yml@main
+    permissions:
+      contents: read
+    secrets: inherit

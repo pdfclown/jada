@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  SPDX-FileCopyrightText: 2025 Stefano Chizzolini and contributors
+
+  SPDX-License-Identifier: LGPL-3.0-only
+-->
+<project
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.pdfclown</groupId>
+    <artifactId>jada-parent</artifactId>
+    <version>${revision}</version>
+    <relativePath>../jada-parent/pom.xml</relativePath>
+  </parent>
+
+  <artifactId>jada-build</artifactId>
+
+  <name>${project.artifactId}</name>
+  <description>Build tools and resources for Jada doclet.</description>
+  <url>${projectRootUrl}</url>
+
+  <properties>
+    <!--
+      OVERRIDDEN PROPERTIES
+    -->
+    <projectJpmsName>org.pdfclown.jada.build</projectJpmsName>
+    <rootdir>${project.basedir}/..</rootdir>
+
+    <!--
+      VERSIONS
+    -->
+    <testcontainers.junit.version>1.21.0</testcontainers.junit.version>
+  </properties>
+
+  <dependencies>
+    <!--
+      NOTE: Since test-scoped dependencies aren't transitive, this is a workaround to bring
+      everything needed to test-jars (namely, jada-core:test-jar) in a single place.
+      Whenever a test-jar needs new dependencies, place them HERE.
+    -->
+
+    <dependency>
+      <groupId>info.picocli</groupId>
+      <artifactId>picocli</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.jspecify</groupId>
+      <artifactId>jspecify</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.pdfclown</groupId>
+      <artifactId>pdfclown-common-build</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.pdfclown</groupId>
+      <artifactId>pdfclown-common-util</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>${testcontainers.junit.version}</version>
+    </dependency>
+    <!--
+      NOTE: org.apache.commons:commons-compress is temporarily referenced here to override the
+      transitive dependency of org.testcontainers:junit-jupiter, whose version (1.24.0) is affected
+      by severe vulnerabilities <https://github.com/testcontainers/testcontainers-java/issues/8338>.
+
+      TODO: remove when org.testcontainers:junit-jupiter has been fixed with secure
+      org.apache.commons:commons-compress -->
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-compress</artifactId>
+      <version>1.27.1</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <configuration>
+          <!--
+            NOTE: Dependencies are declared for use by consuming artifacts, no matter whether they
+            are locally unused. -->
+          <ignoredUnusedDeclaredDependencies>*</ignoredUnusedDeclaredDependencies>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
