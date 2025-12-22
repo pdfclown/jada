@@ -160,6 +160,30 @@ public class PageProcessor extends JadaHtmlProcessor {
     }
 
     /*
+     * Cleans up spurious URLs generated prepending `{@docRoot}`.
+     *
+     * NOTE: Despite `{@docRoot}` is typically prepended to URLs, it doesn't render its trailing
+     * slash, forcing users to place a fixed slash to concatenate the local path (e.g.,
+     * "src=\"{@docRoot}/my/local/path\""); as a result, in the files at Javadoc root directory
+     * `{@docRoot}` renders as an empty string, causing the fixed trailing slash to become the
+     * leading one (which makes the URL point to the website root; e.g., "src=\"/my/local/path\"")),
+     * thus disrupting its resolution.
+     *
+     * This tweak removes the offending leading slash.
+     */
+    addTweak(($doc, $file, $changedRef) -> {
+      if (!$file.getParent().equals(getConfig().getOutputDirectory()))
+        return;
+
+      var oldHtml = $doc.html();
+      var newHtml = oldHtml.replace("href=\"/", "href=\"").replace("src=\"/", "src=\"");
+      if (!newHtml.equals(oldHtml)) {
+        $doc.html(newHtml);
+        $changedRef.setTrue();
+      }
+    }, "cleanupDocRootOnRootDir");
+
+    /*
      * Adds the literal representation to character constant values.
      */
     addTweak(($doc, $file, $changedRef) -> {
