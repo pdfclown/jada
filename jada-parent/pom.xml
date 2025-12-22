@@ -147,15 +147,12 @@
             <!--
               DOCLET
             -->
-            <!--
-              TODO: [jada-next] Enable after first release.
-            -->
-            <!--            <additionalOptions-->
-            <!--                combine.children="append">-->
-            <!--              <additionalOption>&#45;&#45;log-level INFO</additionalOption>-->
-            <!--              <additionalOption>&#45;&#45;biblio-static-entries JAVA,JAVADOC-COMMENT</additionalOption>-->
-            <!--              <additionalOption>&#45;&#45;uml-package-deps-max-count -1</additionalOption>-->
-            <!--            </additionalOptions>-->
+            <additionalOptions
+                combine.children="append">
+              <additionalOption>--log-level INFO</additionalOption>
+              <additionalOption>--biblio-static-entries JLS,JAVADOC-COMMENT</additionalOption>
+              <additionalOption>--uml-package-deps-max-count -1</additionalOption>
+            </additionalOptions>
             <additionalJOptions
                 combine.children="append">
               <!-- Internal APIs export for source-code reference -->

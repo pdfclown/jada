@@ -13,7 +13,7 @@
   <parent>
     <groupId>org.pdfclown</groupId>
     <artifactId>pdfclown-common-base</artifactId>
-    <version>0.1.1</version>
+    <version>0.2.0</version>
   </parent>
 
   <artifactId>jada-bom</artifactId>
@@ -57,15 +57,6 @@ to transform its output in more flexible and convenient ways.</description>
 
     <!--
       CUSTOM PROPERTIES
-    -->
-
-    <!--
-      PLUGIN VERSIONS
-    -->
-    <!--
-      TODO: [jada-next] Enable after first release.
-
-    <jada.version>0.3.5-SNAPSHOT</jada.version>
     -->
   </properties>
 

@@ -19,7 +19,7 @@ package org.pdfclown.jada.core.util;
  */
 public interface Nameable {
   /**
-   * Name {@biblio.spec JAVA:17 6.2} identifying this object.
+   * Name {@biblio.spec JLS:17 6.2} identifying this object.
    */
   String getName();
 }
