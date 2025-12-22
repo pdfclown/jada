@@ -1,3 +1,10 @@
+## v0.1.2 (2025-12-22)
+
+### Fix
+
+- **core**: fix `@docRoot` in files at Javadoc root directory/2
+- **core**: fix `@docRoot` in files at Javadoc root directory
+
 ## v0.1.1 (2025-12-22)
 
 ### Fix
