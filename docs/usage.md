@@ -7,7 +7,7 @@ This document describes how to use Jada in your own projects.
 All the examples are based on the Maven build system.
 
 In the `pom.xml` file of your project, add to maven-javadoc-plugin the following
-configuration:
+configuration (replace `${jada.version}` with the latest release version of Jada):
 
 ```xml
 <project>

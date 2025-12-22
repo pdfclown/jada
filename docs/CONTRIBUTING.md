@@ -10,7 +10,7 @@ In case the code in the repository doesn't seem to work as expected, please foll
 
 2. **check if the issue has already been fixed** — try to reproduce it using the latest unreleased codebase, in any of the following alternatives:
 
-   - [snapshot artifacts](https://github.com/pdfclown/pdfclown-common/blob/main/docs/common/usage.md#snapshot-artifacts) (pre-built)
+   - [snapshot artifacts](https://github.com/pdfclown/jada/blob/main/docs/usage.md#snapshot-artifacts) (pre-built)
    - [source code](https://github.com/pdfclown/jada/blob/main/docs/building.md#setup) (to build): check out the relevant branch (`main` for current development, or `r/`-prefixed (e.g., `r/1.5`) for release maintenance) in the repository and [build it](https://github.com/pdfclown/jada/blob/main/docs/building.md#building) by yourself
 
 3. **isolate the problem** — reduce your case to the bare minimum which still demonstrates the problem (ideally, create a test case)
