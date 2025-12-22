@@ -18,4 +18,6 @@ jobs:
     permissions:
       contents: write
       security-events: write
+    with:
+      java_matrix: "[ '17' ]"
     secrets: inherit
