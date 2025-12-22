@@ -4,6 +4,11 @@
 </picture><br>Jada
 </h1>
 
+[![maven](https://img.shields.io/maven-central/v/org.pdfclown/jada-core)](https://search.maven.org/artifact/org.pdfclown/jada-core)
+[![javadoc](https://javadoc.io/badge2/org.pdfclown/jada-core/javadoc.svg)](https://javadoc.io/doc/org.pdfclown/jada-core)
+[![build](https://img.shields.io/github/actions/workflow/status/pdfclown/jada/build.yml?branch=main&label=build%20%28main%29)](https://github.com/pdfclown/jada/actions/workflows/build.yml)
+[![REUSE status](https://api.reuse.software/badge/github.com/pdfclown/jada)](https://api.reuse.software/info/github.com/pdfclown/jada)
+
 Extensible [Javadoc doclet](https://docs.oracle.com/en/java/javase/17/docs/api/jdk.javadoc/jdk/javadoc/doclet/Doclet.html) enabling users to combine an arbitrary doclet with multiple pre/post-processors in order to transform its output in more flexible and convenient ways.
 
 > [!NOTE]
@@ -46,10 +51,7 @@ This project is licensed under **[GNU Lesser General Public License (LGPL), vers
 
 See [NOTICE](NOTICE.txt) for attributions.
 
-<!--
-TODO
 See [REUSE compliance report](https://api.reuse.software/info/github.com/pdfclown/jada) for detailed licensing and copyright information.
--->
 
 ## Home
 
