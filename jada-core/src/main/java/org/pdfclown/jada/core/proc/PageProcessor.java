@@ -181,7 +181,7 @@ public class PageProcessor extends JadaHtmlProcessor {
         $doc.html(newHtml);
         $changedRef.setTrue();
       }
-    }, "cleanupDocRootOnRootDir");
+    }, "cleanupDocRootAtRootDir");
 
     /*
      * Adds the literal representation to character constant values.
