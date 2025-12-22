@@ -35,7 +35,7 @@ flexible and convenient ways.</description>
     <!--
       VERSIONS
     -->
-    <closure-compiler.version>v20240317</closure-compiler.version>
+    <closure-compiler.version>v20251216</closure-compiler.version>
   </properties>
 
   <dependencies>
