@@ -45,6 +45,10 @@ See [Debugging](docs/building.md#debugging) for complete details.
 
 See [Documentation](docs/README.md) for further information about this project.
 
+## Examples
+
+See [Jada Examples](https://github.com/pdfclown/jada-examples).
+
 ## License
 
 This project is licensed under **[GNU Lesser General Public License (LGPL), version 3.0](LICENSE.txt)**.
