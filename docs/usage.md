@@ -1,6 +1,6 @@
-[Jada :: Documentation](README.md) >
+Jada > [Documentation](README.md) >
 
-# Jada :: Usage
+# Usage
 
 This document describes how to use Jada in your own projects.
 
