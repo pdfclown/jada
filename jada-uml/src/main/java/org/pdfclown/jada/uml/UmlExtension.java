@@ -54,7 +54,8 @@ import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
 import javax.tools.Diagnostic.Kind;
 import jdk.javadoc.doclet.Doclet.Option;
-import net.sourceforge.plantuml.OptionFlags;
+import net.sourceforge.plantuml.cli.GlobalConfig;
+import net.sourceforge.plantuml.cli.GlobalConfigKey;
 import org.jspecify.annotations.Nullable;
 import org.pdfclown.common.util.annot.InitNonNull;
 import org.pdfclown.common.util.io.Resource;
@@ -170,8 +171,8 @@ public class UmlExtension extends JadaExtension {
         .add(OPTION__PLANTUML_SERVER_URL, List.of("<url>"),
             $args -> extConfig.setPlantumlServerUrl($args.get(0)))
         .add(OPTION__PLANTUML_SERVER_TIMEOUT, List.of("<seconds>"),
-            $args -> OptionFlags.getInstance().setTimeoutMs(SECONDS.toMillis(
-                parseInt($args.get(0)))))
+            $args -> GlobalConfig.getInstance().put(GlobalConfigKey.TIMEOUT_MS,
+                SECONDS.toMillis(parseInt($args.get(0)))))
         .add(OPTION__PROPERTIES_FLATTENED, List.of(),
             $args -> extConfig.getMethodConfig().propertiesFlattened = true)
         .add(OPTION__STATIC_FIELDS_MAX_COUNT, List.of("<count>"),
