@@ -128,16 +128,16 @@ import org.xml.sax.SAXException;
  * <li><b>{@linkplain Jada Jada doclet}</b></li>
  * <li><b>bibliographic artifact</b>:<pre class="lang-xml" data-line="2-6,9-10"><code>
  * &lt;docletArtifacts&gt;
- *   <span style="background-color:yellow;color:black;">&lt;docletArtifact&gt;
+ *   <span style="background-color:yellow;color:black;">&lt;artifact&gt;
  *     &lt;groupId&gt;org.pdfclown&lt;/groupId&gt;
  *     &lt;artifactId&gt;jada-biblio&lt;/artifactId&gt;
  *     &lt;version&gt;${jada.version}&lt;/version&gt;
- *   &lt;/docletArtifact&gt;</span>
+ *   &lt;/artifact&gt;</span>
  * &lt;/docletArtifacts&gt;
  * &lt;additionalOptions&gt;
  *   <span style=
-"background-color:yellow;color:black;">&lt;additionalOption&gt;--jada-exts JadaBiblio&lt;/additionalOption&gt;
- *   &lt;additionalOption&gt;--biblio-used-only true&lt;/additionalOption&gt;</span>
+"background-color:yellow;color:black;">&lt;option&gt;--jada-exts JadaBiblio&lt;/option&gt;
+ *   &lt;option&gt;--biblio-used-only true&lt;/option&gt;</span>
  * &lt;/additionalOptions&gt;</code></pre></li>
  * <li><b>bibliographic taglets</b>:<pre class="lang-xml" data-line="2-15"><code>
  * &lt;taglets&gt;

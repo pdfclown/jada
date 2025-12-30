@@ -147,43 +147,43 @@
             <!--
               DOCLET
             -->
-            <additionalOptions
-                combine.children="append">
-              <additionalOption>--log-level INFO</additionalOption>
-              <additionalOption>--biblio-static-entries JLS,JAVADOC-COMMENT</additionalOption>
-              <additionalOption>--uml-package-deps-max-count -1</additionalOption>
-            </additionalOptions>
             <additionalJOptions
                 combine.children="append">
               <!-- Internal APIs export for source-code reference -->
-              <additionalJOption>--add-exports</additionalJOption>
-              <additionalJOption>jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED</additionalJOption>
-              <additionalJOption>--add-exports</additionalJOption>
-              <additionalJOption>jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED</additionalJOption>
-              <additionalJOption>--add-exports</additionalJOption>
-              <additionalJOption>jdk.javadoc/jdk.javadoc.internal.tool=ALL-UNNAMED</additionalJOption>
+              <option>--add-exports</option>
+              <option>jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED</option>
+              <option>--add-exports</option>
+              <option>jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED</option>
+              <option>--add-exports</option>
+              <option>jdk.javadoc/jdk.javadoc.internal.tool=ALL-UNNAMED</option>
             </additionalJOptions>
+            <additionalOptions
+                combine.children="append">
+              <option>--log-level INFO</option>
+              <option>--biblio-static-entries JLS,JAVADOC-COMMENT</option>
+              <option>--uml-package-deps-max-count -1</option>
+            </additionalOptions>
 
             <dependencyLinks
                 combine.children="append">
-              <dependencyLink>
+              <link>
                 <groupId>org.pdfclown</groupId>
                 <artifactId>jada-core</artifactId>
                 <url>https://javadoc.io/doc/org.pdfclown/jada-core/${project.version}</url>
-              </dependencyLink>
+              </link>
             </dependencyLinks>
 
             <offlineLinks>
               <!--
                 NOTE: While building, the project's Javadoc files are, obviously, not published yet;
                 in order to generate correct cross-reference links between project modules, offline
-                links remap the corresponding online links (`dependencyLink/url`, matched by
-                `offlineLink/url`) to the local path where Javadoc files are generated
-                (`offlineLink/location`). -->
-              <offlineLink>
+                links remap the corresponding online links (`dependencyLinks/link/url`, matched by
+                `offlineLinks/link/url`) to the local path where Javadoc files are generated
+                (`offlineLinks/link/location`). -->
+              <link>
                 <url>https://javadoc.io/doc/org.pdfclown/jada-core/${project.version}</url>
                 <location>${rootdir}/jada-core/target/reports/apidocs</location>
-              </offlineLink>
+              </link>
             </offlineLinks>
           </configuration>
         </plugin>

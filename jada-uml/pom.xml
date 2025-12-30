@@ -95,11 +95,11 @@
           <configuration>
             <dependencyLinks
                 combine.children="append">
-              <dependencyLink>
+              <link>
                 <groupId>net.sourceforge.plantuml</groupId>
                 <artifactId>plantuml-asl</artifactId>
                 <url>https://javadoc.io/doc/net.sourceforge.plantuml/plantuml/${plantuml.version}</url>
-              </dependencyLink>
+              </link>
             </dependencyLinks>
           </configuration>
         </plugin>

@@ -19,27 +19,27 @@ configuration (replace `${jada.version}` with the latest release version of Jada
         <configuration>
           <doclet>org.pdfclown.jada.core.Jada</doclet>
           <docletArtifacts>
-            <docletArtifact>
+            <artifact>
               <groupId>org.pdfclown</groupId>
               <artifactId>jada-core</artifactId>
               <version>${jada.version}</version>
-            </docletArtifact>
+            </artifact>
           </docletArtifacts>
           <additionalOptions>
-            <additionalOption>-jada-doclet Standard</additionalOption>
-            <additionalOption>-jada-dir ${rootdir}/src/main/javadoc/jada</additionalOption>
+            <option>-jada-doclet Standard</option>
+            <option>-jada-dir ${rootdir}/src/main/javadoc/jada</option>
             <!--
               TIP: Uncomment the following option to list all the available options on next
               `mvn javadoc` execution.
             -->
             <!--
-              <additionalOption>-help</additionalOption>
+              <option>-help</option>
             -->
           </additionalOptions>
           <additionalJOptions>
-            <additionalJOption>-J--add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED</additionalJOption>
-            <additionalJOption>-J--add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED</additionalJOption>
-            <additionalJOption>-J--add-exports=jdk.javadoc/jdk.javadoc.internal.tool=ALL-UNNAMED</additionalJOption>
+            <option>-J--add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED</option>
+            <option>-J--add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED</option>
+            <option>-J--add-exports=jdk.javadoc/jdk.javadoc.internal.tool=ALL-UNNAMED</option>
           </additionalJOptions>
         </configuration>
       </plugin>

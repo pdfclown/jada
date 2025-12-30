@@ -185,29 +185,29 @@ import org.pdfclown.jada.core.util.Nameable;
  *           <span style=
 "background-color:yellow;color:black;">&lt;doclet&gt;org.pdfclown.jada.core.Jada&lt;/doclet&gt;
  *           &lt;docletArtifacts&gt;
- *             &lt;docletArtifact&gt;
+ *             &lt;artifact&gt;
  *               &lt;groupId&gt;org.pdfclown&lt;/groupId&gt;
  *               &lt;artifactId&gt;jada-core&lt;/artifactId&gt;
  *               &lt;version&gt;${jada.version}&lt;/version&gt;
- *             &lt;/docletArtifact&gt;
+ *             &lt;/artifact&gt;
  *           &lt;/docletArtifacts&gt;</span>
  *           &lt;additionalOptions&gt;
  *             <span style=
-"background-color:yellow;color:black;">&lt;additionalOption&gt;-jada-doclet Standard&lt;/additionalOption&gt;
- *             &lt;additionalOption&gt;-jada-dir ${rootdir}/src/main/javadoc/jada&lt;/additionalOption&gt;
+"background-color:yellow;color:black;">&lt;option&gt;-jada-doclet Standard&lt;/option&gt;
+ *             &lt;option&gt;-jada-dir ${rootdir}/src/main/javadoc/jada&lt;/option&gt;
  *             &lt;!--
  *               TIP: Uncomment the following option to list all the available options on next
  *               `mvn javadoc` execution.
  *             --&gt;
  *             &lt;!--
- *             &lt;additionalOption&gt;-help&lt;/additionalOption&gt;
+ *             &lt;option&gt;-help&lt;/option&gt;
  *             --&gt;</span>
  *           &lt;/additionalOptions&gt;
  *           &lt;additionalJOptions&gt;
  *             <span style=
-"background-color:yellow;color:black;">&lt;additionalJOption&gt;-J--add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED&lt;/additionalJOption&gt;
- *             &lt;additionalJOption&gt;-J--add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED&lt;/additionalJOption&gt;
- *             &lt;additionalJOption&gt;-J--add-exports=jdk.javadoc/jdk.javadoc.internal.tool=ALL-UNNAMED&lt;/additionalJOption&gt;</span>
+"background-color:yellow;color:black;">&lt;option&gt;-J--add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED&lt;/option&gt;
+ *             &lt;option&gt;-J--add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED&lt;/option&gt;
+ *             &lt;option&gt;-J--add-exports=jdk.javadoc/jdk.javadoc.internal.tool=ALL-UNNAMED&lt;/option&gt;</span>
  *           &lt;/additionalJOptions&gt;
  *         &lt;configuration&gt;
  *       &lt;plugin&gt;

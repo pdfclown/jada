@@ -106,8 +106,8 @@ flexible and convenient ways.</description>
           <configuration>
             <additionalOptions
                 combine.children="append">
-              <additionalOption>--uml-package-deps-exclude
-                +com.github.javaparser.ast*,com.sun.tools.*,io.github.classgraph,org.greenrobot.eventbus</additionalOption>
+              <option>--uml-package-deps-exclude
+                +com.github.javaparser.ast*,com.sun.tools.*,io.github.classgraph,org.greenrobot.eventbus</option>
             </additionalOptions>
           </configuration>
           <executions>
@@ -122,7 +122,7 @@ flexible and convenient ways.</description>
                     and source path references apart (in this case, it detects imports from MAIN
                     `org.pdfclown.jada.core` (on classpath), but links TEST `org.pdfclown.jada.core`
                     (on source path) instead), so we have to suppress wrongly-linked dependencies. -->
-                  <additionalOption>--uml-package-deps-exclude +org.pdfclown.jada.core</additionalOption>
+                  <option>--uml-package-deps-exclude +org.pdfclown.jada.core</option>
                 </additionalOptions>
               </configuration>
             </execution>
