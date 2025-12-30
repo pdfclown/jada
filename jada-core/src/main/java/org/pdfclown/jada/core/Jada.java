@@ -42,7 +42,6 @@ import static org.pdfclown.common.util.Strings.EOL;
 import static org.pdfclown.common.util.io.Files.FILE_EXTENSION__GROOVY;
 import static org.pdfclown.common.util.io.Files.baseName;
 import static org.pdfclown.common.util.io.Files.isExtension;
-import static org.pdfclown.common.util.system.Clis.parseList;
 import static org.pdfclown.common.util.system.Clis.parseListIncremental;
 import static org.pdfclown.common.util.system.Clis.parseResource;
 import static org.pdfclown.jada.core.JadaConfig.OPTION__BASE_DOCLET;
@@ -70,11 +69,13 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.AbstractCollection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -346,7 +347,7 @@ public class Jada implements Doclet, JadaComponent {
   private class JadaCandidates implements AutoCloseable {
     private final Map<Class<?>, List<JadaCandidate<?>>> base = new LinkedHashMap<>();
     private final Set<Class<?>> electedTypes = new HashSet<>();
-    private boolean scriptExtensionsLoaded;
+    private final List<Path> scriptResourceDirs = new ArrayList<>();
 
     @Override
     public void close() {
@@ -359,13 +360,11 @@ public class Jada implements Doclet, JadaComponent {
      * done}.
      *
      * @throws IllegalArgumentException
-     *           if {@code type} has already been elected or is not among the candidate types.
+     *           if {@code type} is not among the candidate types.
      */
     public <T> List<JadaCandidate<T>> elect(Class<T> type) {
       var ret = get(type);
-      if (!electedTypes.add(type))
-        throw wrongArg("type", type, "ALREADY ELECTED");
-
+      electedTypes.add(type);
       return ret;
     }
 
@@ -437,29 +436,34 @@ public class Jada implements Doclet, JadaComponent {
      * </p>
      */
     private void loadLazy(Class<?> type) {
-      // Script extensions ready to be loaded?
-      if (type == JadaExtension.class && !scriptExtensionsLoaded
-          && !config.getResourceDirectories().isEmpty()) {
-        scriptExtensionsLoaded = true;
-
+      if (type == JadaExtension.class) {
+        /*
+         * NOTE: Script resource directories can be defined incrementally, so this loading operation
+         * may be repeated as new directories are added to the collection.
+         */
         var scriptUrls = new HashMap<String, URL>();
-        config.getResources("ext").forEach($ -> {
-          try (var paths = Files.list($)) {
-            paths
-                .filter($$ -> isRegularFile($$) && isExtension($$, FILE_EXTENSION__GROOVY))
-                .forEach($$ -> {
-                  /*
-                   * NOTE: In case of script name collision, the highest priority wins.
-                   */
-                  var scriptName = $$.getFileName().toString();
-                  if (!scriptUrls.containsKey(scriptName)) {
-                    scriptUrls.put(scriptName, Uris.url($$));
-                  }
-                });
-          } catch (IOException ex) {
-            throw runtime(ex);
-          }
-        });
+        config.getResourceDirectories().stream()
+            .filter($ -> !scriptResourceDirs.contains($))
+            .peek(scriptResourceDirs::add)
+            .map($ -> $.resolve("ext"))
+            .filter(Files::exists)
+            .forEach($ -> {
+              try (var paths = Files.list($)) {
+                paths
+                    .filter($$ -> isRegularFile($$) && isExtension($$, FILE_EXTENSION__GROOVY))
+                    .forEach($$ -> {
+                      /*
+                       * NOTE: In case of script name collision, the highest priority wins.
+                       */
+                      var scriptName = $$.getFileName().toString();
+                      if (!scriptUrls.containsKey(scriptName)) {
+                        scriptUrls.put(scriptName, Uris.url($$));
+                      }
+                    });
+              } catch (IOException ex) {
+                throw runtime(ex);
+              }
+            });
 
         if (!scriptUrls.isEmpty()) {
           @SuppressWarnings("unchecked")
@@ -740,12 +744,38 @@ public class Jada implements Doclet, JadaComponent {
               $args -> config.setDebug(true))
           .add(OPTION__DOCLET_EXTENSIONS, options.getText(OPTION__DOCLET_EXTENSIONS, EMPTY,
               getCandidatesDescription(JadaExtension.class)),
-              List.of("(<name>|<class>)(,(<name>|<class>))*"),
+              List.of("[+-]?(<name>|<class>)(,(<name>|<class>))*"),
               $args -> {
                 var extensions = candidates.elect(JadaExtension.class);
-                parseList($args.get(0)).forEachOrdered(
-                    $selectedName -> config.registerExtension(selectCandidate($selectedName,
-                        extensions)));
+                parseListIncremental($args.get(0),
+                    $ -> $.map($$ -> selectCandidate($$, extensions)),
+                    new AbstractCollection<JadaExtension>() {
+                      @Override
+                      public boolean add(JadaExtension e) {
+                        config.addExtension(e);
+                        return true;
+                      }
+
+                      @Override
+                      public void clear() {
+                        config.clearExtensions();
+                      }
+
+                      @Override
+                      public Iterator<JadaExtension> iterator() {
+                        return config.getExtensions().values().iterator();
+                      }
+
+                      @Override
+                      public boolean remove(Object o) {
+                        return config.removeExtension((JadaExtension) o);
+                      }
+
+                      @Override
+                      public int size() {
+                        return config.getExtensions().size();
+                      }
+                    });
               })
           .add(OPTION__EXCLUDED_OPTIMIZATION_FILES, List.of("[+-]?<path-glob>(,<path-glob>)*"),
               $args -> parseListIncremental($args.get(0), identity(),

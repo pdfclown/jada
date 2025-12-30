@@ -1141,6 +1141,10 @@ public class JadaConfig extends SystemConfig implements JadaObject {
     return new JadaLogger(this, reporter);
   }
 
+  void addExtension(JadaExtension e) {
+    extensions.put(fqn(e), e);
+  }
+
   void addInputDirectory(File e) {
     super.getInputDirectories().add(e.toPath());
   }
@@ -1153,6 +1157,10 @@ public class JadaConfig extends SystemConfig implements JadaObject {
     resourceDirectories.add(0, normal(e));
   }
 
+  void clearExtensions() {
+    extensions.clear();
+  }
+
   /**
    * Whether logged warnings are assimilated to errors, thus representing execution failure.
    */
@@ -1160,9 +1168,8 @@ public class JadaConfig extends SystemConfig implements JadaObject {
     return warningRejected;
   }
 
-  JadaConfig registerExtension(JadaExtension e) {
-    extensions.put(fqn(e), e);
-    return this;
+  boolean removeExtension(JadaExtension e) {
+    return extensions.remove(fqn(e)) != null;
   }
 
   /**
@@ -1172,19 +1179,17 @@ public class JadaConfig extends SystemConfig implements JadaObject {
    *           over {@link #isQuiet() quiet}: if {@code help} is requested, {@code quiet} is
    *           disabled.
    */
-  JadaConfig setHelp(boolean value) {
+  void setHelp(boolean value) {
     help = value;
     if (help && isQuiet()) {
       setQuiet(false);
     }
-    return this;
   }
 
   /**
    * Sets {@link #isWarningRejected () warningRejected}.
    */
-  JadaConfig setWarningsRejected(boolean value) {
+  void setWarningsRejected(boolean value) {
     warningRejected = value;
-    return this;
   }
 }
