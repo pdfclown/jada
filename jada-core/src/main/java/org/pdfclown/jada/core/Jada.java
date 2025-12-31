@@ -347,7 +347,7 @@ public class Jada implements Doclet, JadaComponent {
   private class JadaCandidates implements AutoCloseable {
     private final Map<Class<?>, List<JadaCandidate<?>>> base = new LinkedHashMap<>();
     private final Set<Class<?>> electedTypes = new HashSet<>();
-    private final List<Path> scriptResourceDirs = new ArrayList<>();
+    private final List<Path> extResourceDirs = new ArrayList<>();
 
     @Override
     public void close() {
@@ -442,11 +442,9 @@ public class Jada implements Doclet, JadaComponent {
          * may be repeated as new directories are added to the collection.
          */
         var scriptUrls = new HashMap<String, URL>();
-        config.getResourceDirectories().stream()
-            .filter($ -> !scriptResourceDirs.contains($))
-            .peek(scriptResourceDirs::add)
-            .map($ -> $.resolve("ext"))
-            .filter(Files::exists)
+        config.getResources("ext")
+            .filter($ -> !extResourceDirs.contains($))
+            .peek(extResourceDirs::add)
             .forEach($ -> {
               try (var paths = Files.list($)) {
                 paths
