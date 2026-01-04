@@ -1,5 +1,5 @@
 Jada <https://github.com/pdfclown/jada>
-Copyright 2025 Stefano Chizzolini and others
+Copyright 2025-2026 Stefano Chizzolini and others
 License LGPL-3.0-only <https://spdx.org/licenses/LGPL-3.0-only>
 
 

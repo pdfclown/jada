@@ -1,5 +1,5 @@
 /*
-  SPDX-FileCopyrightText: © 2025 Stefano Chizzolini and contributors
+  SPDX-FileCopyrightText: 2025-2026 Stefano Chizzolini and contributors
 
   SPDX-License-Identifier: LGPL-3.0-only
 
@@ -11,14 +11,14 @@
   header, listing the main changes you applied to the original source.
  */
 /*
-  SPDX-FileCopyrightText: © 2011-2015 PrimeFaces Extensions
+  SPDX-FileCopyrightText: 2011-2015 PrimeFaces Extensions
 
   SPDX-License-Identifier: Apache-2.0
 
   Source: https://github.com/primefaces-extensions/resources-optimizer-maven-plugin/blob/b7d3c10106ade68e54d001a146939485f1f0bc59/src/main/java/org/primefaces/extensions/optimizerplugin/optimizer/CssCompressor.java
  */
 /*
-  SPDX-FileCopyrightText: © 2013 Yahoo! Inc.  All rights reserved.
+  SPDX-FileCopyrightText: 2013 Yahoo! Inc.  All rights reserved.
 
   SPDX-License-Identifier: LicenseRef-YUI-BSD
 
