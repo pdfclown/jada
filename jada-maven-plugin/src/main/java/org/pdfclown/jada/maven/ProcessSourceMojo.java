@@ -42,6 +42,7 @@ import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
+import org.pdfclown.common.util.annot.Derived;
 import org.pdfclown.jada.core.system.proc.FileProcess.RunResult;
 import org.pdfclown.jada.core.system.proc.FileProcess.RunResult.FileStatus;
 import org.pdfclown.jada.core.system.proc.src.SrcFileProcess;
@@ -106,6 +107,7 @@ public class ProcessSourceMojo extends AbstractMojo {
   @Parameter(property = "jada.procs.info")
   private Set<String> info;
 
+  @Derived
   private final transient Set<Info> info_ = new HashSet<>();
 
   @Override

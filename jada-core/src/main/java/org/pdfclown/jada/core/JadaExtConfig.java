@@ -20,7 +20,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.jspecify.annotations.Nullable;
-import org.pdfclown.common.util.annot.LazyNonNull;
+import org.pdfclown.common.util.annot.Derived;
 
 /**
  * {@linkplain JadaExtension Jada extension} configuration.
@@ -31,7 +31,8 @@ public class JadaExtConfig implements JadaObject {
   @SuppressWarnings("NotNullFieldNotInitialized")
   private JadaExtension extension;
 
-  private transient @LazyNonNull @Nullable List<Path> resourceDirectories;
+  @Derived
+  private transient @Nullable List<Path> resourceDirectories;
 
   /**
    * <span class="warning">(For internal use only)</span>

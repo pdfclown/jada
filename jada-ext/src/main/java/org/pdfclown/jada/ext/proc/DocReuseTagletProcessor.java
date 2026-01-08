@@ -72,6 +72,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.tools.Diagnostic.Kind;
 import org.jspecify.annotations.Nullable;
+import org.pdfclown.common.util.annot.Derived;
 import org.pdfclown.common.util.annot.InitNonNull;
 import org.pdfclown.jada.core.system.SystemConfig;
 import org.pdfclown.jada.core.system.proc.FileProcess;
@@ -233,20 +234,8 @@ public class DocReuseTagletProcessor extends JavaProcessor {
       return link;
     }
 
-    private transient @Nullable Node base;
-    /**
-     * Fragment content for reuse outside the {@linkplain #getBase() source container}.
-     * <p>
-     * Canonical representation of {@link #sourceContent}, whose links (that is, <code>@link</code>,
-     * <code>@linkplain</code>, <code>@value</code> tags) are resolved to their fully-qualified
-     * names for reuse outside the source container.
-     * </p>
-     */
-    private transient @Nullable String content;
     private final Node element;
     private final Path file;
-    private transient @Nullable String normalContent;
-    private transient @Nullable String normalSourceContent;
     /**
      * Fragment content for reuse within the {@linkplain #getBase() source container}.
      * <p>
@@ -257,6 +246,23 @@ public class DocReuseTagletProcessor extends JavaProcessor {
      * </p>
      */
     private final String sourceContent;
+
+    @Derived
+    private transient @Nullable Node base;
+    /**
+     * Fragment content for reuse outside the {@linkplain #getBase() source container}.
+     * <p>
+     * Canonical representation of {@link #sourceContent}, whose links (that is, <code>@link</code>,
+     * <code>@linkplain</code>, <code>@value</code> tags) are resolved to their fully-qualified
+     * names for reuse outside the source container.
+     * </p>
+     */
+    @Derived
+    private transient @Nullable String content;
+    @Derived
+    private transient @Nullable String normalContent;
+    @Derived
+    private transient @Nullable String normalSourceContent;
 
     Fragment(Path file, Node element, String sourceContent) {
       this.file = file;
