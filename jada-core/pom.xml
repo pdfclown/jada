@@ -31,6 +31,8 @@ flexible and convenient ways.</description>
     -->
     <projectJpmsName>org.pdfclown.jada.core</projectJpmsName>
     <rootdir>${project.basedir}/..</rootdir>
+    <testJarFiles>org/pdfclown/jada/core/test/**</testJarFiles>
+    <testJarPackages>org.pdfclown.jada.core.test</testJarPackages>
 
     <!--
       VERSIONS
@@ -112,9 +114,8 @@ flexible and convenient ways.</description>
           </configuration>
           <executions>
             <execution>
-              <id>default-test-javadoc</id>
+              <id>generate-test-javadoc-jar</id>
               <configuration>
-                <subpackages>org.pdfclown.jada.core.test</subpackages>
                 <additionalOptions
                     combine.children="append">
                   <!--
@@ -130,28 +131,5 @@ flexible and convenient ways.</description>
         </plugin>
       </plugins>
     </pluginManagement>
-
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <executions>
-          <!--
-            (jada-core:test-jar) Shared test model artifact generation.
-          -->
-          <execution>
-            <id>core-test-jar</id>
-            <goals>
-              <goal>test-jar</goal>
-            </goals>
-            <configuration>
-              <includes>
-                <include>org/pdfclown/jada/core/test/**</include>
-              </includes>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
   </build>
 </project>
