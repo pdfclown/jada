@@ -56,6 +56,6 @@ class StringBufferWriterTest extends BaseTest {
   @Test
   void toString_() {
     assertThat(new StringBufferWriter(new NopWriter()),
-        hasToString("StringBufferWriter [NopWriter]"));
+        hasToString("StringBufferWriter[NopWriter]"));
   }
 }
