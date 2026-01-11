@@ -1,3 +1,15 @@
+## v0.2.1 (2026-01-11)
+
+### Fix
+
+- **deps**: bump org.pdfclown:pdfclown-common-base from 0.3.0 to 0.4.0 (#8)
+- **deps**: bump org.pdfclown:pdfclown-common-base from 0.2.2 to 0.3.0 (#7)
+
+### Refactor
+
+- normalize derived fields
+- **core**: simplify script loading code
+
 ## v0.2.0 (2025-12-30)
 
 ### Feat
