@@ -57,6 +57,7 @@ import com.github.javaparser.ast.body.FieldDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
 import com.github.javaparser.ast.comments.Comment;
 import com.github.javaparser.ast.comments.JavadocComment;
+import com.github.javaparser.ast.comments.TraditionalJavadocComment;
 import com.github.javaparser.ast.nodeTypes.NodeWithJavadoc;
 import com.github.javaparser.ast.nodeTypes.NodeWithSimpleName;
 import java.io.IOException;
@@ -826,7 +827,7 @@ public class DocReuseTagletProcessor extends JavaProcessor {
       // Update the source code!
       if (c.out.length() > 0) {
         //noinspection UnusedAssignment
-        $.setComment(comment = new JavadocComment(c.out.toString()));
+        $.setComment(comment = new TraditionalJavadocComment(c.out.toString()));
         context.changeFile();
       }
     });
