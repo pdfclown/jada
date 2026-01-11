@@ -97,7 +97,7 @@ class DelegateWriterTest extends BaseTest {
     delegatingWriter.flush();
     delegatingWriter.close();
 
-    assertThat(delegatingWriter, hasToString("DelegateWriter []"));
+    assertThat(delegatingWriter, hasToString("DelegateWriter[]"));
   }
 
   // SourceName: testFlushCombinedSuccessAndException
