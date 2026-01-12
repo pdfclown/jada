@@ -66,6 +66,17 @@ public class Issue71_DeprecationIT extends BaseIT {
   }
 
   @Deprecated
+  public static String deprecatedStaticField;
+
+  /**
+   * @deprecated Testing deprecation of static method.
+   */
+  @Deprecated
+  public static void deprecatedStaticMethod() {
+    // Empty method to test UML generation.
+  }
+
+  @Deprecated
   public String deprecatedByAnnotation;
 
   /*

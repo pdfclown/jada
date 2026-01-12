@@ -61,7 +61,7 @@ elements in case of renaming.
 <td><b>Upstream package</b></td>
 <td><b>Upstream commit*</b></td>
 </tr>
-<tr><td><code>org.pdfclown.jada.uml</code></td><td><a href="https://github.com/talsma-ict/umldoclet/tree/main/src/main/java/nl/talsmasoftware/umldoclet">nl.talsmasoftware.umldoclet</a></td><td><a href="https://github.com/talsma-ict/umldoclet/tree/6a7b2e09126b38e1c49103ba85754c7fdfb01db4">6a7b2e0</a> (2024-10-24_19:10:04+0000)</td>
+<tr><td><code>org.pdfclown.jada.uml</code></td><td><a href="https://github.com/talsma-ict/umldoclet/tree/main/src/main/java/nl/talsmasoftware/umldoclet">nl.talsmasoftware.umldoclet</a></td><td><a href="https://github.com/talsma-ict/umldoclet/tree/355c12713a518c0db0a80453a132c547f356f0de">355c127</a> (2026-01-09_15:59+0100)</td>
 </tr>
 </table>
 [*] Latest commit reconciled

@@ -22,7 +22,7 @@ Despite its ubiquity in the standard Java development environment, Javadoc is co
 
 Jada tries to fill this gap as a tiny framework on top of the Javadoc tool: with minor tweaks, *existing doclets can be adapted to work together on the same Javadoc execution as specialized components (doclet extensions)*, with the additional benefits of a simple, intuitive and user-friendly API (each and every object in its model extends a single class, `JadaObject`, which provides direct access to all the relevant parts of the model) which relieves them of common chores like **options definition** (a dedicated builder provides ready-to-use option creation with transparent option overriding, parameter composition, text localization, ...), **message logging** (enhanced printing with parameterized, localized and contextualized (caller's parent component, instance class and stack location) messages, ...), **shared page resources** (such as javascripts and stylesheets, dynamically insertable and optimized), **input** (Java source code) **and output** (generated documentation) **transformation** (pluggable file processors), **taglets integration** (overcoming architectural limitations which affect the interaction between taglets and doclet), **Javadoc testing harness**, and so on.
 
-For a real-world example of the successful porting of existing doclets to Jada, see [JadaUML](jada-uml/README.md).
+For a real-world example of the successful porting of existing doclets to Jada, see [JadaUML](jada-uml).
 
 ### See also
 
