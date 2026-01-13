@@ -12,7 +12,6 @@
  */
 package org.pdfclown.jada.maven;
 
-import static java.lang.Boolean.parseBoolean;
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.joining;
@@ -24,6 +23,7 @@ import static org.pdfclown.common.util.ParamMessage.format;
 import static org.pdfclown.common.util.Strings.EMPTY;
 import static org.pdfclown.common.util.Strings.S;
 import static org.pdfclown.jada.core.util.Objects.realSubTypes;
+import static org.pdfclown.jada.maven.internal.util.Mojos.parseParameterEnumValues;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -60,7 +60,7 @@ public class ProcessSourceMojo extends AbstractMojo {
    */
   public enum Info {
     PROCS($ -> {
-      $.getLog().info(format("Available source code processors (extending `{}`):",
+      $.getLog().info(format("Available source code processors (extending {}):",
           fqnd(SrcFileProcessor.class)));
       realSubTypes(SrcFileProcessor.class).forEach($$ -> $.getLog().info("- " + fqnd($$)));
     });
@@ -73,15 +73,18 @@ public class ProcessSourceMojo extends AbstractMojo {
   }
 
   @Parameter(defaultValue = "${project}", required = true, readonly = true)
+  @SuppressWarnings({ "NotNullFieldNotInitialized", "unused" })
   private MavenProject project;
 
   /**
-   * Class names of selected {@linkplain SrcFileProcessor source file processors}.
+   * Class names of selected source code processors (extending {@link SrcFileProcess}).
    * <p>
    * The processors are executed in the given order.
    * </p>
    */
   @Parameter(property = "jada.procs")
+  @SuppressWarnings({ "NotNullFieldNotInitialized", "MismatchedQueryAndUpdateOfCollection",
+      "unused" })
   private List<String> processors;
 
   /**
@@ -93,71 +96,70 @@ public class ProcessSourceMojo extends AbstractMojo {
   /**
    * Information request.
    * <p>
-   * A list of values, among these:
+   * A list of values among these:
    * </p>
    * <ul>
-   * <li>{@code PROCS} — lists the class names of {@linkplain SrcFileProcessor source-code
-   * processors} available in the classpath</li>
+   * <li>{@code PROCS} — lists the class names of source code processors (extending
+   * {@link SrcFileProcess}) available in the classpath</li>
    * </ul>
    * <p>
    * Requested information is printed to Maven output; if no selector is specified, all information
    * is printed. This operation suppresses source code processing.
    * </p>
    */
-  @Parameter(property = "jada.procs.info")
-  private Set<String> info;
+  @Parameter(property = "jada.procs.info", alias = "info")
+  @SuppressWarnings({ "NotNullFieldNotInitialized", "MismatchedQueryAndUpdateOfCollection",
+      "unused" })
+  private Set<String> rawInfo;
 
+  /**
+   * Information request.
+   * <p>
+   * Strongly-typed representation of {@link #rawInfo}.
+   * </p>
+   *
+   * @implNote When users specify the corresponding parameter without any value (resolved as "true"
+   *           or empty value by the CLI parser), we want to print all the information. Since,
+   *           AFAIK, Maven's built-in {@link Enum}-typed parameter conversion cannot deal with
+   *           implicit parameter values, "true" or empty value cause conversion to fail; to work
+   *           around this, the parameter is injected as raw list ({@link #rawInfo}), then it is
+   *           processed for conversion by implicit-value-aware logic.
+   */
   @Derived
-  private final transient Set<Info> info_ = new HashSet<>();
+  private final transient Set<Info> info = new HashSet<>();
 
   @Override
   public void execute() throws MojoExecutionException {
-    if (isSkip()) {
+    if (skip) {
       getLog().info("Source processing SKIPPED");
       return;
     }
 
     init();
 
-    if (!processors.isEmpty() && info_.isEmpty()) {
+    /*
+     * NOTE: Information request has priority over source processing.
+     */
+    if (!processors.isEmpty() && info.isEmpty()) {
       process();
     } else {
       printInfo();
     }
   }
 
-  public boolean isSkip() {
-    return skip;
-  }
-
-  public void setSkip(boolean value) {
-    skip = value;
-  }
-
   private void init() {
-    /*
-     * NOTE: AFAIK, Maven's built-in parameter conversion capabilities are quite rudimentary; here
-     * we want to print all the information when users input the parameter without specifying any
-     * value (in such case, CLI parser assigns "true").
-     */
-    for (var e : info) {
-      if (parseBoolean(e)) {
-        info_.addAll(List.of(Info.values()));
-        break;
-      } else {
-        info_.add(Info.valueOf(e));
-      }
-    }
+    parseParameterEnumValues(Info.class, rawInfo, info,
+        $target -> $target.addAll(List.of(Info.values())));
   }
 
   private void printInfo() {
-    if (processors.isEmpty()) {
+    if (processors.isEmpty() && info.isEmpty()) {
       getLog().warn("No source code processor selected.");
 
-      info_.add(Info.PROCS);
+      info.add(Info.PROCS);
     }
 
-    info_.forEach($ -> {
+    info.forEach($ -> {
       getLog().info(EMPTY);
       $.printer.accept(this);
     });
