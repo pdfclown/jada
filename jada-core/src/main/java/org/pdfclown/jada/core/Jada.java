@@ -479,7 +479,7 @@ public class Jada implements Doclet, JadaComponent {
               throw new ResourceException("Connection to resource for '%s' script FAILED"
                   .formatted($resourceName), ex);
             }
-          });
+          }, Jada.class.getClassLoader());
 
           for (var scriptUrlEntry : scriptUrls.entrySet()) {
             try {
