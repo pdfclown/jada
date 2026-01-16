@@ -350,9 +350,16 @@ public class JadaDebug extends Debug {
 
         List<Path> jadaArtifactClasspath = jadaArtifactClasspaths.computeIfAbsent(
             m.group(PATTERN_GROUP__ARTIFACT_ID), Failable.asFunction(
-                $k -> Builds.classpath(jadaProjectDir.resolve($k), "runtime")));
+                $k -> Builds.classpath(jadaProjectDir.resolve($k), "runtime").stream()
+                    .filter(
+                        $ -> !PATTERN__JADA_ARTIFACT_FILENAME.matcher($.getFileName().toString())
+                            .matches() /*
+                                        * Purges redundant Jada dependencies from Jada artifact
+                                        * classpath
+                                        */)
+                    .toList()));
 
-        // Append build classes in place of the corresponding Jada artifact!
+        // Replace Jada artifact with corresponding build classes!
         {
           Path jadaArtifactClassesPath = jadaArtifactClasspath.get(0);
           m.appendReplacement(optionsContentBuilder, jadaArtifactClassesPath.toString());
