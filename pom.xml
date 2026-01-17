@@ -21,9 +21,8 @@
   <packaging>pom</packaging>
 
   <name>${project.artifactId}</name>
-  <description>Bill of Materials (complete set of Jada modules). Jada is an extensible Javadoc
-doclet enabling users to combine an arbitrary doclet with multiple pre- and post-processors in order
-to transform its output in more flexible and convenient ways.</description>
+  <description>Bill of Materials (complete set of Jada components). Jada is an extensible Javadoc
+doclet combining an arbitrary doclet with multiple pre- and post-processors to transform its output in more flexible and convenient ways.</description>
   <url>${projectRootUrl}</url>
   <inceptionYear>2025</inceptionYear>
 

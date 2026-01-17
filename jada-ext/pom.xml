@@ -20,7 +20,7 @@
   <artifactId>jada-ext</artifactId>
 
   <name>${project.artifactId}</name>
-  <description>Supplemental Javadoc functionalities.</description>
+  <description>Supplemental Javadoc functionalities on top of Jada doclet</description>
   <url>${projectRootUrl}</url>
 
   <properties>

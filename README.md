@@ -4,12 +4,18 @@
 </picture><br>Jada
 </h1>
 
-[![maven](https://img.shields.io/maven-central/v/org.pdfclown/jada-core)](https://search.maven.org/artifact/org.pdfclown/jada-core)
-[![javadoc](https://javadoc.io/badge2/org.pdfclown/jada-core/javadoc.svg)](https://javadoc.io/doc/org.pdfclown/jada-core)
+<div align="center">
+
+*Extensible [Javadoc doclet](https://docs.oracle.com/en/java/javase/17/docs/api/jdk.javadoc/jdk/javadoc/doclet/Doclet.html) combining an arbitrary doclet<br>
+with multiple pre/post-processors<br>
+to transform its output in more flexible and convenient ways*
+
+[![JDK Compatibility](https://img.shields.io/badge/Java-17%2B-blue)](https://openjdk.org/projects/jdk/17/)
+[![maven](https://img.shields.io/maven-central/v/org.pdfclown/jada-bom)](https://search.maven.org/artifact/org.pdfclown/jada-bom/0.2.1/pom)<br>
 [![build](https://img.shields.io/github/actions/workflow/status/pdfclown/jada/build.yml?branch=main&label=build%20%28main%29)](https://github.com/pdfclown/jada/actions/workflows/build.yml)
 [![REUSE status](https://api.reuse.software/badge/github.com/pdfclown/jada)](https://api.reuse.software/info/github.com/pdfclown/jada)
 
-Extensible [Javadoc doclet](https://docs.oracle.com/en/java/javase/17/docs/api/jdk.javadoc/jdk/javadoc/doclet/Doclet.html) enabling users to combine an arbitrary doclet with multiple pre/post-processors in order to transform its output in more flexible and convenient ways.
+</div>
 
 > [!NOTE]
 > The current implementation is focused on HTML-based [StandardDoclet](https://docs.oracle.com/en/java/javase/17/docs/api/jdk.javadoc/jdk/javadoc/doclet/StandardDoclet.html), as it is by far the most common; [further doclets](docs/TODO.md#base-doclet-generalization) will be supported as they become relevant.
@@ -20,7 +26,7 @@ Despite its ubiquity in the standard Java development environment, Javadoc is co
 
 *The traditional design of custom doclets is monolithic*: main generation is delegated to the standard doclet (HTML output) and pre-processed (for example, for source files with [alternate Javadoc formats such as Markdown](https://github.com/Abnaxos/markdown-doclet) (before [Java 23](https://openjdk.org/jeps/467)) or [AsciiDoc](https://github.com/asciidoctor/asciidoclet)) or post-processed (for example, [to add UML diagrams](https://github.com/talsma-ict/umldoclet) to the generated documentation files), or (less frequently) the entire generation is implemented from scratch (for example, for alternate output formats such as XML) — in any case, just a single hard-coded set of features can be applied to a doclet. *This single-extensibility model can be annoyingly limiting in case multiple specialized doclets need to be placed on the same Javadoc toolchain*. Some doclets try to mitigate this by allowing users to pass their own doclet delegate; such jury-rigged solutions, however, lack the consistency of a common mechanism to easily chain doclet functionalities. Furthermore, the minimalism of Doclet API forces doclets to reimplement common functionalities over and over.
 
-Jada tries to fill this gap as a tiny framework on top of the Javadoc tool: with minor tweaks, *existing doclets can be adapted to work together on the same Javadoc execution as specialized components (doclet extensions)*, with the additional benefits of a simple, intuitive and user-friendly API (each and every object in its model extends a single class, `JadaObject`, which provides direct access to all the relevant parts of the model) which relieves them of common chores like **options definition** (a dedicated builder provides ready-to-use option creation with transparent option overriding, parameter composition, text localization, ...), **message logging** (enhanced printing with parameterized, localized and contextualized (caller's parent component, instance class and stack location) messages, ...), **shared page resources** (such as javascripts and stylesheets, dynamically insertable and optimized), **input** (Java source code) **and output** (generated documentation) **transformation** (pluggable file processors), **taglets integration** (overcoming architectural limitations which affect the interaction between taglets and doclet), **Javadoc testing harness**, and so on.
+Jada tries to fill this gap as a tiny framework on top of the Javadoc tool: with minor tweaks, *existing doclets can be adapted to work together on the same Javadoc execution as specialized components (doclet extensions)*, with the additional benefits of a simple, intuitive and user-friendly API (each and every object in its model extends a single class, <code>[JadaObject](https://javadoc.io/static/org.pdfclown/jada-core/0.2.1/org/pdfclown/jada/core/JadaObject.html)</code>, which provides direct access to all the relevant parts of the model) which relieves them of common chores like **options definition** (a dedicated builder provides ready-to-use option creation with transparent option overriding, parameter composition, text localization, ...), **message logging** (enhanced printing with parameterized, localized and contextualized (caller's parent component, instance class and stack location) messages, ...), **shared page resources** (such as javascripts and stylesheets, dynamically insertable and optimized), **input** (Java source code) **and output** (generated documentation) **transformation** (pluggable file processors), **taglets integration** (overcoming architectural limitations which affect the interaction between taglets and doclet), **Javadoc testing harness**, and so on.
 
 For a real-world example of the successful porting of existing doclets to Jada, see [JadaUML](jada-uml).
 
@@ -33,6 +39,8 @@ For a real-world example of the successful porting of existing doclets to Jada, 
 
 See [Usage](docs/usage.md) for complete details.
 
+See [Jada Examples](https://github.com/pdfclown/jada-examples) for practical use cases.
+
 ## Building
 
 See [Building](docs/building.md) for complete details.
@@ -44,10 +52,6 @@ See [Debugging](docs/building.md#debugging) for complete details.
 ## Documentation
 
 See [Documentation](docs/README.md) for further information about this project.
-
-## Examples
-
-See [Jada Examples](https://github.com/pdfclown/jada-examples).
 
 ## License
 

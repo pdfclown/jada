@@ -20,7 +20,7 @@
   <artifactId>jada-build</artifactId>
 
   <name>${project.artifactId}</name>
-  <description>Build tools and resources for Jada doclet.</description>
+  <description>Build tools and resources for Jada doclet</description>
   <url>${projectRootUrl}</url>
 
   <properties>

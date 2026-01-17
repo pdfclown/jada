@@ -20,9 +20,9 @@
   <artifactId>jada-core</artifactId>
 
   <name>${project.artifactId}</name>
-  <description>Core module of Jada, an extensible Javadoc doclet enabling users to combine an
-arbitrary doclet with multiple pre- and post-processors in order to transform its output in more
-flexible and convenient ways.</description>
+  <description>Core component of Jada, an extensible Javadoc doclet combining an
+arbitrary doclet with multiple pre- and post-processors to transform its output in more
+flexible and convenient ways</description>
   <url>${projectRootUrl}</url>
 
   <properties>

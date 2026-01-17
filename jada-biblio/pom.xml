@@ -20,7 +20,7 @@
   <artifactId>jada-biblio</artifactId>
 
   <name>${project.artifactId}</name>
-  <description>JadaBiblio is a Jada doclet extension to add bibliographies to Javadoc.</description>
+  <description>JadaBiblio is a Jada doclet extension to add bibliographies to Javadoc</description>
   <url>${projectRootUrl}</url>
 
   <properties>

@@ -21,7 +21,7 @@
   <packaging>maven-plugin</packaging>
 
   <name>${project.artifactId}</name>
-  <description>Maven plugin for Javadoc processing.</description>
+  <description>Maven plugin for Javadoc processing on top of Jada doclet</description>
   <url>${projectRootUrl}</url>
 
   <prerequisites>

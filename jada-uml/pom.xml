@@ -20,7 +20,7 @@
   <artifactId>jada-uml</artifactId>
 
   <name>${project.artifactId}</name>
-  <description>JadaUML is a Jada doclet extension to add UML diagrams to Javadoc.</description>
+  <description>JadaUML is a Jada doclet extension to add UML diagrams to Javadoc</description>
   <url>${projectRootUrl}</url>
 
   <properties>
@@ -98,7 +98,7 @@
               <link>
                 <groupId>net.sourceforge.plantuml</groupId>
                 <artifactId>plantuml-asl</artifactId>
-                <url>https://javadoc.io/doc/net.sourceforge.plantuml/plantuml/${plantuml.version}</url>
+                <url>https://javadoc.io/static/net.sourceforge.plantuml/plantuml/${plantuml.version}</url>
               </link>
             </dependencyLinks>
           </configuration>
