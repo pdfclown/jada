@@ -1,3 +1,13 @@
+## v0.2.2 (2026-01-17)
+
+### Fix
+
+- **deps**: bump org.pdfclown:pdfclown-common-base from 0.4.0 to 0.5.0 (#10)
+- **build**: fix Javadoc classpath (`JadaDebug`)
+- **core**: fix `JadaScriptExtension` classpath
+- **maven**: improve `ProcessSourceMojo`
+- **uml**: reconcile codebase with upstream project (commit 355c127)
+
 ## v0.2.1 (2026-01-11)
 
 ### Fix
