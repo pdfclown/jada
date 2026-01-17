@@ -57,8 +57,14 @@ import org.pdfclown.jada.core.system.proc.src.SrcFileProcessor;
 public class ProcessSourceMojo extends AbstractMojo {
   /**
    * Information to print.
+   *
+   * @author Stefano Chizzolini
    */
   public enum Info {
+    /**
+     * Lists the class names of source code processors (extending {@link SrcFileProcess}) available
+     * in the classpath.
+     */
     PROCS($ -> {
       $.getLog().info(format("Available source code processors (extending {}):",
           fqnd(SrcFileProcessor.class)));
