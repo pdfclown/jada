@@ -19,6 +19,7 @@ import static org.pdfclown.common.util.Chars.DOT;
 import static org.pdfclown.common.util.Chars.UNDERSCORE;
 import static org.pdfclown.common.util.Objects.sqn;
 import static org.pdfclown.common.util.Strings.EMPTY;
+import static org.pdfclown.common.util.Strings.S;
 import static org.pdfclown.common.util.io.Files.FILE_EXTENSION__JAVA;
 import static org.pdfclown.common.util.io.Files.copyDirectory;
 import static org.pdfclown.common.util.io.Files.resetDirectory;
@@ -31,6 +32,8 @@ import org.junit.jupiter.api.Test;
 import org.pdfclown.common.build.test.assertion.Assertions;
 import org.pdfclown.common.build.util.io.ResourceNames;
 import org.pdfclown.jada.core.system.proc.src.SrcFileProcess;
+import org.pdfclown.jada.ext.proc._DocReuseTagletProcessorIT.alreadyProcessed.ClassA;
+import org.pdfclown.jada.ext.proc._DocReuseTagletProcessorIT.main.Main;
 import org.pdfclown.jada.ext.proc.__test.BaseIT;
 
 /**
@@ -44,7 +47,7 @@ class DocReuseTagletProcessorIT extends BaseIT {
   @Test
   void alreadyProcessed() throws IOException {
     SrcFileProcess process = prepareTest(
-        org.pdfclown.jada.ext.proc._DocReuseTagletProcessor.alreadyProcessed.ClassA.class,
+        ClassA.class,
         false /* timeThresholdInitialized */);
 
     assertFileTreeEquals(process);
@@ -58,12 +61,12 @@ class DocReuseTagletProcessorIT extends BaseIT {
   @Test
   void main__withTimeThreshold() throws IOException {
     SrcFileProcess process = prepareTest(
-        org.pdfclown.jada.ext.proc._DocReuseTagletProcessor.main.Main.class,
+        Main.class,
         true /* timeThresholdInitialized */);
 
     // Force `ClassA` processing!
     var classAFile = process.getConfig().getBuildDirectory()
-        .resolve(org.pdfclown.jada.ext.proc._DocReuseTagletProcessor.main.a.ClassA.class.getName()
+        .resolve(org.pdfclown.jada.ext.proc._DocReuseTagletProcessorIT.main.a.ClassA.class.getName()
             .replace(DOT, File.separatorChar) + FILE_EXTENSION__JAVA);
     if (exists(classAFile)) {
       touch(classAFile);
@@ -80,7 +83,7 @@ class DocReuseTagletProcessorIT extends BaseIT {
   @Test
   void main__withoutTimeThreshold() throws IOException {
     SrcFileProcess process = prepareTest(
-        org.pdfclown.jada.ext.proc._DocReuseTagletProcessor.main.Main.class,
+        Main.class,
         false /* timeThresholdInitialized */);
 
     assertFileTreeEquals(process);
@@ -89,7 +92,8 @@ class DocReuseTagletProcessorIT extends BaseIT {
   private void assertFileTreeEquals(SrcFileProcess process) {
     process.run();
 
-    Assertions.assertFileTreeEquals(ResourceNames.name(UNDERSCORE + sqn(this), getTestMethodName()),
+    Assertions.assertFileTreeEquals(
+        ResourceNames.name(S + UNDERSCORE + sqn(this), "expected", getTestMethodName()),
         process.getConfig().getBuildDirectory(), this);
   }
 
