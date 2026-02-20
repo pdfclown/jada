@@ -17,6 +17,7 @@ import static org.pdfclown.common.util.Chars.COLON;
 import static org.pdfclown.common.util.Chars.ROUND_BRACKET_CLOSE;
 import static org.pdfclown.common.util.Chars.ROUND_BRACKET_OPEN;
 import static org.pdfclown.common.util.Chars.SPACE;
+import static org.pdfclown.common.util.Objects.found;
 import static org.pdfclown.common.util.Objects.fqn;
 import static org.pdfclown.common.util.Strings.S;
 
@@ -26,6 +27,7 @@ import java.util.ResourceBundle;
 import javax.tools.Diagnostic.Kind;
 import jdk.javadoc.doclet.StandardDoclet;
 import org.jspecify.annotations.Nullable;
+import org.pdfclown.common.util.ParamMessage;
 
 /**
  * Message manager.
@@ -48,17 +50,18 @@ public class MessageManager {
   }
 
   /**
-   * Formats the message.
+   * Formats a message.
    *
    * @param message
-   *          Message formatted according to {@link MessageFormat}.
+   *          Message formatted according to {@link MessageFormat}. For simplicity, generic argument
+   *          placeholders (<code>{}</code>) can be used instead of indexed ones.
    * @param args
    *          Message arguments. Special argument types:
    *          <ul>
    *          <li>{@link Message} — automatically resolved</li>
    *          <li>{@link Class} — converted to FQN</li>
    *          <li>{@link Throwable} — if last argument, its string representation is automatically
-   *          appended to the format (DO NOT specify an explicit parameter placeholder in
+   *          appended to the format (DO NOT specify an explicit argument placeholder in
    *          {@code message}!).</li>
    *          </ul>
    */
@@ -73,7 +76,9 @@ public class MessageManager {
     }
 
     // Message formatting.
-    var ret = MessageFormat.format(message, args);
+    var ret = found(message.indexOf(ParamMessage.ARG))
+        ? ParamMessage.format(message, args)
+        : MessageFormat.format(message, args);
     if (args.length > 0 && args[args.length - 1] instanceof Throwable) {
       ret += S + SPACE + ROUND_BRACKET_OPEN + args[args.length - 1] + ROUND_BRACKET_CLOSE;
     }
@@ -81,7 +86,7 @@ public class MessageManager {
   }
 
   /**
-   * Resolves the message.
+   * Resolves a message.
    * <p>
    * The resource bundle is resolved according to the algorithm specified by
    * {@link ResourceBundle#getBundle(String, java.util.Locale, ClassLoader)
@@ -93,7 +98,8 @@ public class MessageManager {
    * is logged instead), in order not to interfere with ongoing operations.
    * </p>
    * <p>
-   * Message formatting follows {@link MessageFormat} conventions.
+   * Message formatting follows {@link MessageFormat} conventions. For simplicity, generic argument
+   * placeholders (<code>{}</code>) can be used instead of indexed ones.
    * </p>
    *
    * @param message
@@ -104,7 +110,7 @@ public class MessageManager {
    *          <li>{@link Message} — automatically resolved</li>
    *          <li>{@link Class} — converted to FQN</li>
    *          <li>{@link Throwable} — if last argument, its string representation is automatically
-   *          appended to the format (DO NOT specify an explicit parameter placeholder in
+   *          appended to the format (DO NOT specify an explicit argument placeholder in
    *          {@code message}!).</li>
    *          </ul>
    * @return Resolved message, or message key ({@code <MISSING KEY:%key%>}) if resource missing.
@@ -114,7 +120,7 @@ public class MessageManager {
   }
 
   /**
-   * Resolves the message corresponding to the coordinates.
+   * Resolves the message corresponding to coordinates.
    * <p>
    * The resource bundle is resolved according to the algorithm specified by
    * {@link ResourceBundle#getBundle(String, java.util.Locale, ClassLoader)
@@ -125,7 +131,8 @@ public class MessageManager {
    * is logged instead), in order not to interfere with ongoing operations.
    * </p>
    * <p>
-   * Message formatting follows {@link MessageFormat} conventions.
+   * Message formatting follows {@link MessageFormat} conventions. For simplicity, generic argument
+   * placeholders (<code>{}</code>) can be used instead of indexed ones.
    * </p>
    *
    * @param bundleName
@@ -138,7 +145,7 @@ public class MessageManager {
    *          <li>{@link Message} — automatically resolved</li>
    *          <li>{@link Class} — converted to FQN</li>
    *          <li>{@link Throwable} — if last argument, its string representation is automatically
-   *          appended to the format (DO NOT specify an explicit parameter placeholder in
+   *          appended to the format (DO NOT specify an explicit argument placeholder in
    *          {@code message}!).</li>
    *          </ul>
    * @return Resolved message, or message key ({@code <MISSING KEY:%key%>}) if resource missing.
@@ -155,7 +162,7 @@ public class MessageManager {
       /*
        * IMPORTANT: DO NOT use a message resource here (error loop hazard!).
        */
-      config.getLog().print(Kind.WARNING, this, format("Missing resource key: {0}@{1}", key,
+      config.getLog().print(Kind.WARNING, this, format("Missing resource key: {}@{}", key,
           bundleName));
 
       /*

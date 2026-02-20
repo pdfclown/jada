@@ -45,7 +45,6 @@ import org.pdfclown.common.util.Objects;
 import org.pdfclown.common.util.io.Files;
 import org.pdfclown.common.util.reflect.Reflects;
 import org.pdfclown.jada.core.JadaComponent;
-import org.pdfclown.jada.core.JadaScriptExtension;
 import org.pdfclown.jada.core.internal.Internals;
 
 /**
@@ -121,14 +120,13 @@ public class Logger implements Reporter {
     final String componentName;
     if (source != null) {
       var sourceType = asType(xflat(source));
+      assert sourceType != null /* PolyNull */;
+
       String sourceSqn = sqn(sourceType);
+      sourceSimpleName = requireNonNullElse(Reflects.call(source, "getName", null, null),
+          sourceSqn);
 
-      sourceSimpleName =
-          requireNonNullElse(Reflects.call(source, "getName", null, null), sourceSqn);
-
-      assert sourceType != null;
-      var fqn = JadaScriptExtension.class.isAssignableFrom(sourceType) ? sourceSqn
-          : sourceType.getName();
+      var fqn = sourceType.getName();
       componentName = Internals.getComponentNames().entrySet().stream()
           .filter($ -> fqn.startsWith($.getKey()))
           .map(Map.Entry::getValue)
@@ -229,14 +227,15 @@ public class Logger implements Reporter {
    * @param source
    *          Log source.
    * @param message
-   *          Message to print.
+   *          Message formatted according to {@link MessageFormat}. For simplicity, generic argument
+   *          placeholders (<code>{}</code>) can be used instead of indexed ones.
    * @param args
    *          Message arguments. Special argument types:
    *          <ul>
    *          <li>{@link Message} — automatically resolved</li>
    *          <li>{@link Class} — converted to FQN</li>
    *          <li>{@link Throwable} — if last argument, its string representation is automatically
-   *          appended to the format (DO NOT specify an explicit parameter placeholder in
+   *          appended to the format (DO NOT specify an explicit argument placeholder in
    *          {@code message}!).</li>
    *          </ul>
    */
@@ -274,14 +273,15 @@ public class Logger implements Reporter {
    * @param source
    *          Log source.
    * @param message
-   *          Message formatted according to {@link MessageFormat}.
+   *          Message formatted according to {@link MessageFormat}. For simplicity, generic argument
+   *          placeholders (<code>{}</code>) can be used instead of indexed ones.
    * @param args
    *          Message arguments. Special argument types:
    *          <ul>
    *          <li>{@link Message} — automatically resolved</li>
    *          <li>{@link Class} — converted to FQN</li>
    *          <li>{@link Throwable} — if last argument, its string representation is automatically
-   *          appended to the format (DO NOT specify an explicit parameter placeholder in
+   *          appended to the format (DO NOT specify an explicit argument placeholder in
    *          {@code message}!).</li>
    *          </ul>
    */
@@ -303,14 +303,15 @@ public class Logger implements Reporter {
    * @param source
    *          Log source.
    * @param message
-   *          Message to print.
+   *          Message formatted according to {@link MessageFormat}. For simplicity, generic argument
+   *          placeholders (<code>{}</code>) can be used instead of indexed ones.
    * @param args
    *          Message arguments. Special argument types:
    *          <ul>
    *          <li>{@link Message} — automatically resolved</li>
    *          <li>{@link Class} — converted to FQN</li>
    *          <li>{@link Throwable} — if last argument, its string representation is automatically
-   *          appended to the format (DO NOT specify an explicit parameter placeholder in
+   *          appended to the format (DO NOT specify an explicit argument placeholder in
    *          {@code message}!).</li>
    *          </ul>
    */
@@ -348,14 +349,15 @@ public class Logger implements Reporter {
    * @param source
    *          Log source.
    * @param message
-   *          Message formatted according to {@link MessageFormat}.
+   *          Message formatted according to {@link MessageFormat}. For simplicity, generic argument
+   *          placeholders (<code>{}</code>) can be used instead of indexed ones.
    * @param args
    *          Message arguments. Special argument types:
    *          <ul>
    *          <li>{@link Message} — automatically resolved</li>
    *          <li>{@link Class} — converted to FQN</li>
    *          <li>{@link Throwable} — if last argument, its string representation is automatically
-   *          appended to the format (DO NOT specify an explicit parameter placeholder in
+   *          appended to the format (DO NOT specify an explicit argument placeholder in
    *          {@code message}!).</li>
    *          </ul>
    */
@@ -383,14 +385,15 @@ public class Logger implements Reporter {
    * @param source
    *          Log source.
    * @param message
-   *          Message to print.
+   *          Message formatted according to {@link MessageFormat}. For simplicity, generic argument
+   *          placeholders (<code>{}</code>) can be used instead of indexed ones.
    * @param args
    *          Message arguments. Special argument types:
    *          <ul>
    *          <li>{@link Message} — automatically resolved</li>
    *          <li>{@link Class} — converted to FQN</li>
    *          <li>{@link Throwable} — if last argument, its string representation is automatically
-   *          appended to the format (DO NOT specify an explicit parameter placeholder in
+   *          appended to the format (DO NOT specify an explicit argument placeholder in
    *          {@code message}!).</li>
    *          </ul>
    */
@@ -442,14 +445,15 @@ public class Logger implements Reporter {
    * @param source
    *          Log source.
    * @param message
-   *          Message formatted according to {@link MessageFormat}.
+   *          Message formatted according to {@link MessageFormat}. For simplicity, generic argument
+   *          placeholders (<code>{}</code>) can be used instead of indexed ones.
    * @param args
    *          Message arguments. Special argument types:
    *          <ul>
    *          <li>{@link Message} — automatically resolved</li>
    *          <li>{@link Class} — converted to FQN</li>
    *          <li>{@link Throwable} — if last argument, its string representation is automatically
-   *          appended to the format (DO NOT specify an explicit parameter placeholder in
+   *          appended to the format (DO NOT specify an explicit argument placeholder in
    *          {@code message}!).</li>
    *          </ul>
    */
@@ -469,14 +473,15 @@ public class Logger implements Reporter {
    * @param source
    *          Log source.
    * @param message
-   *          Message to print.
+   *          Message formatted according to {@link MessageFormat}. For simplicity, generic argument
+   *          placeholders (<code>{}</code>) can be used instead of indexed ones.
    * @param args
    *          Message arguments. Special argument types:
    *          <ul>
    *          <li>{@link Message} — automatically resolved</li>
    *          <li>{@link Class} — converted to FQN</li>
    *          <li>{@link Throwable} — if last argument, its string representation is automatically
-   *          appended to the format (DO NOT specify an explicit parameter placeholder in
+   *          appended to the format (DO NOT specify an explicit argument placeholder in
    *          {@code message}!).</li>
    *          </ul>
    */
@@ -509,14 +514,15 @@ public class Logger implements Reporter {
    * @param source
    *          Log source.
    * @param message
-   *          Message to print.
+   *          Message formatted according to {@link MessageFormat}. For simplicity, generic argument
+   *          placeholders (<code>{}</code>) can be used instead of indexed ones.
    * @param args
    *          Message arguments. Special argument types:
    *          <ul>
    *          <li>{@link Message} — automatically resolved</li>
    *          <li>{@link Class} — converted to FQN</li>
    *          <li>{@link Throwable} — if last argument, its string representation is automatically
-   *          appended to the format (DO NOT specify an explicit parameter placeholder in
+   *          appended to the format (DO NOT specify an explicit argument placeholder in
    *          {@code message}!).</li>
    *          </ul>
    */
@@ -550,17 +556,19 @@ public class Logger implements Reporter {
   }
 
   /**
-   * Formats the message.
+   * Formats a {@linkplain MessageFormat parameterized} message.
    *
    * @param message
-   *          Message (either {@link String} (literal) or {@link Message} (resource)).
+   *          Message (either {@link String} (literal) or {@link Message} (resource)). For
+   *          simplicity, generic argument placeholders (<code>{}</code>) can be used instead of
+   *          indexed ones.
    * @param args
    *          Message arguments. Special argument types:
    *          <ul>
    *          <li>{@link Message} — automatically resolved</li>
    *          <li>{@link Class} — converted to FQN</li>
    *          <li>{@link Throwable} — if last argument, its string representation is automatically
-   *          appended to the format (DO NOT specify an explicit parameter placeholder in
+   *          appended to the format (DO NOT specify an explicit argument placeholder in
    *          {@code message}!).</li>
    *          </ul>
    */

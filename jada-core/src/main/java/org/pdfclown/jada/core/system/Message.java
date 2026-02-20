@@ -21,8 +21,8 @@ import java.util.ResourceBundle;
  * @author Stefano Chizzolini
  * @implSpec Implementations are expected to be backed by corresponding {@linkplain ResourceBundle
  *           resource bundle} files ({@link #getBundleName() %BUNDLE_NAME%}{@code .properties}),
- *           where each entry is assigned its {@linkplain MessageFormat parameterized message
- *           string}, like this:<pre><code>
+ *           where each entry is assigned its {@linkplain MessageFormat parameterized} message
+ *           string, like this:<pre><code>
  *             COMPONENTS=\
  *             Selected components:\n\
  *             {0}</code></pre>
