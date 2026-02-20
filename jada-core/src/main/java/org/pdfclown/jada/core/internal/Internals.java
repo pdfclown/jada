@@ -18,7 +18,6 @@ import java.util.HashMap;
 import java.util.Map;
 import org.pdfclown.common.util.annot.UnmodifiableView;
 import org.pdfclown.common.util.reflect.Reflects;
-import org.pdfclown.jada.core.JadaScriptExtension;
 
 /**
  * Internal utilities.
@@ -41,9 +40,7 @@ public final class Internals {
    * Registers a component for name resolution.
    */
   public static void registerComponentName(Object component) {
-    componentNames.put(component instanceof JadaScriptExtension
-        ? component.getClass().getSimpleName()
-        : component.getClass().getPackageName(), Reflects.get(component, "getName"));
+    componentNames.put(component.getClass().getPackageName(), Reflects.get(component, "getName"));
   }
 
   private Internals() {

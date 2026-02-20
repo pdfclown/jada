@@ -12,7 +12,6 @@
  */
 package org.pdfclown.jada.core;
 
-import static java.nio.file.Files.isRegularFile;
 import static java.util.Objects.requireNonNullElse;
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.collectingAndThen;
@@ -35,13 +34,9 @@ import static org.pdfclown.common.util.Exceptions.wrongArg;
 import static org.pdfclown.common.util.Exceptions.wrongState;
 import static org.pdfclown.common.util.Objects.fqn;
 import static org.pdfclown.common.util.Objects.sqn;
-import static org.pdfclown.common.util.Objects.textLiteral;
 import static org.pdfclown.common.util.Objects.toStringWithValues;
 import static org.pdfclown.common.util.Strings.EMPTY;
 import static org.pdfclown.common.util.Strings.EOL;
-import static org.pdfclown.common.util.io.Files.FILE_EXTENSION__GROOVY;
-import static org.pdfclown.common.util.io.Files.baseName;
-import static org.pdfclown.common.util.io.Files.isExtension;
 import static org.pdfclown.common.util.system.Clis.parseListIncremental;
 import static org.pdfclown.common.util.system.Clis.parseResource;
 import static org.pdfclown.jada.core.JadaConfig.OPTION__BASE_DOCLET;
@@ -61,19 +56,14 @@ import static org.pdfclown.jada.core.JadaConfig.OPTION__VERBOSE;
 import static org.pdfclown.jada.core.util.Objects.realSubTypes;
 
 import com.sun.tools.javac.util.Log;
-import groovy.util.GroovyScriptEngine;
-import groovy.util.ResourceException;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.net.URLClassLoader;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.AbstractCollection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -99,7 +89,6 @@ import org.pdfclown.common.util.ArgumentException;
 import org.pdfclown.common.util.annot.InitNonNull;
 import org.pdfclown.common.util.io.PathResource;
 import org.pdfclown.common.util.io.Resource;
-import org.pdfclown.common.util.net.Uris;
 import org.pdfclown.common.util.reflect.Reflects;
 import org.pdfclown.jada.core.JadaConfig.Attachment;
 import org.pdfclown.jada.core.event.MainProcessEvent;
@@ -376,8 +365,6 @@ public class Jada implements Doclet, JadaComponent {
      */
     @SuppressWarnings("unchecked")
     public <T> List<JadaCandidate<T>> get(Class<T> type) {
-      loadLazy(type);
-
       return Optional.ofNullable(((List<JadaCandidate<T>>) (Object) base.get(type)))
           .orElseThrow(() -> wrongArg("type", type));
     }
@@ -421,91 +408,6 @@ public class Jada implements Doclet, JadaComponent {
       }
       return (List<JadaCandidate<T>>) (Object) typeCandidates;
     }
-
-    /**
-     * Loads lazy components belonging to the type.
-     * <p>
-     * Because of their particular lifecycle, certain types (namely,
-     * {@linkplain org.pdfclown.jada.core.JadaScriptExtension script extensions}) aren't immediately
-     * available during the doclet initialization — whilst, in order to register their own CLI
-     * options, regular extension candidates need to be loaded <i>before</i> the resolution of CLI
-     * options, it is impossible to do so for script extensions since their locations depend
-     * themselves on a CLI option ({@value JadaConfig#OPTION__RESOURCE_DIR}), which hasn't been
-     * resolved yet. Therefore, it is necessary to postpone their loading until the state has
-     * settled.
-     * </p>
-     */
-    private void loadLazy(Class<?> type) {
-      if (type == JadaExtension.class) {
-        /*
-         * NOTE: Script resource directories can be defined incrementally, so this loading operation
-         * may be repeated as new directories are added to the collection.
-         */
-        var scriptUrls = new HashMap<String, URL>();
-        config.getResources("ext")
-            .filter($ -> !extResourceDirs.contains($))
-            .peek(extResourceDirs::add)
-            .forEach($ -> {
-              try (var paths = Files.list($)) {
-                paths
-                    .filter($$ -> isRegularFile($$) && isExtension($$, FILE_EXTENSION__GROOVY))
-                    .forEach($$ -> {
-                      /*
-                       * NOTE: In case of script name collision, the highest priority wins.
-                       */
-                      var scriptName = $$.getFileName().toString();
-                      if (!scriptUrls.containsKey(scriptName)) {
-                        scriptUrls.put(scriptName, Uris.url($$));
-                      }
-                    });
-              } catch (IOException ex) {
-                throw runtime(ex);
-              }
-            });
-
-        if (!scriptUrls.isEmpty()) {
-          @SuppressWarnings("unchecked")
-          var candidates = (List<JadaCandidate<JadaExtension>>) (Object) base.get(type);
-
-          var groovyScriptEngine = new GroovyScriptEngine($resourceName -> {
-            var ret = scriptUrls.get($resourceName);
-            if (ret == null)
-              throw new ResourceException("Resource for '%s' script NOT FOUND"
-                  .formatted($resourceName));
-
-            try {
-              return ret.openConnection();
-            } catch (IOException ex) {
-              throw new ResourceException("Connection to resource for '%s' script FAILED"
-                  .formatted($resourceName), ex);
-            }
-          }, Jada.class.getClassLoader());
-
-          for (var scriptUrlEntry : scriptUrls.entrySet()) {
-            try {
-              @SuppressWarnings("unchecked")
-              var candidate = (JadaCandidate<JadaExtension>) JadaCandidate.of(
-                  groovyScriptEngine.loadScriptByName(scriptUrlEntry.getKey()));
-              {
-                var scriptExtension = (JadaScriptExtension) candidate.getBase();
-                {
-                  scriptExtension.name = baseName(scriptUrlEntry.getKey());
-                  scriptExtension.location = scriptUrlEntry.getValue();
-                  scriptExtension.language = "groovy";
-                }
-                Internals.registerComponentName(scriptExtension);
-                //noinspection DataFlowIssue - `null` options (NOT supported for scripts)
-                scriptExtension.init(null, Jada.this);
-              }
-              candidates.add(candidate);
-            } catch (Exception ex) {
-              throw runtime("Loading of script extension {} FAILED",
-                  textLiteral(scriptUrlEntry.getValue()), ex);
-            }
-          }
-        }
-      }
-    }
   }
 
   public static final String NAME = "Jada";
@@ -536,12 +438,6 @@ public class Jada implements Doclet, JadaComponent {
         .append(Reflects.<String>call(component, "getName", null, null))
         .append(SQUARE_BRACKET_CLOSE).append(SPACE)
         .append(fqn(component));
-    if (component instanceof JadaScriptExtension scriptExtension) {
-      b.append(SPACE)
-          .append(ROUND_BRACKET_OPEN)
-          .append(scriptExtension.getLocation())
-          .append(ROUND_BRACKET_CLOSE);
-    }
 
     /*
      * COMPONENT STATUS
@@ -598,6 +494,7 @@ public class Jada implements Doclet, JadaComponent {
   private @InitNonNull JadaEnvironment env;
   @SuppressWarnings("NotNullFieldNotInitialized")
   private @InitNonNull EventBus eventBus;
+  private final JadaScriptManager scriptManager = new JadaScriptManager(this);
   @SuppressWarnings("NotNullFieldNotInitialized")
   private @InitNonNull Set<? extends Option> supportedOptions;
 
@@ -1119,9 +1016,13 @@ public class Jada implements Doclet, JadaComponent {
 
   private void notifyMainProcess() {
     post(new MainProcessEvent(this));
+
+    scriptManager.run("onMainProcess");
   }
 
   private void notifyPostProcess() {
     post(new PostProcessEvent(this));
+
+    scriptManager.run("onPostProcess");
   }
 }

@@ -956,15 +956,14 @@ public class JadaConfig extends SystemConfig implements JadaObject {
   /**
    * Jada resource directories.
    * <p>
-   * These resources are meant to be consumed during javadoc tool execution; the resources to be
-   * included into the Javadoc output are under the {@code attach} subdirectory, as described here
-   * below (additional resources can be specified as {@linkplain #getAttachments() attachments}).
+   * These resources are meant to be consumed during the javadoc tool execution.
    * </p>
    * <p>
    * Each resource directory is expected to contain these subdirectories:
    * </p>
    * <ul>
-   * <li>{@code attach} — resources to attach to Javadoc output. Subdirectories:
+   * <li>{@code attach} — resources automatically attached to Javadoc output (additional resources
+   * can be dynamically specified as {@linkplain #getAttachments() attachments}). Subdirectories:
    * <ul>
    * <li>{@code common} — resources common to any output</li>
    * <li>{@code java%JAVA_VERSION%} — resources bound to specific javadoc tool versions. Supported
@@ -979,16 +978,20 @@ public class JadaConfig extends SystemConfig implements JadaObject {
    * <li>{@code ext} — {@linkplain JadaExtension extension}-specific resources under respective
    * subdirectories {@linkplain JadaExtension#getName() named after the corresponding extension}
    * (for example, <code>ext/JadaBiblio</code> for JadaBiblio extension)</li>
+   * <li>{@code scripts} — script hooks for Jada execution phases ({@code onMainProcess},
+   * {@code onPostProcess}); their files are named after the corresponding phase (for example,
+   * {@code onMainProcess.groovy}); their language has to be Groovy</li>
    * </ul>
    * <p>
    * Resources under these directories are identified by their relative paths (<b>resource
    * name</b>); as a consequence, <i>a resource name may match multiple resource instances, ordered
    * by decreasing priority corresponding to the position of their respective resource directory in
    * this list</i>. This definition provides sort of inheritance line, useful in case of shared
-   * resource artifacts: depending on the semantics specific to each resource type, a
-   * higher-priority resource instance may replace (for example, project logo image) or augment (for
-   * example, a collection of bibliographic entries may expand a shared collection or even override
-   * its entries) a lower-priority one.
+   * resource artifacts: depending on resource type-specific semantics, a higher-priority resource
+   * instance may replace (for example, project logo image) or augment (for example, a collection of
+   * bibliographic entries may expand a shared collection or even override its entries) a
+   * lower-priority one; in the context of script hooks, the ancestor script can be invoked via
+   * {@link JadaScriptContext#callSuper() self.callSuper()} method.
    * </p>
    * <p>
    * CLI option: {@value #OPTION__RESOURCE_DIR} (repeatable)

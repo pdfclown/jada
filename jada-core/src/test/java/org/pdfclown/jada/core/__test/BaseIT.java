@@ -12,7 +12,13 @@
  */
 package org.pdfclown.jada.core.__test;
 
+import static org.pdfclown.jada.core.JadaConfig.OPTION__DEBUG;
+
+import java.util.List;
+import org.jspecify.annotations.Nullable;
+import org.pdfclown.common.build.system.ProjectDirId;
 import org.pdfclown.jada.core.test.JadaIT;
+import org.pdfclown.jada.core.test.assertion.Assertions.JavadocAssertArgs;
 
 /**
  * Module-specific integration test.
@@ -20,4 +26,32 @@ import org.pdfclown.jada.core.test.JadaIT;
  * @author Stefano Chizzolini
  */
 public abstract class BaseIT extends JadaIT {
+  protected BaseIT() {
+  }
+
+  protected BaseIT(@Nullable Class<?> sourceType) {
+    super(sourceType);
+  }
+
+  protected BaseIT(List<String> sourcePackageNames) {
+    super(sourcePackageNames);
+  }
+
+  protected BaseIT(@Nullable ProjectDirId sourceDirId, List<String> sourcePackageNames) {
+    super(sourceDirId, sourcePackageNames);
+  }
+
+  protected BaseIT(@Nullable ProjectDirId sourceDirId, String sourcePackageName) {
+    super(sourceDirId, sourcePackageName);
+  }
+
+  protected BaseIT(String sourcePackageName) {
+    super(sourcePackageName);
+  }
+
+  @Override
+  protected JavadocAssertArgs javadocArgs() {
+    return super.javadocArgs()
+        .arg(OPTION__DEBUG);
+  }
 }
