@@ -124,9 +124,11 @@ public class DocReuseTagletProcessor extends JavaProcessor {
     @Nullable
     String lastTagName;
     StringBuilder out = new StringBuilder();
+    final FileProcess.Context process;
 
-    Context(JavadocComment comment) {
+    Context(JavadocComment comment, FileProcess.Context process) {
       commentContent = comment.getContent();
+      this.process = process;
     }
   }
 
@@ -531,7 +533,7 @@ public class DocReuseTagletProcessor extends JavaProcessor {
       if (comment == null)
         return;
 
-      var c = new Context(comment);
+      var c = new Context(comment, context);
       Matcher tagMatcher = PATTERN__DOC_REUSE_TAG.matcher(c.commentContent);
       while (tagMatcher.find()) {
         String tagName = inlineTagName(tagMatcher);
@@ -552,7 +554,7 @@ public class DocReuseTagletProcessor extends JavaProcessor {
                 assert c.lastFragmentKey != null;
 
                 // Store the fragment for later use by @jada.reuseDoc tags!
-                storeFragment(c.lastFragmentKey, tagFragmentContent, $, file);
+                storeFragment(c.lastFragmentKey, tagFragmentContent, $, file, c);
                 break;
               }
               case ReuseDocTaglet.NAME: {
@@ -588,7 +590,7 @@ public class DocReuseTagletProcessor extends JavaProcessor {
           default: {
             // Fragment end tag missing (unbalanced tags)?
             if (c.lastFragmentKey != null) {
-              normalizeTag(c, tagMatcher.start(), $, file);
+              normalizeTag(tagMatcher.start(), $, file, c);
             }
 
             // Fragment key resolution.
@@ -816,7 +818,7 @@ public class DocReuseTagletProcessor extends JavaProcessor {
 
       // Fragment end tag missing (unbalanced tags)?
       if (c.lastFragmentKey != null) {
-        normalizeTag(c, c.commentContent.length(), $, file);
+        normalizeTag(c.commentContent.length(), $, file, c);
       }
       // Content changed (balanced tags)?
       else if (c.out.length() > 0) {
@@ -858,7 +860,7 @@ public class DocReuseTagletProcessor extends JavaProcessor {
    * case of {@code @jada.reuseDoc}, the fragment is also automatically copied from its source).
    * </p>
    */
-  private void normalizeTag(Context c, int lastFragmentEnd, Node node, Path file) {
+  private void normalizeTag(int lastFragmentEnd, Node node, Path file, Context c) {
     assert c.lastFragmentKey != null;
     assert c.lastTagName != null;
 
@@ -870,7 +872,7 @@ public class DocReuseTagletProcessor extends JavaProcessor {
     switch (c.lastTagName) {
       case DocTaglet.NAME: {
         // Store the fragment for later use by jada.reuseDoc tags!
-        c.fragment = storeFragment(c.lastFragmentKey, midContent, node, file);
+        c.fragment = storeFragment(c.lastFragmentKey, midContent, node, file, c);
 
         /*
          * NOTE: @jada.doc normalization implies that its content is followed by a new balancing end
@@ -939,7 +941,7 @@ public class DocReuseTagletProcessor extends JavaProcessor {
    *
    * @return Stored fragment.
    */
-  private Fragment storeFragment(String key, String value, Node node, Path file) {
+  private Fragment storeFragment(String key, String value, Node node, Path file, Context c) {
     String event;
     var fragment = fragments.get(key);
     if (fragment != null) {
@@ -966,6 +968,16 @@ public class DocReuseTagletProcessor extends JavaProcessor {
     }
 
     fragments.put(key, fragment = new Fragment(file, node, value));
+
+    /*
+     * Force reprocessing!
+     *
+     * NOTE: After all the fileset is processed, processing starves to infinite loop exception if no
+     * changes occurred despite incomplete files left. To prevent such failure, we have to
+     * explicitly notify the process that we expect another processing cycle so stored source
+     * fragments can be used to resolve targets and eventually complete those incomplete files.
+     */
+    c.process.allowReprocess();
 
     logFragmentEvent(Kind.OTHER, DocTaglet.NAME, key, event, node);
 

@@ -74,6 +74,10 @@ public abstract class FileProcess<T extends FileProcessor<?>> implements SystemO
     /**
      * Enables re-processing, causing another iteration even if no change occurred in the current
      * one.
+     * <p>
+     * Useful to be invoked on value resolution, to give postponed files a chance to consume it on
+     * next processing iteration.
+     * </p>
      */
     public void allowReprocess() {
       reprocessable = true;
