@@ -1,3 +1,20 @@
+## v0.3.0 (2026-02-26)
+
+### BREAKING CHANGE
+
+- `JadaScriptExtension` removed (see `JadaScriptContext`
+instead).
+
+### Feat
+
+- **core**: replace script extensions with script hooks
+
+### Fix
+
+- harmonize lists in messages
+- **ext**: fix infinite loop exception (`DocReuseTagletProcessor`)
+- **core**: support generic argument placeholders (`MessageManager`)
+
 ## v0.2.2 (2026-01-17)
 
 ### Fix
