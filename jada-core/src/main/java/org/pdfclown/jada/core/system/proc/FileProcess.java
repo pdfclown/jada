@@ -39,6 +39,7 @@ import org.pdfclown.jada.core.internal.JadaMessage;
 import org.pdfclown.jada.core.system.Logger;
 import org.pdfclown.jada.core.system.SystemConfig;
 import org.pdfclown.jada.core.system.SystemObject;
+import org.pdfclown.jada.core.util.Messages;
 
 /**
  * File processing manager.
@@ -561,7 +562,7 @@ public abstract class FileProcess<T extends FileProcessor<?>> implements SystemO
           break;
         } else if (!context.isReprocessable())
           throw wrongState(JadaMessage.FILE_PROCESS_INFINITE_LOOP.toString(config,
-              Logger.sourceName(p), incompleteFiles, p.createStatusMessage()));
+              Logger.sourceName(p), Messages.list(incompleteFiles, 1), p.createStatusMessage()));
 
         files.close();
 

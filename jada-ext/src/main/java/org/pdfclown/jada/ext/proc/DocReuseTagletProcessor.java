@@ -14,12 +14,10 @@ package org.pdfclown.jada.ext.proc;
 
 import static java.lang.Math.min;
 import static java.nio.file.Files.exists;
-import static java.util.stream.Collectors.joining;
 import static org.apache.commons.io.file.PathUtils.touch;
 import static org.pdfclown.common.util.Chars.COLON;
 import static org.pdfclown.common.util.Chars.DOT;
 import static org.pdfclown.common.util.Chars.HASH;
-import static org.pdfclown.common.util.Chars.LF;
 import static org.pdfclown.common.util.Chars.ROUND_BRACKET_CLOSE;
 import static org.pdfclown.common.util.Chars.ROUND_BRACKET_OPEN;
 import static org.pdfclown.common.util.Chars.SPACE;
@@ -78,6 +76,7 @@ import org.pdfclown.common.util.annot.InitNonNull;
 import org.pdfclown.jada.core.system.SystemConfig;
 import org.pdfclown.jada.core.system.proc.FileProcess;
 import org.pdfclown.jada.core.system.proc.src.JavaProcessor;
+import org.pdfclown.jada.core.util.Messages;
 import org.pdfclown.jada.core.util.lang.Javadocs;
 import org.pdfclown.jada.core.util.lang.LangAsts;
 import org.pdfclown.jada.ext.internal.ExtMessage;
@@ -431,8 +430,7 @@ public class DocReuseTagletProcessor extends JavaProcessor {
 
   @Override
   public String createStatusMessage() {
-    return "- Javadoc fragment keys NOT FOUND:"
-        + unsolvedFragmentKeys.stream().collect(joining(EMPTY, S + LF + SPACE + SPACE, EMPTY));
+    return "- Javadoc fragment keys NOT FOUND:" + Messages.list(unsolvedFragmentKeys, 1);
   }
 
   @Override
