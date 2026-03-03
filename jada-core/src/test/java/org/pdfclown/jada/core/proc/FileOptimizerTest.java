@@ -121,7 +121,7 @@ class FileOptimizerTest extends BaseTest {
     assertParameterizedOf(
         () -> fileOptimizer.isProcessable(Path.of(filename), null),
         expected,
-        () -> new ExpectedGeneration(of(
+        () -> new ExpectedGeneration<>(of(
             entry("filename", filename),
             entry("debug", debug))));
   }

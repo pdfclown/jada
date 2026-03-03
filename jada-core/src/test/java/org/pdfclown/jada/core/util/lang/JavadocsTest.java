@@ -109,11 +109,10 @@ class JavadocsTest extends BaseTest {
         },
         expected,
         () -> new ExpectedGeneration<List<String>>(tagNames, content)
-            .setExpectedSourceCodeGenerator(
-                $ -> "asList(\n%s)".formatted(
-                    Stream.iterate(0, $$ -> $$ < $.size(), $$ -> $$ + 2)
-                        .map($$ -> literal($.get($$)) + COMMA + literal($.get($$ + 1)))
-                        .collect(joining(S + COMMA + LF)))));
+            .setExpectedSourceCodeGenerator($ -> "asList(\n%s)".formatted(
+                Stream.iterate(0, $$ -> $$ < $.size(), $$ -> $$ + 2)
+                    .map($$ -> literal($.get($$)) + COMMA + literal($.get($$ + 1)))
+                    .collect(joining(S + COMMA + LF)))));
   }
 
   static Stream<Arguments> inlineTagPattern() {
@@ -193,7 +192,7 @@ class JavadocsTest extends BaseTest {
     assertParameterizedOf(
         () -> Javadocs.normal(content),
         expected,
-        () -> new ExpectedGeneration(of(
+        () -> new ExpectedGeneration<>(of(
             entry("content", content))));
   }
 }
