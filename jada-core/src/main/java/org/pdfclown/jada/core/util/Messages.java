@@ -16,7 +16,7 @@ import static org.apache.commons.lang3.StringUtils.repeat;
 import static org.pdfclown.common.util.Chars.LF;
 import static org.pdfclown.common.util.Chars.SPACE;
 import static org.pdfclown.common.util.Strings.S;
-import static org.pdfclown.jada.core.internal.temp.util.Strings.joinWithPrefix;
+import static org.pdfclown.common.util.Strings.joinWithPrefix;
 
 /**
  * Message-related utilities.
