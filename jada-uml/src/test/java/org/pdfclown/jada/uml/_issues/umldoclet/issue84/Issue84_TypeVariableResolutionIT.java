@@ -42,7 +42,8 @@ public class Issue84_TypeVariableResolutionIT extends BaseIT {
   @Test
   void _typeMemberImplementsComparableTypeMember() {
     assert sourceType != null;
-    String puml = outputContent(getEnv().basedName(filename(sourceType, FILE_EXTENSION__PLANTUML)));
+    String puml = outputContent(getEnv().outputName(
+        filename(sourceType, FILE_EXTENSION__PLANTUML)));
 
     assertThat(puml,
         stringContainsInOrder(List.of(

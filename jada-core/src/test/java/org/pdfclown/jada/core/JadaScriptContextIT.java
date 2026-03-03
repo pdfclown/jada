@@ -15,15 +15,11 @@ package org.pdfclown.jada.core;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.fail;
-import static org.pdfclown.common.util.Chars.UNDERSCORE;
-import static org.pdfclown.common.util.Objects.sqn;
-import static org.pdfclown.common.util.Strings.S;
 import static org.pdfclown.jada.core.JadaConfig.OPTION__RESOURCE_DIR;
 
 import java.util.List;
 import java.util.regex.Pattern;
 import org.junit.jupiter.api.Test;
-import org.pdfclown.common.build.util.io.ResourceNames;
 import org.pdfclown.jada.core.__test.BaseIT;
 import org.pdfclown.jada.core.test.assertion.Assertions.JavadocAssertResult;
 
@@ -38,10 +34,8 @@ public class JadaScriptContextIT extends BaseIT {
   @Test
   void _multipleResourceDirectories() {
     JavadocAssertResult result = runJavadoc(javadocArgs()
-        .arg(OPTION__RESOURCE_DIR,
-            getEnv().resourcePath(ResourceNames.name(S + UNDERSCORE + sqn(this), "res1")))
-        .arg(OPTION__RESOURCE_DIR,
-            getEnv().resourcePath(ResourceNames.name(S + UNDERSCORE + sqn(this), "res2")))
+        .arg(OPTION__RESOURCE_DIR, getEnv().resourcePath("res1"))
+        .arg(OPTION__RESOURCE_DIR, getEnv().resourcePath("res2"))
         .outputStreams(true));
 
     var scriptLogPattern = Pattern.compile("""

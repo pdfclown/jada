@@ -48,7 +48,7 @@ public class Issue69_LinksIT extends BaseIT {
   @Test
   void _linkSameDirectory() {
     String puml =
-        outputContent(getEnv().basedName(FILENAME__PACKAGE + FILE_EXTENSION__PLANTUML));
+        outputContent(getEnv().outputName(FILENAME__PACKAGE + FILE_EXTENSION__PLANTUML));
 
     // Check link to test class
     assertThat(puml, stringContainsInOrder(List.of(

@@ -59,9 +59,9 @@ public class Issue266_PropertyTighteningIT extends BaseIT {
 
   @Override
   protected void onSingleRunTerm(JavadocAssertResult result) {
-    classPuml = outputContent(getEnv().basedName(filename(TesterUtil.class,
+    classPuml = outputContent(getEnv().outputName(filename(TesterUtil.class,
         FILE_EXTENSION__PLANTUML)));
-    packagePuml = outputContent(getEnv().basedName(FILENAME__PACKAGE + FILE_EXTENSION__PLANTUML));
+    packagePuml = outputContent(getEnv().outputName(FILENAME__PACKAGE + FILE_EXTENSION__PLANTUML));
   }
 
   // SourceName: testBug266Rendering

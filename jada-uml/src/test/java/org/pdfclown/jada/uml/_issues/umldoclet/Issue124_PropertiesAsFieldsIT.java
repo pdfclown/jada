@@ -49,7 +49,7 @@ public class Issue124_PropertiesAsFieldsIT extends BaseIT {
   // SourceName: testPropertiesAsFieldsForPublicClass
   @Test
   void _propertiesAsFieldsForClassDiagram() {
-    String puml = outputContent(getEnv().basedName(filename(StandardJavaBean.class,
+    String puml = outputContent(getEnv().outputName(filename(StandardJavaBean.class,
         FILE_EXTENSION__PLANTUML)));
 
     assertThat(puml, containsString("+stringValue: String"));
@@ -70,7 +70,7 @@ public class Issue124_PropertiesAsFieldsIT extends BaseIT {
   // SourceName: testPropertiesAsFieldsForPackageDiagram
   @Test
   void _propertiesAsFieldsForPackageDiagram() {
-    String puml = outputContent(getEnv().basedName(FILENAME__PACKAGE + FILE_EXTENSION__PLANTUML));
+    String puml = outputContent(getEnv().outputName(FILENAME__PACKAGE + FILE_EXTENSION__PLANTUML));
     String nsFqn = pumlNsFqn(StandardJavaBean.class);
 
     assertThat(puml, containsString("+stringValue: String"));

@@ -52,7 +52,7 @@ public class Issue276_AnnotationSyntaxErrorIT extends BaseIT {
   // SourceName: testAnnotationDiagramHasNoSyntaxError
   @Test
   void _annotationDiagramHasNoSyntaxError() {
-    String svg = outputContent(getEnv().basedName(filename(Generated.class, FILE_EXTENSION__SVG)));
+    String svg = outputContent(getEnv().outputName(filename(Generated.class, FILE_EXTENSION__SVG)));
 
     assertThat(svg, not(containsString("Syntax Error")));
   }

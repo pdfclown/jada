@@ -101,7 +101,7 @@ class DocReuseTagletProcessorIT extends BaseIT {
       throws IOException {
     final var sourceDir = getEnv().typeSrcPath(baseType).getParent();
     final var targetBaseDir = getEnv().outputPath(getTestMethodName());
-    final var targetDir = targetBaseDir.resolve(ResourceNames.based(EMPTY, baseType));
+    final var targetDir = targetBaseDir.resolve(ResourceNames.relBased(EMPTY, baseType));
     copyDirectory(sourceDir, resetDirectory(targetDir));
 
     var ret = new SrcFileProcess();

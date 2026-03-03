@@ -59,7 +59,7 @@ public class Issue79_GenericsAsMarkupIT extends BaseIT {
   @Override
   protected void onSingleRunTerm(JavadocAssertResult result) {
     assert sourceType != null;
-    classPuml = outputContent(getEnv().basedName(filename(sourceType, FILE_EXTENSION__PLANTUML)));
+    classPuml = outputContent(getEnv().outputName(filename(sourceType, FILE_EXTENSION__PLANTUML)));
   }
 
   // SourceName: testNoMarkup

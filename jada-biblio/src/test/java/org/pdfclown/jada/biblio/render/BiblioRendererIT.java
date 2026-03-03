@@ -16,7 +16,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.pdfclown.common.build.test.assertion.Matchers.matchesFileContent;
-import static org.pdfclown.common.util.Objects.sqn;
+import static org.pdfclown.common.util.Strings.EMPTY;
 import static org.pdfclown.common.util.io.Files.resetDirectory;
 import static org.pdfclown.jada.core.test.JadaMocks.mockJadaConfig;
 
@@ -44,12 +44,12 @@ class BiblioRendererIT extends BaseIT {
   }
 
   private void render() throws IOException, SAXException {
-    final var sourceBaseDir = getEnv().resourcePath("_" + sqn(this));
+    final var sourceBaseDir = getEnv().resourcePath(EMPTY);
     final var sourceDir = sourceBaseDir.resolve(getTestMethodName());
     final var targetDir = resetDirectory(getEnv().outputPath(getTestMethodName()));
 
-    Files.copy(sourceDir.resolve("index_original.html"), targetDir.resolve("index.html"));
-    Files.copy(sourceDir.resolve("index-all_original.html"), targetDir.resolve("index-all.html"));
+    Files.copy(sourceDir.resolve("index.html"), targetDir.resolve("index.html"));
+    Files.copy(sourceDir.resolve("index-all.html"), targetDir.resolve("index-all.html"));
 
     var biblioHtmlFile = targetDir.resolve("biblio.html");
 
@@ -70,8 +70,9 @@ class BiblioRendererIT extends BaseIT {
     var renderer = new BiblioRenderer();
     renderer.render(config);
 
-    assertThat(biblioHtmlFile, matchesFileContent(sourceDir.resolve("biblio_expected.html")));
+    assertThat(biblioHtmlFile,
+        matchesFileContent(sourceDir.resolve("expected/biblio.html")));
     assertThat(targetDir.resolve("index-all.html"),
-        matchesFileContent(sourceDir.resolve("index-all_expected.html")));
+        matchesFileContent(sourceDir.resolve("expected/index-all.html")));
   }
 }

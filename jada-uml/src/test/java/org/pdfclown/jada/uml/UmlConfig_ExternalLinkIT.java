@@ -82,7 +82,7 @@ public class UmlConfig_ExternalLinkIT extends BaseIT {
           $args.arg("-linkoffline", "https://docs.oracle.com/javase/9/docs/api",
               packageListFile.getParent());
         })));
-    String puml = outputContent(getEnv().basedName(FILENAME__PACKAGE + FILE_EXTENSION__PLANTUML));
+    String puml = outputContent(getEnv().outputName(FILENAME__PACKAGE + FILE_EXTENSION__PLANTUML));
 
     assertThat(puml, stringContainsInOrder(asList("interface", "Serializable",
         "[[https://docs.oracle.com/javase/9/docs/api/java/io/Serializable.html?is-external=true]]")));
@@ -93,7 +93,7 @@ public class UmlConfig_ExternalLinkIT extends BaseIT {
   void _onlineExternalLink() {
     runJavadoc(javadocArgs()
         .arg("-link", "https://docs.oracle.com/javase/9/docs/api"));
-    String puml = outputContent(getEnv().basedName(FILENAME__PACKAGE + FILE_EXTENSION__PLANTUML));
+    String puml = outputContent(getEnv().outputName(FILENAME__PACKAGE + FILE_EXTENSION__PLANTUML));
 
     assertThat(puml, stringContainsInOrder(asList("interface", "Serializable",
         "[[https://docs.oracle.com/javase/9/docs/api/java/io/Serializable.html?is-external=true]]")));
@@ -109,13 +109,13 @@ public class UmlConfig_ExternalLinkIT extends BaseIT {
 
           writeText(externalDirRef.get().resolve(FILENAME__PACKAGE_LIST),
               Serializable.class.getPackageName());
-          writeText(externalDirRef.get().resolve(ResourceNames.based(
+          writeText(externalDirRef.get().resolve(ResourceNames.relBased(
               FILENAME__PACKAGE_SUMMARY + FILE_EXTENSION__HTML, Serializable.class)),
               "<html></html>");
 
           $args.arg("-link", relativize($outputDir, externalDirRef.get()));
         })));
-    Path packagePumlFile = getEnv().outputPath(getEnv().basedName(FILENAME__PACKAGE
+    Path packagePumlFile = getEnv().outputPath(getEnv().outputName(FILENAME__PACKAGE
         + FILE_EXTENSION__PLANTUML));
     String puml = readString(packagePumlFile);
 

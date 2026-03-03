@@ -51,7 +51,7 @@ public class Issue236_ExcludedTypeReferencesIT extends BaseIT {
   // SourceName: testImplicitSuperclassObjectIsNotExcluded
   @Test
   void _implicitSuperclassObjectIsNotExcluded() {
-    String puml = outputContent(getEnv().basedName(filename(StandardJavaBean.class,
+    String puml = outputContent(getEnv().outputName(filename(StandardJavaBean.class,
         FILE_EXTENSION__PLANTUML)));
 
     assertThat(puml, containsString(puml()

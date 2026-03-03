@@ -50,23 +50,21 @@ import org.pdfclown.jada.core.test.assertion.Assertions.JavadocAssertResult;
 public abstract class JadaIT extends IT {
   public class Environment extends TestUnit.Environment {
     /**
-     * Gets the fully-qualified name of the resource, resolved according to {@link #sourceType} (if
-     * defined) or {@link #sourcePackages} (if single).
+     * Gets the name of an output file relative to this test environment, defined according to
+     * {@link #sourceType} (if present) or {@link #sourcePackages} (if single).
      * <p>
-     * This is a convenience for frequent references to generated javadoc files, as integration
+     * This is a convenience for frequent references to generated Javadoc files, as integration
      * tests are typically focused on a limited set of source types within a single package.
      * </p>
      *
-     * @param name
-     *          Resource name.
      * @throws IllegalStateException
-     *           if {@link #sourceType} is undefined and {@link #sourcePackages} is not single.
+     *           if {@link #sourceType} is absent and {@link #sourcePackages} is not single.
      */
-    public String basedName(String name) {
+    public String outputName(String name) {
       if (sourceType != null)
-        return ResourceNames.based(name, sourceType);
+        return ResourceNames.relBased(name, sourceType);
       else if (sourcePackages.size() == 1)
-        return ResourceNames.based(name, sourcePackages.get(0));
+        return ResourceNames.relBased(name, sourcePackages.get(0));
       else
         throw wrongState(sourcePackages.isEmpty()
             ? "No source reference (neither `sourceType` nor `sourcePackages`)"
@@ -75,7 +73,7 @@ public abstract class JadaIT extends IT {
 
     /**
      * @param name
-     *          Output file name (either absolute or relative to this context; in case of
+     *          Output file name (either absolute or relative to this test environment; in case of
      *          {@linkplain #runJavadoc() javadoc execution}, the relative base becomes its specific
      *          output directory since {@linkplain JavadocAssertArgs#getOnRunInit() run
      *          initialization}).
@@ -83,7 +81,7 @@ public abstract class JadaIT extends IT {
     @Override
     public Path outputPath(String name) {
       return outputDir != null && !ResourceNames.isAbs(name)
-          ? ResourceNames.path(name, outputDir)
+          ? ResourceNames.toPath(name, outputDir)
           : super.outputPath(name);
     }
   }

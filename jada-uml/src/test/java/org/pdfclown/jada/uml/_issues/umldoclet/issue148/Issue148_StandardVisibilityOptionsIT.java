@@ -63,7 +63,8 @@ public class Issue148_StandardVisibilityOptionsIT extends BaseIT {
   void _option__package() {
     runJavadoc("-package");
     {
-      String puml = outputContent(getEnv().basedName(FILENAME__PACKAGE + FILE_EXTENSION__PLANTUML));
+      String puml = outputContent(getEnv().outputName(
+          FILENAME__PACKAGE + FILE_EXTENSION__PLANTUML));
 
       assertThat(puml, allOf(
           not(containsString("[[Access.PrivateClass.html]]")),
@@ -81,8 +82,8 @@ public class Issue148_StandardVisibilityOptionsIT extends BaseIT {
       assertThat(puml, containsString("+getPublicValue()"));
     }
     {
-      String puml = outputContent(getEnv().basedName("PackageProtectedClass"
-          + FILE_EXTENSION__PLANTUML));
+      String puml = outputContent(getEnv().outputName(
+          "PackageProtectedClass" + FILE_EXTENSION__PLANTUML));
 
       assertThat(puml, not(containsString("-privateField")));
       assertThat(puml, containsString("~packageProtectedField"));
@@ -101,7 +102,8 @@ public class Issue148_StandardVisibilityOptionsIT extends BaseIT {
   void _option__private() {
     runJavadoc("-private");
     {
-      String puml = outputContent(getEnv().basedName(FILENAME__PACKAGE + FILE_EXTENSION__PLANTUML));
+      String puml = outputContent(getEnv().outputName(
+          FILENAME__PACKAGE + FILE_EXTENSION__PLANTUML));
 
       assertThat(puml, allOf(
           containsString("[[Access.PrivateClass.html]]"),
@@ -119,8 +121,8 @@ public class Issue148_StandardVisibilityOptionsIT extends BaseIT {
       assertThat(puml, containsString("+getPublicValue()"));
     }
     {
-      String puml = outputContent(getEnv().basedName("Access.PrivateClass"
-          + FILE_EXTENSION__PLANTUML));
+      String puml = outputContent(getEnv().outputName(
+          "Access.PrivateClass" + FILE_EXTENSION__PLANTUML));
 
       assertThat(puml, containsString("-privateField"));
       assertThat(puml, containsString("~packageProtectedField"));
@@ -139,7 +141,8 @@ public class Issue148_StandardVisibilityOptionsIT extends BaseIT {
   void _option__protected() {
     runJavadoc("-protected");
     {
-      String puml = outputContent(getEnv().basedName(FILENAME__PACKAGE + FILE_EXTENSION__PLANTUML));
+      String puml = outputContent(getEnv().outputName(
+          FILENAME__PACKAGE + FILE_EXTENSION__PLANTUML));
 
       assertThat(puml, allOf(
           not(containsString("[[Access.PrivateClass.html]]")),
@@ -157,8 +160,8 @@ public class Issue148_StandardVisibilityOptionsIT extends BaseIT {
       assertThat(puml, containsString("+getPublicValue()"));
     }
     {
-      String puml = outputContent(getEnv().basedName("Access.ProtectedClass"
-          + FILE_EXTENSION__PLANTUML));
+      String puml = outputContent(getEnv().outputName(
+          "Access.ProtectedClass" + FILE_EXTENSION__PLANTUML));
 
       assertThat(puml, not(containsString("-privateField")));
       assertThat(puml, not(containsString("~packageProtectedField")));
@@ -177,7 +180,8 @@ public class Issue148_StandardVisibilityOptionsIT extends BaseIT {
   void _option__public() {
     runJavadoc("-public");
     {
-      String puml = outputContent(getEnv().basedName(FILENAME__PACKAGE + FILE_EXTENSION__PLANTUML));
+      String puml = outputContent(getEnv().outputName(
+          FILENAME__PACKAGE + FILE_EXTENSION__PLANTUML));
 
       assertThat(puml, allOf(
           not(containsString("[[Access.PrivateClass.html]]")),
@@ -195,7 +199,7 @@ public class Issue148_StandardVisibilityOptionsIT extends BaseIT {
       assertThat(puml, containsString("+getPublicValue()"));
     }
     {
-      String puml = outputContent(getEnv().basedName("PublicClass" + FILE_EXTENSION__PLANTUML));
+      String puml = outputContent(getEnv().outputName("PublicClass" + FILE_EXTENSION__PLANTUML));
 
       assertThat(puml, not(containsString("-privateField")));
       assertThat(puml, not(containsString("~packageProtectedField")));
@@ -214,7 +218,8 @@ public class Issue148_StandardVisibilityOptionsIT extends BaseIT {
   void _option__showMembers_package() {
     runJavadoc("--show-members", "package");
     {
-      String puml = outputContent(getEnv().basedName(FILENAME__PACKAGE + FILE_EXTENSION__PLANTUML));
+      String puml = outputContent(getEnv().outputName(
+          FILENAME__PACKAGE + FILE_EXTENSION__PLANTUML));
 
       assertThat(puml, allOf(
           not(containsString("[[Access.PrivateClass.html]]")),
@@ -232,7 +237,7 @@ public class Issue148_StandardVisibilityOptionsIT extends BaseIT {
       assertThat(puml, containsString("+getPublicValue()"));
     }
     {
-      String puml = outputContent(getEnv().basedName("PublicClass" + FILE_EXTENSION__PLANTUML));
+      String puml = outputContent(getEnv().outputName("PublicClass" + FILE_EXTENSION__PLANTUML));
 
       assertThat(puml, not(containsString("-privateField")));
       assertThat(puml, containsString("~packageProtectedField"));
@@ -251,7 +256,8 @@ public class Issue148_StandardVisibilityOptionsIT extends BaseIT {
   void _option__showMembers_private() {
     runJavadoc("--show-members", "private");
     {
-      String puml = outputContent(getEnv().basedName(FILENAME__PACKAGE + FILE_EXTENSION__PLANTUML));
+      String puml = outputContent(getEnv().outputName(
+          FILENAME__PACKAGE + FILE_EXTENSION__PLANTUML));
 
       assertThat(puml, allOf(
           not(containsString("[[Access.PrivateClass.html]]")),
@@ -269,7 +275,7 @@ public class Issue148_StandardVisibilityOptionsIT extends BaseIT {
       assertThat(puml, containsString("+getPublicValue()"));
     }
     {
-      String puml = outputContent(getEnv().basedName("PublicClass" + FILE_EXTENSION__PLANTUML));
+      String puml = outputContent(getEnv().outputName("PublicClass" + FILE_EXTENSION__PLANTUML));
 
       assertThat(puml, containsString("-privateField"));
       assertThat(puml, containsString("~packageProtectedField"));
@@ -288,7 +294,8 @@ public class Issue148_StandardVisibilityOptionsIT extends BaseIT {
   void _option__showMembers_protected() {
     runJavadoc("--show-members", "protected");
     {
-      String puml = outputContent(getEnv().basedName(FILENAME__PACKAGE + FILE_EXTENSION__PLANTUML));
+      String puml = outputContent(getEnv().outputName(
+          FILENAME__PACKAGE + FILE_EXTENSION__PLANTUML));
 
       assertThat(puml, allOf(
           not(containsString("[[Access.PrivateClass.html]]")),
@@ -306,8 +313,8 @@ public class Issue148_StandardVisibilityOptionsIT extends BaseIT {
       assertThat(puml, containsString("+getPublicValue()"));
     }
     {
-      String puml = outputContent(getEnv().basedName("Access.ProtectedClass"
-          + FILE_EXTENSION__PLANTUML));
+      String puml = outputContent(getEnv().outputName(
+          "Access.ProtectedClass" + FILE_EXTENSION__PLANTUML));
 
       assertThat(puml, not(containsString("-privateField")));
       assertThat(puml, not(containsString("~packageProtectedField")));
@@ -326,7 +333,8 @@ public class Issue148_StandardVisibilityOptionsIT extends BaseIT {
   void _option__showMembers_public() {
     runJavadoc("--show-members", "public");
     {
-      String puml = outputContent(getEnv().basedName(FILENAME__PACKAGE + FILE_EXTENSION__PLANTUML));
+      String puml = outputContent(getEnv().outputName(
+          FILENAME__PACKAGE + FILE_EXTENSION__PLANTUML));
 
       assertThat(puml, allOf(
           not(containsString("[[Access.PrivateClass.html]]")),
@@ -344,7 +352,7 @@ public class Issue148_StandardVisibilityOptionsIT extends BaseIT {
       assertThat(puml, containsString("+getPublicValue()"));
     }
     {
-      String puml = outputContent(getEnv().basedName("PublicClass" + FILE_EXTENSION__PLANTUML));
+      String puml = outputContent(getEnv().outputName("PublicClass" + FILE_EXTENSION__PLANTUML));
 
       assertThat(puml, not(containsString("-privateField")));
       assertThat(puml, not(containsString("~packageProtectedField")));
@@ -363,7 +371,8 @@ public class Issue148_StandardVisibilityOptionsIT extends BaseIT {
   void _option__showTypes_package() {
     runJavadoc("--show-types", "package");
     {
-      String puml = outputContent(getEnv().basedName(FILENAME__PACKAGE + FILE_EXTENSION__PLANTUML));
+      String puml = outputContent(getEnv().outputName(
+          FILENAME__PACKAGE + FILE_EXTENSION__PLANTUML));
 
       assertThat(puml, allOf(
           not(containsString("[[Access.PrivateClass.html]]")),
@@ -381,8 +390,8 @@ public class Issue148_StandardVisibilityOptionsIT extends BaseIT {
       assertThat(puml, containsString("+getPublicValue()"));
     }
     {
-      String puml = outputContent(getEnv().basedName("PackageProtectedClass"
-          + FILE_EXTENSION__PLANTUML));
+      String puml = outputContent(getEnv().outputName(
+          "PackageProtectedClass" + FILE_EXTENSION__PLANTUML));
 
       assertThat(puml, not(containsString("-privateField")));
       assertThat(puml, not(containsString("~packageProtectedField")));
@@ -401,7 +410,8 @@ public class Issue148_StandardVisibilityOptionsIT extends BaseIT {
   void _option__showTypes_private() {
     runJavadoc("--show-types", "private");
     {
-      String puml = outputContent(getEnv().basedName(FILENAME__PACKAGE + FILE_EXTENSION__PLANTUML));
+      String puml = outputContent(getEnv().outputName(
+          FILENAME__PACKAGE + FILE_EXTENSION__PLANTUML));
 
       assertThat(puml, allOf(
           containsString("[[Access.PrivateClass.html]]"),
@@ -419,8 +429,8 @@ public class Issue148_StandardVisibilityOptionsIT extends BaseIT {
       assertThat(puml, containsString("+getPublicValue()"));
     }
     {
-      String puml = outputContent(getEnv().basedName("Access.PrivateClass"
-          + FILE_EXTENSION__PLANTUML));
+      String puml = outputContent(getEnv().outputName(
+          "Access.PrivateClass" + FILE_EXTENSION__PLANTUML));
 
       assertThat(puml, not(containsString("-privateField")));
       assertThat(puml, not(containsString("~packageProtectedField")));
@@ -439,7 +449,8 @@ public class Issue148_StandardVisibilityOptionsIT extends BaseIT {
   void _option__showTypes_protected() {
     runJavadoc("--show-types", "protected");
     {
-      String puml = outputContent(getEnv().basedName(FILENAME__PACKAGE + FILE_EXTENSION__PLANTUML));
+      String puml = outputContent(getEnv().outputName(
+          FILENAME__PACKAGE + FILE_EXTENSION__PLANTUML));
 
       assertThat(puml, allOf(
           not(containsString("[[Access.PrivateClass.html]]")),
@@ -457,8 +468,8 @@ public class Issue148_StandardVisibilityOptionsIT extends BaseIT {
       assertThat(puml, containsString("+getPublicValue()"));
     }
     {
-      String puml = outputContent(getEnv().basedName("Access.ProtectedClass"
-          + FILE_EXTENSION__PLANTUML));
+      String puml = outputContent(getEnv().outputName(
+          "Access.ProtectedClass" + FILE_EXTENSION__PLANTUML));
 
       assertThat(puml, not(containsString("-privateField")));
       assertThat(puml, not(containsString("~packageProtectedField")));
@@ -477,7 +488,8 @@ public class Issue148_StandardVisibilityOptionsIT extends BaseIT {
   void _option__showTypes_public() {
     runJavadoc("--show-types", "public");
     {
-      String puml = outputContent(getEnv().basedName(FILENAME__PACKAGE + FILE_EXTENSION__PLANTUML));
+      String puml = outputContent(getEnv().outputName(
+          FILENAME__PACKAGE + FILE_EXTENSION__PLANTUML));
 
       assertThat(puml, allOf(
           not(containsString("[[Access.PrivateClass.html]]")),
@@ -495,7 +507,7 @@ public class Issue148_StandardVisibilityOptionsIT extends BaseIT {
       assertThat(puml, containsString("+getPublicValue()"));
     }
     {
-      String puml = outputContent(getEnv().basedName("PublicClass" + FILE_EXTENSION__PLANTUML));
+      String puml = outputContent(getEnv().outputName("PublicClass" + FILE_EXTENSION__PLANTUML));
 
       assertThat(puml, not(containsString("-privateField")));
       assertThat(puml, not(containsString("~packageProtectedField")));

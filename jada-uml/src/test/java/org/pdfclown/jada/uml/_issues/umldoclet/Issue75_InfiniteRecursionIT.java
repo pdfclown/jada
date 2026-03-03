@@ -51,8 +51,8 @@ public class Issue75_InfiniteRecursionIT extends BaseIT {
   void _main() {
     var comparableSimpleName = Comparable.class.getSimpleName();
     assert sourceType != null;
-    outputContent(getEnv().basedName(filename(sourceType, FILE_EXTENSION__PLANTUML)));
-    String packagePuml = outputContent(getEnv().basedName(FILENAME__PACKAGE
+    outputContent(getEnv().outputName(filename(sourceType, FILE_EXTENSION__PLANTUML)));
+    String packagePuml = outputContent(getEnv().outputName(FILENAME__PACKAGE
         + FILE_EXTENSION__PLANTUML));
 
     assertThat(packagePuml, not(containsString(

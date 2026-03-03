@@ -60,7 +60,7 @@ public class Issue245_SubInterfaceIT extends BaseIT {
    */
   @Test
   void _extendsWithSolidLine() {
-    String puml = outputContent(getEnv().basedName(filename(SubInterface.class,
+    String puml = outputContent(getEnv().outputName(filename(SubInterface.class,
         FILE_EXTENSION__PLANTUML)));
 
     assertThat("SubInterface extends ParentInterface", puml,
@@ -76,7 +76,7 @@ public class Issue245_SubInterfaceIT extends BaseIT {
    */
   @Test
   void _implementsWithDottedLine() {
-    String puml = outputContent(getEnv().basedName(filename(Implementation.class,
+    String puml = outputContent(getEnv().outputName(filename(Implementation.class,
         FILE_EXTENSION__PLANTUML)));
 
     assertThat("Implementation implements ParentInterface", puml,

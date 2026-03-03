@@ -56,7 +56,8 @@ public class Issue152_InnerClassVisibilityIT extends BaseIT {
   @Test
   void _main() {
     {
-      String puml = outputContent(getEnv().basedName(FILENAME__PACKAGE + FILE_EXTENSION__PLANTUML));
+      String puml = outputContent(getEnv().outputName(
+          FILENAME__PACKAGE + FILE_EXTENSION__PLANTUML));
 
       assertThat("Package uml", puml, allOf(
           containsString("PublicClass.PublicInnerClass"),
@@ -65,7 +66,7 @@ public class Issue152_InnerClassVisibilityIT extends BaseIT {
           not(containsString("PublicClass.PrivateInnerClass"))));
     }
     {
-      String puml = outputContent(getEnv().basedName(filename(PublicClass.class,
+      String puml = outputContent(getEnv().outputName(filename(PublicClass.class,
           FILE_EXTENSION__PLANTUML)));
 
       assertThat("Class uml", puml, allOf(
@@ -79,19 +80,19 @@ public class Issue152_InnerClassVisibilityIT extends BaseIT {
           FILE_EXTENSION__PLANTUML,
           FILE_EXTENSION__SVG).forEach($ -> {
             assertThat("public innerclass " + $,
-                exists(getEnv().outputPath(getEnv().basedName(
+                exists(getEnv().outputPath(getEnv().outputName(
                     filename(PublicClass.PublicInnerClass.class, $)))),
                 is(true));
             assertThat("protected innerclass " + $,
-                exists(getEnv().outputPath(getEnv().basedName(
+                exists(getEnv().outputPath(getEnv().outputName(
                     filename(PublicClass.ProtectedInnerClass.class, $)))),
                 is(false));
             assertThat("package innerclass " + $,
-                exists(getEnv().outputPath(getEnv().basedName(
+                exists(getEnv().outputPath(getEnv().outputName(
                     filename(PublicClass.PackageProtectedInnerClass.class, $)))),
                 is(false));
             assertThat("private innerclass " + $,
-                exists(getEnv().outputPath(getEnv().basedName(
+                exists(getEnv().outputPath(getEnv().outputName(
                     "PublicClass.PrivateInnerClass" + $))),
                 is(false));
           });

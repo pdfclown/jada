@@ -86,7 +86,7 @@ public class UmlConfigIT extends BaseIT {
     runJavadoc(javadocArgs()
         .type(StaticFields.class)
         .arg(UmlConfig.OPTION__STATIC_FIELDS_MAX_COUNT, 5));
-    String puml = outputContent(getEnv().basedName(filename(StaticFields.class,
+    String puml = outputContent(getEnv().outputName(filename(StaticFields.class,
         FILE_EXTENSION__PLANTUML)));
 
     assertThat(puml, containsPattern("\\{static\\} \\+VALUE13: int\\s+. . .\\s+\\}",
@@ -97,7 +97,7 @@ public class UmlConfigIT extends BaseIT {
   void _option__staticFieldsMaxCount_default() {
     runJavadoc(javadocArgs()
         .type(StaticFields.class));
-    String puml = outputContent(getEnv().basedName(filename(StaticFields.class,
+    String puml = outputContent(getEnv().outputName(filename(StaticFields.class,
         FILE_EXTENSION__PLANTUML)));
 
     assertThat(puml, containsPattern("\\{static\\} \\+VALUE3: int\\s+. . .\\s+\\}",

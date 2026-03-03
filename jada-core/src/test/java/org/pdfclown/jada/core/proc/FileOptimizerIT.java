@@ -15,6 +15,7 @@ package org.pdfclown.jada.core.proc;
 import static org.mockito.Mockito.mock;
 import static org.pdfclown.common.build.test.assertion.Matchers.matchesText;
 import static org.pdfclown.common.util.Exceptions.runtime;
+import static org.pdfclown.common.util.Strings.EMPTY;
 import static org.pdfclown.common.util.io.Files.FILE_EXTENSION__CSS;
 import static org.pdfclown.common.util.io.Files.FILE_EXTENSION__JAVASCRIPT;
 import static org.pdfclown.common.util.io.Files.filename;
@@ -60,7 +61,7 @@ public class FileOptimizerIT extends BaseIT {
 
   private Stream<Path> files(String extension) {
     try {
-      return Files.list(getEnv().resourcePath("_FileOptimizer"))
+      return Files.list(getEnv().resourcePath(EMPTY))
           .filter($ -> isExtension($, extension))
           .sorted();
     } catch (IOException ex) {

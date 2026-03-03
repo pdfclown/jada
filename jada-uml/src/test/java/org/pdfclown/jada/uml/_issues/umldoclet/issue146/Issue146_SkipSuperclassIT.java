@@ -56,8 +56,8 @@ public class Issue146_SkipSuperclassIT extends BaseIT {
   @Override
   protected void onSingleRunTerm(JavadocAssertResult result) {
     assert sourceType != null;
-    classPuml = outputContent(getEnv().basedName(filename(sourceType, FILE_EXTENSION__PLANTUML)));
-    packagePuml = outputContent(getEnv().basedName(FILENAME__PACKAGE + FILE_EXTENSION__PLANTUML));
+    classPuml = outputContent(getEnv().outputName(filename(sourceType, FILE_EXTENSION__PLANTUML)));
+    packagePuml = outputContent(getEnv().outputName(FILENAME__PACKAGE + FILE_EXTENSION__PLANTUML));
   }
 
   // SourceName: testPackageProtectedSuperclassShouldBeSkipped

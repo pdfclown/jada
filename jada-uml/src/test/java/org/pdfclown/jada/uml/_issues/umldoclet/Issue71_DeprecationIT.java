@@ -114,8 +114,8 @@ public class Issue71_DeprecationIT extends BaseIT {
   @Override
   protected void onSingleRunTerm(JavadocAssertResult result) {
     assert sourceType != null;
-    classUml = outputContent(getEnv().basedName(filename(sourceType, FILE_EXTENSION__PLANTUML)));
-    packageUml = outputContent(getEnv().basedName(FILENAME__PACKAGE + FILE_EXTENSION__PLANTUML));
+    classUml = outputContent(getEnv().outputName(filename(sourceType, FILE_EXTENSION__PLANTUML)));
+    packageUml = outputContent(getEnv().outputName(FILENAME__PACKAGE + FILE_EXTENSION__PLANTUML));
   }
 
   // SourceName: testClassDeprecatedByAnnotation
@@ -160,7 +160,7 @@ public class Issue71_DeprecationIT extends BaseIT {
   @Test
   void _issue73_innerClassImageName() {
     Path innerClassFile = getEnv().outputPath(
-        getEnv().basedName(filename(MoreDeprecation.class, FILE_EXTENSION__SVG)));
+        getEnv().outputName(filename(MoreDeprecation.class, FILE_EXTENSION__SVG)));
 
     assertThat(innerClassFile + " exists", exists(innerClassFile), is(true));
   }

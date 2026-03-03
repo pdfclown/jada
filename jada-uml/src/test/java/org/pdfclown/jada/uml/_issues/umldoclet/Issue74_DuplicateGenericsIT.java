@@ -51,9 +51,9 @@ public class Issue74_DuplicateGenericsIT extends BaseIT {
 
   @Override
   protected void onSingleRunTerm(JavadocAssertResult result) {
-    classPuml = outputContent(getEnv().basedName(filename(MySupplier.class,
+    classPuml = outputContent(getEnv().outputName(filename(MySupplier.class,
         FILE_EXTENSION__PLANTUML)));
-    packagePuml = outputContent(getEnv().basedName(FILENAME__PACKAGE + FILE_EXTENSION__PLANTUML));
+    packagePuml = outputContent(getEnv().outputName(FILENAME__PACKAGE + FILE_EXTENSION__PLANTUML));
   }
 
   // SourceName: testGenericsNotDuplicated

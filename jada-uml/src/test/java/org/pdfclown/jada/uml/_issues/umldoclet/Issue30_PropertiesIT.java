@@ -62,7 +62,7 @@ public class Issue30_PropertiesIT extends BaseIT {
   // SourceName: testIssue30
   @Test
   void _main() {
-    String puml = outputContent(getEnv().basedName(FILENAME__PACKAGE + FILE_EXTENSION__PLANTUML));
+    String puml = outputContent(getEnv().outputName(FILENAME__PACKAGE + FILE_EXTENSION__PLANTUML));
     String simpleName = sqnd(sourceType);
     String nsFqn = pumlNsFqn(sourceType);
 

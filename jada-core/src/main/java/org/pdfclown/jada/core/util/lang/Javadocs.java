@@ -22,7 +22,7 @@ import static org.pdfclown.common.util.Objects.found;
 import static org.pdfclown.common.util.Objects.textLiteral;
 import static org.pdfclown.common.util.Strings.EMPTY;
 import static org.pdfclown.common.util.Strings.S;
-import static org.pdfclown.common.util.Strings.indexOfElseEnd;
+import static org.pdfclown.common.util.Strings.indexOfElse;
 
 import java.net.URI;
 import java.util.HashSet;
@@ -387,7 +387,7 @@ public final class Javadocs {
       if (!found(preContentBegin++))
         throw runtime("<pre> tag MALFORMED in {}", textLiteral(content.substring(preBegin)));
 
-      int preContentEnd = indexOfElseEnd(content, "</pre>", preContentBegin);
+      int preContentEnd = indexOfElse(content, "</pre>", preContentBegin, -1);
       if (b == null) {
         b = new StringBuilder();
       }

@@ -66,7 +66,7 @@ public class Issue64_ExtendsObjectIT extends BaseIT {
 
   @Override
   protected void onSingleRunTerm(JavadocAssertResult result) {
-    emptySetPuml = outputContent(getEnv().basedName(filename(EmptySet.class,
+    emptySetPuml = outputContent(getEnv().outputName(filename(EmptySet.class,
         FILE_EXTENSION__PLANTUML)));
   }
 

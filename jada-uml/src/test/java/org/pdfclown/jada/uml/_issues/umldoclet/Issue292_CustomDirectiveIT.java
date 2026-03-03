@@ -50,7 +50,7 @@ public class Issue292_CustomDirectiveIT extends BaseIT {
   @Test
   void _customDirectiveInClassDiagram() {
     assert sourceType != null;
-    var puml = outputContent(getEnv().basedName(filename(sourceType, FILE_EXTENSION__PLANTUML)));
+    var puml = outputContent(getEnv().outputName(filename(sourceType, FILE_EXTENSION__PLANTUML)));
 
     assertThat(puml, containsString("skinparam handwritten true"));
   }
@@ -66,7 +66,7 @@ public class Issue292_CustomDirectiveIT extends BaseIT {
   // SourceName: testCustomDirectiveInPackageDiagram
   @Test
   void _customDirectiveInPackageDiagram() {
-    var puml = outputContent(getEnv().basedName(FILENAME__PACKAGE + FILE_EXTENSION__PLANTUML));
+    var puml = outputContent(getEnv().outputName(FILENAME__PACKAGE + FILE_EXTENSION__PLANTUML));
 
     assertThat(puml, containsString("skinparam handwritten true"));
   }

@@ -77,8 +77,7 @@ public class Issue164_PackageDependenciesIT extends BaseIT {
             .join(Jada.class.getPackageName()).toString()));
     assertThat("package-summary links", puml,
         containsString("\"%s\" [[%s]]".formatted(
-            umlExtensionPackage, ResourceNames.based(
-                FILENAME__PACKAGE_SUMMARY + FILE_EXTENSION__HTML,
-                UmlExtension.class))));
+            umlExtensionPackage, ResourceNames.relBased(
+                FILENAME__PACKAGE_SUMMARY + FILE_EXTENSION__HTML, UmlExtension.class))));
   }
 }

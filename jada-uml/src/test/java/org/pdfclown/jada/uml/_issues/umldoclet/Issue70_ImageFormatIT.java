@@ -89,7 +89,7 @@ public class Issue70_ImageFormatIT extends BaseIT {
 
   private void assertImageExists(String imageExtension, Matcher<Boolean> matcher) {
     assert sourceType != null;
-    Path imageFile = getEnv().outputPath(getEnv().basedName(filename(sourceType, imageExtension)));
+    Path imageFile = getEnv().outputPath(getEnv().outputName(filename(sourceType, imageExtension)));
 
     assertThat(imageFile + " exists and is a file", isRegularFile(imageFile), matcher);
   }
