@@ -169,7 +169,7 @@
               <link>
                 <groupId>org.pdfclown</groupId>
                 <artifactId>jada-core</artifactId>
-                <url>https://javadoc.io/static/org.pdfclown/jada-core/${project.version}</url>
+                <url>https://javadoc.io/doc/org.pdfclown/jada-core/${project.version}</url>
               </link>
             </dependencyLinks>
 
@@ -181,7 +181,7 @@
                 `offlineLinks/link/url`) to the local path where Javadoc files are generated
                 (`offlineLinks/link/location`). -->
               <link>
-                <url>https://javadoc.io/static/org.pdfclown/jada-core/${project.version}</url>
+                <url>https://javadoc.io/doc/org.pdfclown/jada-core/${project.version}</url>
                 <location>${rootdir}/jada-core/target/reports/apidocs</location>
               </link>
             </offlineLinks>

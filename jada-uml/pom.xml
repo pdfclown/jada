@@ -98,7 +98,7 @@
               <link>
                 <groupId>net.sourceforge.plantuml</groupId>
                 <artifactId>plantuml-asl</artifactId>
-                <url>https://javadoc.io/static/net.sourceforge.plantuml/plantuml/${plantuml.version}</url>
+                <url>https://javadoc.io/doc/net.sourceforge.plantuml/plantuml/${plantuml.version}</url>
               </link>
             </dependencyLinks>
           </configuration>
