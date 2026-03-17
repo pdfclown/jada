@@ -22,6 +22,7 @@ Compared to its upstream project (UMLDoclet), JadaUML differs in the following a
 
   - **CLI options**:
     - [NEW]
+        - `--uml-empty-diagrams-render`: replaces `--uml-render-empty-diagrams`.
         - `--uml-image-dir`: replaces `--uml-image-directory`.
         - `--uml-package-deps-check-cyclic`: replaces `--fail-on-cyclic-package-dependencies`, changing its logic — see "cyclic package dependencies" here below for further information.
         - `--uml-package-deps-exclude`: replaces `--uml-excluded-package-dependencies`, extending exclusion filters (now wildcard-based (default: `"java.*,javax.*"`) instead of prefix-based (original default: `"java,javax"`)) for additional flexibility. Moreover, this argument can be prefixed by a modifier (`'+'` or `'-'`) which, respectively, appends or removes the new filters to/from the existing ones instead of replacing them, for incremental definitions (no modifier means collection overriding).
@@ -37,9 +38,10 @@ Compared to its upstream project (UMLDoclet), JadaUML differs in the following a
         - `--fail-on-cyclic-package-dependencies`: replaced by `--uml-package-deps-check-cyclic`.
         - `--plantuml-server-url`: replaced by `--uml-server-url`.
         - `--uml-excluded-package-dependencies`: replaced by `--uml-package-deps-exclude`.
+        - `--uml-excluded-type-references`: replaced by `--uml-type-refs-exclude`.
         - `--uml-image-directory`: replaced by `--uml-image-dir`.
         - `--uml-java-bean-properties-as-fields`: replaced by `--uml-properties-flatten`.
-        - `--uml-excluded-type-references`: replaced by `--uml-type-refs-exclude`.
+        - `--uml-render-empty-diagrams`: replaced by `--uml-empty-diagrams-render`.
         - `--uml-timeout`: replaced by `--uml-server-timeout`.
   - [CHANGE] **cyclic package dependencies** detection is skipped by default (whilst UMLDoclet logs a warning by default, escalating to error level if requested by users via `--fail-on-cyclic-package-dependencies` CLI option) — despite this functionality may be deemed useful by someone, it is not Javadoc's purpose to apply static analysis to code (dedicated tools like [SpotBugs](https://spotbugs.readthedocs.io/en/stable/detectors.html#findcirculardependencies) are more appropriate for such evaluations).<br>
 Nonetheless, if users desire such extra bit of diagnostic aid, `--uml-package-deps-check-cyclic` CLI option will cause a warning to be logged instead.
@@ -65,7 +67,7 @@ elements in case of renaming.
 <td><b>Upstream package</b></td>
 <td><b>Upstream commit*</b></td>
 </tr>
-<tr><td><code>org.pdfclown.jada.uml</code></td><td><a href="https://github.com/talsma-ict/umldoclet/tree/main/src/main/java/nl/talsmasoftware/umldoclet">nl.talsmasoftware.umldoclet</a></td><td><a href="https://github.com/talsma-ict/umldoclet/tree/43cd08a3fc43b5ebe2848903fb76f5a614c32ea9">43cd08a</a> (2026-02-17_08:39+0100)</td>
+<tr><td><code>org.pdfclown.jada.uml</code></td><td><a href="https://github.com/talsma-ict/umldoclet/tree/main/src/main/java/nl/talsmasoftware/umldoclet">nl.talsmasoftware.umldoclet</a></td><td><a href="https://github.com/talsma-ict/umldoclet/tree/9bd5908612914a3d0cd5b35644e50c7bc2c98ca1">9bd5908</a> (2026-02-20_16:25+0100)</td>
 </tr>
 </table>
 [*] Latest commit reconciled

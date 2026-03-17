@@ -87,6 +87,11 @@ public abstract class TypeMember extends UmlNode {
     return deprecated;
   }
 
+  @Override
+  public boolean isEmpty() {
+    return false;
+  }
+
   public boolean isStatic() {
     return static_;
   }

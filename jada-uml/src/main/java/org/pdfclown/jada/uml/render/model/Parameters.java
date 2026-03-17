@@ -95,6 +95,11 @@ public class Parameters extends UmlNode {
     }
   }
 
+  @Override
+  public boolean isEmpty() {
+    return false;
+  }
+
   public Parameters varargs(boolean varargs) {
     this.varargs = varargs;
     return this;

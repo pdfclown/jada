@@ -83,6 +83,13 @@ public abstract class UmlNode {
     return parent;
   }
 
+  /**
+   * Whether this UML node is empty.
+   */
+  public boolean isEmpty() {
+    return getChildren().stream().allMatch(UmlNode::isEmpty);
+  }
+
   public boolean removeChildren(Predicate<? super UmlNode> condition) {
     return children.removeIf(condition);
   }

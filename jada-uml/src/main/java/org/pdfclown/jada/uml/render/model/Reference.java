@@ -231,6 +231,11 @@ public class Reference extends UmlNode {
     return Objects.hash(ref.from, ref.type, ref.to);
   }
 
+  @Override
+  public boolean isEmpty() {
+    return false;
+  }
+
   public boolean isSelfReference() {
     return from.qualifiedName.equals(to.qualifiedName);
   }

@@ -518,6 +518,11 @@ public class UmlConfig extends JadaExtConfig {
   public static final String OPTION__CYCLIC_PACKAGE_DEPENDENCIES_CHECKED =
       "--uml-package-deps-check-cyclic";
   /**
+   * @see #isEmptyDiagramRendered()
+   */
+  public static final String OPTION__EMPTY_DIAGRAM_RENDERED =
+      "--uml-empty-diagrams-render";
+  /**
    * @see #getExcludedPackageDependencies()
    */
   public static final String OPTION__EXCLUDED_PACKAGE_DEPENDENCIES =
@@ -576,6 +581,8 @@ public class UmlConfig extends JadaExtConfig {
   public static final int STATIC_FIELDS_MAX_COUNT__DEFAULT = 10;
 
   private boolean cyclicPackageDependenciesChecked;
+  // SourceName: renderEmptyDiagrams
+  private boolean emptyDiagramRendered;
   private final List<String> excludedPackageDependencies = new ArrayList<>(
       EXCLUDED_PACKAGE_DEPENDENCIES__DEFAULT);
   // SourceName: excludedReferences
@@ -602,6 +609,17 @@ public class UmlConfig extends JadaExtConfig {
    * <span class="warning">(For internal use only)</span>
    */
   protected UmlConfig() {
+  }
+
+  // SourceName: renderEmptyDiagrams()
+  /**
+   * Whether empty diagrams are rendered.
+   * <p>
+   * CLI option: {@value #OPTION__EMPTY_DIAGRAM_RENDERED}
+   * </p>
+   */
+  public boolean isEmptyDiagramRendered() {
+    return emptyDiagramRendered;
   }
 
   // SourceName: excludedPackageDependencies()
@@ -786,6 +804,10 @@ public class UmlConfig extends JadaExtConfig {
 
   void setCyclicPackageDependenciesChecked(boolean value) {
     cyclicPackageDependenciesChecked = value;
+  }
+
+  void setEmptyDiagramRendered(boolean value) {
+    emptyDiagramRendered = value;
   }
 
   void setPackageDependenciesMaxCount(int value) {

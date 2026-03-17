@@ -32,6 +32,7 @@ import static org.pdfclown.common.util.Strings.S;
 import static org.pdfclown.common.util.system.Clis.parseListIncremental;
 import static org.pdfclown.jada.core.util.lang.Javadocs.FILENAME__PACKAGE_DEPS;
 import static org.pdfclown.jada.uml.UmlConfig.OPTION__CYCLIC_PACKAGE_DEPENDENCIES_CHECKED;
+import static org.pdfclown.jada.uml.UmlConfig.OPTION__EMPTY_DIAGRAM_RENDERED;
 import static org.pdfclown.jada.uml.UmlConfig.OPTION__EXCLUDED_PACKAGE_DEPENDENCIES;
 import static org.pdfclown.jada.uml.UmlConfig.OPTION__EXCLUDED_TYPE_REFERENCES;
 import static org.pdfclown.jada.uml.UmlConfig.OPTION__IMAGE_DIR;
@@ -145,6 +146,8 @@ public class UmlExtension extends JadaExtension {
          */
         .add(OPTION__CYCLIC_PACKAGE_DEPENDENCIES_CHECKED, List.of(),
             $args -> extConfig.setCyclicPackageDependenciesChecked(true))
+        .add(OPTION__EMPTY_DIAGRAM_RENDERED, List.of(),
+            $args -> extConfig.setEmptyDiagramRendered(true))
         .add(OPTION__EXCLUDED_PACKAGE_DEPENDENCIES,
             List.of("[+-]?<package-glob>(,<package-glob>)*"),
             $args -> parseListIncremental($args.get(0), identity(),

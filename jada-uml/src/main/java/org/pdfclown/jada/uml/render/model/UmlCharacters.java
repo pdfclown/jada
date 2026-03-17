@@ -17,6 +17,8 @@
  */
 package org.pdfclown.jada.uml.render.model;
 
+import static java.util.Objects.requireNonNull;
+
 import org.pdfclown.common.util.Strings;
 import org.pdfclown.common.util.io.IndentPrintWriter;
 
@@ -54,7 +56,12 @@ public class UmlCharacters extends UmlNode {
   private UmlCharacters(String content) {
     super(null);
 
-    this.content = content;
+    this.content = requireNonNull(content, "`content`");
+  }
+
+  @Override
+  public boolean isEmpty() {
+    return content.isBlank();
   }
 
   @Override

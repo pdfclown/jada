@@ -20,6 +20,7 @@ package org.pdfclown.jada.uml._issues.umldoclet;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.pdfclown.common.util.io.Files.FILE_EXTENSION__JAVA;
+import static org.pdfclown.jada.uml.UmlConfig.OPTION__EMPTY_DIAGRAM_RENDERED;
 import static org.pdfclown.jada.uml.internal.Internals.FILENAME__PACKAGE;
 import static org.pdfclown.jada.uml.internal.util.io.Files.FILE_EXTENSION__PLANTUML;
 import static org.pdfclown.jada.uml.util.Plantumls.puml;
@@ -43,8 +44,10 @@ public class Issue107_DefaultPackageIT extends BaseIT {
 
   @Override
   protected void onSingleRunInit(JavadocAssertArgs args) {
-    args.arg(getEnv().dir(ProjectDirId.TEST_TYPE_SOURCE)
-        .resolve(FOO_TYPE_SIMPLE_NAME + FILE_EXTENSION__JAVA));
+    args
+        .arg(OPTION__EMPTY_DIAGRAM_RENDERED)
+        .arg(getEnv().dir(ProjectDirId.TEST_TYPE_SOURCE)
+            .resolve(FOO_TYPE_SIMPLE_NAME + FILE_EXTENSION__JAVA));
   }
 
   // SourceName: testDefaultPackageDocumentation
