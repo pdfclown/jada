@@ -25,7 +25,7 @@ Compared to its upstream project (UMLDoclet), JadaUML differs in the following a
         - `--uml-image-dir`: replaces `--uml-image-directory`.
         - `--uml-package-deps-check-cyclic`: replaces `--fail-on-cyclic-package-dependencies`, changing its logic — see "cyclic package dependencies" here below for further information.
         - `--uml-package-deps-exclude`: replaces `--uml-excluded-package-dependencies`, extending exclusion filters (now wildcard-based (default: `"java.*,javax.*"`) instead of prefix-based (original default: `"java,javax"`)) for additional flexibility. Moreover, this argument can be prefixed by a modifier (`'+'` or `'-'`) which, respectively, appends or removes the new filters to/from the existing ones instead of replacing them, for incremental definitions (no modifier means collection overriding).
-        - `--uml-package-deps-max-count`: limits the number of packages in the dependencies diagram (default: 10) in order to keep it tidy (the upstream project, which has no limit, ends up with cluttered diagrams as soon as the documented projects become a bit complex); the packages are ordered by dependency count before being filtered. This diagram can also be suppressed by simply setting this option to zero.
+        - `--uml-package-deps-max-count`: limits the number of packages in the dependencies diagram (default: 10) in order to keep it tidy (the upstream project, which had no limit, ended up with cluttered diagrams as soon as the documented projects became a bit complex; this regressive behavior has been [successively addressed](https://github.com/talsma-ict/umldoclet/pull/738) via coarse boolean logic); the packages are ordered by dependency count before being filtered, ensuring the ones most referenced across the project stick out. This diagram can also be suppressed by simply setting this option to zero.
         - `--uml-properties-flatten`: replaces `--uml-java-bean-properties-as-fields` inverting its logic — see "properties" here below for further information.
         - `--uml-server-timeout`: replaces `--uml-timeout`.
         - `--uml-server-url`: replaces `--plantuml-server-url`.
@@ -65,7 +65,7 @@ elements in case of renaming.
 <td><b>Upstream package</b></td>
 <td><b>Upstream commit*</b></td>
 </tr>
-<tr><td><code>org.pdfclown.jada.uml</code></td><td><a href="https://github.com/talsma-ict/umldoclet/tree/main/src/main/java/nl/talsmasoftware/umldoclet">nl.talsmasoftware.umldoclet</a></td><td><a href="https://github.com/talsma-ict/umldoclet/tree/355c12713a518c0db0a80453a132c547f356f0de">355c127</a> (2026-01-09_15:59+0100)</td>
+<tr><td><code>org.pdfclown.jada.uml</code></td><td><a href="https://github.com/talsma-ict/umldoclet/tree/main/src/main/java/nl/talsmasoftware/umldoclet">nl.talsmasoftware.umldoclet</a></td><td><a href="https://github.com/talsma-ict/umldoclet/tree/43cd08a3fc43b5ebe2848903fb76f5a614c32ea9">43cd08a</a> (2026-02-17_08:39+0100)</td>
 </tr>
 </table>
 [*] Latest commit reconciled

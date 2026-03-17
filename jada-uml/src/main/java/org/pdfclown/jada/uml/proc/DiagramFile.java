@@ -53,7 +53,5 @@ abstract class DiagramFile {
   /**
    * Gets whether this diagram corresponds to a documentation file.
    */
-  boolean matches(Path htmlFile) {
-    return false;
-  }
+  protected abstract boolean matches(Path htmlFile);
 }

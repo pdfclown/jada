@@ -96,7 +96,7 @@ final class PackageDependenciesFile extends DiagramFile {
   }
 
   @Override
-  boolean matches(Path htmlFile) {
+  protected boolean matches(Path htmlFile) {
     return htmlFile.equals(index)
         || htmlFile.equals(overviewSummary)
         || htmlFile.equals(moduleSummary);

@@ -104,7 +104,7 @@ final class PackageDiagramFile extends DiagramFile {
   }
 
   @Override
-  boolean matches(Path htmlFile) {
+  protected boolean matches(Path htmlFile) {
     return pathToCompare.equals(relativize(baseDir, htmlFile).toString()
         .replaceFirst(REGEX__FILE_MATCH_REPLACE, FILENAME__PACKAGE + extension));
   }

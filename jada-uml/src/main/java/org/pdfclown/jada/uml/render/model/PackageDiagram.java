@@ -35,6 +35,11 @@ import org.pdfclown.jada.uml.UmlConfig;
 
 // SourceName: nl.talsmasoftware.umldoclet.uml.PackageDiagram
 /**
+ * Package diagram.
+ * <p>
+ * UML helper class to render a {@link Diagram} for a java package.
+ * </p>
+ *
  * @author Sjoerd Talsma (original implementation)
  * @author Stefano Chizzolini (adaptation and redesign for Jada)
  */
