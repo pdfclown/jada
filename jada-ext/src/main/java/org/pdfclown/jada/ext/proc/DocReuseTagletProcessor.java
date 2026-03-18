@@ -27,7 +27,7 @@ import static org.pdfclown.common.util.Conditions.requireNotBlank;
 import static org.pdfclown.common.util.Exceptions.runtime;
 import static org.pdfclown.common.util.Exceptions.unexpected;
 import static org.pdfclown.common.util.Exceptions.unsupported;
-import static org.pdfclown.common.util.Objects.any;
+import static org.pdfclown.common.util.Objects.anyThat;
 import static org.pdfclown.common.util.Objects.found;
 import static org.pdfclown.common.util.Objects.objToElse;
 import static org.pdfclown.common.util.Objects.sfqnd;
@@ -320,7 +320,7 @@ public class DocReuseTagletProcessor extends JavaProcessor {
             String label = EMPTY;
             if (labelSeparatorIndex < tagValue.length()) {
               label = tagValue.substring(labelSeparatorIndex);
-            } else if (any(tagName, Objects::equals, TAG_NAME__LINK, TAG_NAME__LINKPLAIN)) {
+            } else if (anyThat(tagName, Objects::equals, TAG_NAME__LINK, TAG_NAME__LINKPLAIN)) {
               /*
                * NOTE: Since links are fully-qualified, it is important to provide a short label to
                * avoid their expansion on display (`@value` tags don't need it, as they are rendered

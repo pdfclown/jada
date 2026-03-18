@@ -21,7 +21,7 @@ import static org.pdfclown.common.util.Chars.ROUND_BRACKET_OPEN;
 import static org.pdfclown.common.util.Chars.SPACE;
 import static org.pdfclown.common.util.Chars.SQUARE_BRACKET_CLOSE;
 import static org.pdfclown.common.util.Chars.SQUARE_BRACKET_OPEN;
-import static org.pdfclown.common.util.Objects.any;
+import static org.pdfclown.common.util.Objects.anyThat;
 import static org.pdfclown.common.util.Objects.asType;
 import static org.pdfclown.common.util.Objects.objTo;
 import static org.pdfclown.common.util.Objects.sqn;
@@ -136,7 +136,7 @@ public class Logger implements Reporter {
             if (location == null)
               return null;
             else if (isDirectory(location)) {
-              while (any(location.getFileName().toString(), java.util.Objects::equals, "target",
+              while (anyThat(location.getFileName().toString(), java.util.Objects::equals, "target",
                   "classes")) {
                 location = location.getParent();
               }

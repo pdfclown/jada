@@ -17,7 +17,7 @@ import static java.util.stream.Collectors.joining;
 import static org.apache.commons.lang3.exception.ExceptionUtils.getStackTrace;
 import static org.pdfclown.common.util.Chars.PIPE;
 import static org.pdfclown.common.util.Exceptions.unexpected;
-import static org.pdfclown.common.util.Objects.any;
+import static org.pdfclown.common.util.Objects.anyThat;
 import static org.pdfclown.common.util.Strings.S;
 import static org.pdfclown.common.util.io.Files.FILE_EXTENSION__CSS;
 import static org.pdfclown.common.util.io.Files.FILE_EXTENSION__JAVASCRIPT;
@@ -125,8 +125,8 @@ public class FileOptimizer extends JadaFileProcessor<String> {
   @Override
   public boolean isProcessable(Path file, FileProcess.Context context) {
     return !getConfig().isDebug()
-        && any(extension(file), String::equalsIgnoreCase,
-            FILE_EXTENSION__CSS, FILE_EXTENSION__JAVASCRIPT)
+        && anyThat(extension(file), String::equalsIgnoreCase, FILE_EXTENSION__CSS,
+            FILE_EXTENSION__JAVASCRIPT)
         && !isFileExcluded(file);
   }
 
