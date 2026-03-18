@@ -19,8 +19,9 @@ package org.pdfclown.jada.uml.render.model;
 
 import static java.util.Objects.requireNonNull;
 
+import java.io.IOException;
 import org.pdfclown.common.util.Strings;
-import org.pdfclown.common.util.io.IndentPrintWriter;
+import org.pdfclown.common.util.io.IndentWriter;
 
 // SourceName: nl.talsmasoftware.umldoclet.uml.UmlCharacters
 /**
@@ -36,8 +37,8 @@ public class UmlCharacters extends UmlNode {
     }
 
     @Override
-    public <T extends IndentPrintWriter> T writeTo(T out) {
-      super.writeTo(out).newline();
+    public IndentWriter writeTo(IndentWriter out) throws IOException {
+      super.writeTo(out).nl();
       return out;
     }
   }
@@ -65,7 +66,7 @@ public class UmlCharacters extends UmlNode {
   }
 
   @Override
-  public <T extends IndentPrintWriter> T writeTo(T out) {
+  public IndentWriter writeTo(IndentWriter out) throws IOException {
     out.append(content);
     return out;
   }

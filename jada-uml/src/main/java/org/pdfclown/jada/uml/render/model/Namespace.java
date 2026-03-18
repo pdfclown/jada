@@ -21,10 +21,11 @@ import static java.util.Objects.requireNonNull;
 import static org.pdfclown.jada.core.util.lang.LangModels.MODULE__UNNAMED;
 import static org.pdfclown.jada.uml.util.Plantumls.normalNs;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import org.jspecify.annotations.Nullable;
-import org.pdfclown.common.util.io.IndentPrintWriter;
+import org.pdfclown.common.util.io.IndentWriter;
 
 // SourceName: nl.talsmasoftware.umldoclet.uml.Namespace
 /**
@@ -92,10 +93,10 @@ public class Namespace extends UmlNode {
   }
 
   @Override
-  public <T extends IndentPrintWriter> T writeTo(T out) {
-    writeNameTo(out.append("package").whitespace()).append('{').newline();
+  public IndentWriter writeTo(IndentWriter out) throws IOException {
+    writeNameTo(out.append("package").space()).append('{').nl();
     writeChildrenTo(out.withIndent());
-    out.append('}').newline();
+    out.append('}').nl();
     return out;
   }
 
@@ -106,8 +107,8 @@ public class Namespace extends UmlNode {
    *          Output to append the package name to.
    * @return {@code out}
    */
-  private <T extends IndentPrintWriter> T writeNameTo(T out) {
-    out.append(normalNs(name)).whitespace();
+  private IndentWriter writeNameTo(IndentWriter out) throws IOException {
+    out.append(normalNs(name)).space();
     return out;
   }
 }

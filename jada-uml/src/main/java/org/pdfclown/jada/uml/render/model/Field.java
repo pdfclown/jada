@@ -19,7 +19,8 @@ package org.pdfclown.jada.uml.render.model;
 
 import static org.pdfclown.jada.uml.render.model.Type.Classification.ENUM;
 
-import org.pdfclown.common.util.io.IndentPrintWriter;
+import java.io.IOException;
+import org.pdfclown.common.util.io.IndentWriter;
 
 // SourceName: nl.talsmasoftware.umldoclet.uml.Field
 /**
@@ -34,7 +35,7 @@ public class Field extends TypeMember {
   }
 
   @Override
-  public <T extends IndentPrintWriter> T writeTo(T out) {
+  public IndentWriter writeTo(IndentWriter out) throws IOException {
     if (!getConfig().getFieldConfig().includes(getVisibility()))
       return out;
 
@@ -42,7 +43,7 @@ public class Field extends TypeMember {
   }
 
   @Override
-  protected <T extends IndentPrintWriter> T writeTypeTo(T out) {
+  protected IndentWriter writeTypeTo(IndentWriter out) throws IOException {
     return isEnumType() ? out : super.writeTypeTo(out);
   }
 

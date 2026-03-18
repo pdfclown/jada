@@ -21,9 +21,10 @@ import static java.util.Objects.requireNonNull;
 import static java.util.Objects.requireNonNullElse;
 import static org.pdfclown.common.util.Exceptions.wrongArg;
 
+import java.io.IOException;
 import java.util.Objects;
 import org.jspecify.annotations.Nullable;
-import org.pdfclown.common.util.io.IndentPrintWriter;
+import org.pdfclown.common.util.io.IndentWriter;
 import org.pdfclown.jada.uml.UmlConfig.Visibility;
 
 // SourceName: nl.talsmasoftware.umldoclet.uml.TypeMember
@@ -109,9 +110,9 @@ public abstract class TypeMember extends UmlNode {
   }
 
   @Override
-  public <T extends IndentPrintWriter> T writeTo(T out) {
+  public IndentWriter writeTo(IndentWriter out) throws IOException {
     if (static_) {
-      out.append("{static}").whitespace();
+      out.append("{static}").space();
     }
     out.append(umlVisibility());
     if (deprecated) {
@@ -121,15 +122,15 @@ public abstract class TypeMember extends UmlNode {
     }
     writeParametersTo(out);
     writeTypeTo(out);
-    out.newline();
+    out.nl();
     return out;
   }
 
-  protected <T extends IndentPrintWriter> T writeParametersTo(T out) {
+  protected IndentWriter writeParametersTo(IndentWriter out) throws IOException {
     return out;
   }
 
-  protected <T extends IndentPrintWriter> T writeTypeTo(T out) {
+  protected IndentWriter writeTypeTo(IndentWriter out) throws IOException {
     if (type != null) {
       out.append(": ").append(type.toString());
     }

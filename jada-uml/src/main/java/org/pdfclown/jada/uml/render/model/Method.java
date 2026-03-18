@@ -17,9 +17,10 @@
  */
 package org.pdfclown.jada.uml.render.model;
 
+import java.io.IOException;
 import java.util.Objects;
 import org.jspecify.annotations.Nullable;
-import org.pdfclown.common.util.io.IndentPrintWriter;
+import org.pdfclown.common.util.io.IndentWriter;
 import org.pdfclown.jada.uml.UmlConfig.TypeMode;
 
 // SourceName: nl.talsmasoftware.umldoclet.uml.Method
@@ -82,23 +83,23 @@ public class Method extends TypeMember {
   }
 
   @Override
-  public <T extends IndentPrintWriter> T writeTo(T out) {
+  public IndentWriter writeTo(IndentWriter out) throws IOException {
     if (!getConfig().getMethodConfig().includes(getVisibility()))
       return out;
 
     if (abstract_) {
-      out.append("{abstract}").whitespace();
+      out.append("{abstract}").space();
     }
     return super.writeTo(out);
   }
 
   @Override
-  protected <T extends IndentPrintWriter> T writeParametersTo(T out) {
+  protected IndentWriter writeParametersTo(IndentWriter out) throws IOException {
     return getOrCreateParameters().writeTo(out);
   }
 
   @Override
-  protected <T extends IndentPrintWriter> T writeTypeTo(T out) {
+  protected IndentWriter writeTypeTo(IndentWriter out) throws IOException {
     TypeMode returnTypeDisplay = getConfig().getMethodConfig().getReturnTypeMode();
     if (getType() != null && !TypeMode.NONE.equals(returnTypeDisplay)) {
       out.append(": ").append(getType().toUml(returnTypeDisplay, null));

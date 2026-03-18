@@ -25,12 +25,13 @@ import static org.pdfclown.jada.uml.internal.util.io.Files.FILE_EXTENSION__PLANT
 import static org.pdfclown.jada.uml.util.Plantumls.PUML_NS_SEPARATOR;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import org.jspecify.annotations.Nullable;
 import org.pdfclown.common.util.annot.LazyNonNull;
-import org.pdfclown.common.util.io.IndentPrintWriter;
+import org.pdfclown.common.util.io.IndentWriter;
 import org.pdfclown.jada.uml.UmlConfig;
 
 // SourceName: nl.talsmasoftware.umldoclet.uml.PackageDiagram
@@ -77,8 +78,8 @@ public class PackageDiagram extends Diagram {
   }
 
   @Override
-  protected <T extends IndentPrintWriter> T writeCustomDirectives(
-      @Nullable List<String> customDirectives, T out) {
+  protected IndentWriter writeCustomDirectives(@Nullable List<String> customDirectives,
+      IndentWriter out) throws IOException {
     final var directives = new ArrayList<>(customDirectives != null ? customDirectives
         : emptyList());
     {

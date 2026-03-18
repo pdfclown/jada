@@ -26,6 +26,7 @@ import static org.pdfclown.common.util.Strings.S;
 import static org.pdfclown.jada.uml.util.Plantumls.PUML_REF__ASSOCIATES;
 import static org.pdfclown.jada.uml.util.Plantumls.normalNs;
 
+import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
@@ -34,10 +35,11 @@ import java.util.TreeMap;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import org.apache.commons.lang3.function.Failable;
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.jspecify.annotations.Nullable;
 import org.pdfclown.common.util.annot.LazyNonNull;
-import org.pdfclown.common.util.io.IndentPrintWriter;
+import org.pdfclown.common.util.io.IndentWriter;
 import org.pdfclown.common.util.regex.Patterns;
 import org.pdfclown.jada.uml.UmlConfig;
 import org.pdfclown.jada.uml.render.PackageDependency;
@@ -145,29 +147,28 @@ public class DependencyDiagram extends Diagram {
   }
 
   @Override
-  protected <T extends IndentPrintWriter> T writeChildrenTo(T out) {
-    out.append("set namespaceSeparator none").newline()
-        .append("hide circle").newline()
-        .append("hide empty fields").newline()
-        .append("hide empty methods").newline().newline();
+  protected IndentWriter writeChildrenTo(IndentWriter out) throws IOException {
+    out.append("set namespaceSeparator none").nl()
+        .append("hide circle").nl()
+        .append("hide empty fields").nl()
+        .append("hide empty methods").nl().nl();
 
     super.writeChildrenTo(out);
 
-    writePackageLinksTo(out.newline());
+    writePackageLinksTo(out.nl());
     return out;
   }
 
   @Override
-  protected <T extends IndentPrintWriter> T writeCustomDirectives(
-      List<String> customDirectives, T out) {
+  protected IndentWriter writeCustomDirectives(List<String> customDirectives, IndentWriter out)
+      throws IOException {
     boolean backgroundcolorAlreadySet = false;
     for (var customDirective : customDirectives) {
       backgroundcolorAlreadySet |= customDirective.contains(BACKGROUNDCOLOR_DIRECTIVE);
-      out.println(customDirective);
+      out.writeln(customDirective);
     }
     if (!backgroundcolorAlreadySet) {
-      out.append(BACKGROUNDCOLOR_DIRECTIVE).whitespace().append(DEFAULT_BACKGROUNDCOLOR)
-          .newline();
+      out.append(BACKGROUNDCOLOR_DIRECTIVE).space().append(DEFAULT_BACKGROUNDCOLOR).nl();
     }
     return out;
   }
@@ -183,21 +184,22 @@ public class DependencyDiagram extends Diagram {
     return excludedPackageDependenciesPattern.matcher(packageName).matches();
   }
 
-  private IndentPrintWriter writePackageLinkTo(IndentPrintWriter out, Namespace namespace) {
+  private IndentWriter writePackageLinkTo(IndentWriter out, Namespace namespace)
+      throws IOException {
     String link = Link.forPackage(namespace).toString().trim();
     if (!link.isEmpty()) {
       out.append("class \"").append(namespace.getName()).append("\" ").append(link)
-          .append(" {").newline().append('}').newline();
+          .append(" {").nl().append('}').nl();
     }
     return out;
   }
 
-  private IndentPrintWriter writePackageLinksTo(IndentPrintWriter out) {
-    out.println("' Package links");
+  private IndentWriter writePackageLinksTo(IndentWriter out) throws IOException {
+    out.writeln("' Package links");
     getChildren(Reference.class).stream()
         .flatMap($ -> Stream.of($.from.toString(), $.to.toString()))
         .distinct().map($packageName -> new Namespace(this, $packageName, null))
-        .forEach($namespace -> writePackageLinkTo(out, $namespace));
+        .forEach(Failable.asConsumer($namespace -> writePackageLinkTo(out, $namespace)));
     return out;
   }
 }

@@ -26,8 +26,9 @@ import static org.pdfclown.common.util.Strings.ELLIPSIS;
 import static org.pdfclown.common.util.Strings.EMPTY;
 import static org.pdfclown.common.util.Strings.S;
 
+import java.io.IOException;
 import org.jspecify.annotations.Nullable;
-import org.pdfclown.common.util.io.IndentPrintWriter;
+import org.pdfclown.common.util.io.IndentWriter;
 import org.pdfclown.jada.uml.UmlConfig.MethodConfig;
 import org.pdfclown.jada.uml.UmlConfig.TypeMode;
 
@@ -53,7 +54,7 @@ public class Parameters extends UmlNode {
     }
 
     @Override
-    public <T extends IndentPrintWriter> T writeTo(T out) {
+    public IndentWriter writeTo(IndentWriter out) throws IOException {
       String sep = EMPTY;
       MethodConfig methodConfig = getConfig().getMethodConfig();
       if (name != null
@@ -106,7 +107,7 @@ public class Parameters extends UmlNode {
   }
 
   @Override
-  public <T extends IndentPrintWriter> T writeChildrenTo(T out) {
+  public IndentWriter writeChildrenTo(IndentWriter out) throws IOException {
     out.append(ROUND_BRACKET_OPEN);
     String sep = EMPTY;
     for (UmlNode param : getChildren()) {
@@ -118,7 +119,7 @@ public class Parameters extends UmlNode {
   }
 
   @Override
-  public <T extends IndentPrintWriter> T writeTo(T out) {
+  public IndentWriter writeTo(IndentWriter out) throws IOException {
     return writeChildrenTo(out);
   }
 

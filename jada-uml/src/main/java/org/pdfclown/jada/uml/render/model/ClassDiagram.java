@@ -21,10 +21,11 @@ import static org.pdfclown.common.util.Chars.DOT;
 import static org.pdfclown.jada.uml.internal.util.io.Files.FILE_EXTENSION__PLANTUML;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
 import org.jspecify.annotations.Nullable;
 import org.pdfclown.common.util.annot.LazyNonNull;
-import org.pdfclown.common.util.io.IndentPrintWriter;
+import org.pdfclown.common.util.io.IndentWriter;
 import org.pdfclown.jada.uml.UmlConfig;
 
 // SourceName: nl.talsmasoftware.umldoclet.uml.ClassDiagram
@@ -92,11 +93,11 @@ public class ClassDiagram extends Diagram {
   }
 
   @Override
-  protected <T extends IndentPrintWriter> T writeChildrenTo(T out) {
-    out.append("set namespaceSeparator none").newline()
-        .append("hide empty fields").newline()
-        .append("hide empty methods").newline()
-        .newline();
+  protected IndentWriter writeChildrenTo(IndentWriter out) throws IOException {
+    out.append("set namespaceSeparator none").nl()
+        .append("hide empty fields").nl()
+        .append("hide empty methods").nl()
+        .nl();
     return super.writeChildrenTo(out);
   }
 }

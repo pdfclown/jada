@@ -19,8 +19,10 @@ package org.pdfclown.jada.uml.render.model;
 
 import static java.util.Collections.newSetFromMap;
 import static java.util.Collections.unmodifiableList;
+import static org.pdfclown.common.util.Exceptions.runtime;
 import static org.pdfclown.common.util.Exceptions.wrongState;
 
+import java.io.IOException;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.IdentityHashMap;
@@ -29,18 +31,18 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import org.apache.commons.lang3.function.Failable;
 import org.jspecify.annotations.Nullable;
 import org.pdfclown.common.util.annot.UnmodifiableView;
-import org.pdfclown.common.util.io.IndentPrintWriter;
+import org.pdfclown.common.util.io.IndentWriter;
 import org.pdfclown.jada.uml.UmlConfig;
 
 // SourceName: nl.talsmasoftware.umldoclet.uml.UMLNode
 /**
- * Part of a UML diagram that can render itself to the diagram by
- * {@linkplain #writeTo(IndentPrintWriter) writing to} an indenting writer. It serves as a reusable
- * base-class for all specific UML nodes.
+ * Part of a UML diagram that can render itself to the diagram by {@linkplain #writeTo(IndentWriter)
+ * writing to} an indenting writer. It serves as a reusable base-class for all specific UML nodes.
  * <p>
- * UML nodes are capable of rendering themselves to {@link IndentPrintWriter}.
+ * UML nodes are capable of rendering themselves to {@link IndentWriter}.
  * </p>
  *
  * @author Sjoerd Talsma (original implementation)
@@ -105,7 +107,11 @@ public abstract class UmlNode {
    */
   @Override
   public String toString() {
-    return writeTo(IndentPrintWriter.of(new StringWriter(), null)).toString();
+    try {
+      return writeTo(IndentWriter.of(new StringWriter(), null)).toString();
+    } catch (IOException ex) {
+      throw runtime(ex);
+    }
   }
 
   protected <U extends UmlNode> Optional<U> findParent(Class<U> nodeType) {
@@ -128,25 +134,21 @@ public abstract class UmlNode {
   /**
    * Helper method to write all children to the output.
    *
-   * @param <T>
-   *          The subclass of indenting print writer being written to.
    * @param out
    *          The output to write the children to.
    * @return A reference to the output for method chaining purposes.
    */
-  protected <T extends IndentPrintWriter> T writeChildrenTo(T out) {
-    getChildren().forEach(child -> child.writeTo(out));
+  protected IndentWriter writeChildrenTo(IndentWriter out) throws IOException {
+    getChildren().forEach(Failable.asConsumer($ -> $.writeTo(out)));
     return out;
   }
 
   /**
    * Renders this object to the indenting {@code out}.
    *
-   * @param <T>
-   *          The subclass of indenting print writer being written to.
    * @param out
    *          The output to render this object to.
    * @return A reference to the output for method chaining purposes.
    */
-  protected abstract <T extends IndentPrintWriter> T writeTo(T out);
+  protected abstract IndentWriter writeTo(IndentWriter out) throws IOException;
 }

@@ -24,13 +24,14 @@ import static java.util.stream.Collectors.toCollection;
 import static org.apache.commons.lang3.StringUtils.trimToEmpty;
 import static org.pdfclown.common.util.Exceptions.wrongArg;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.Objects;
 import org.apache.commons.lang3.StringUtils;
 import org.jspecify.annotations.Nullable;
-import org.pdfclown.common.util.io.IndentPrintWriter;
+import org.pdfclown.common.util.io.IndentWriter;
 
 // SourceName: nl.talsmasoftware.umldoclet.uml.Reference
 /**
@@ -241,17 +242,17 @@ public class Reference extends UmlNode {
   }
 
   @Override
-  public <T extends IndentPrintWriter> T writeTo(T out) {
+  public IndentWriter writeTo(IndentWriter out) throws IOException {
     // Namespace aware compensation
     final Namespace namespace = findParent(Namespace.class).orElse(null);
 
-    out.append(from.toString(namespace)).whitespace()
-        .append(type).whitespace()
+    out.append(from.toString(namespace)).space()
+        .append(type).space()
         .append(to.toString(namespace));
     if (!notes.isEmpty()) {
       out.append(": ").append(String.join("\\n", notes));
     }
-    out.newline();
+    out.nl();
     return out;
   }
 

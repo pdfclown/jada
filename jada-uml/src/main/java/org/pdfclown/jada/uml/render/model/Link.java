@@ -26,6 +26,7 @@ import static org.pdfclown.jada.core.util.lang.Javadocs.FILENAME__MODULE_SUMMARY
 import static org.pdfclown.jada.core.util.lang.Javadocs.FILENAME__PACKAGE_SUMMARY;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -33,7 +34,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Stream;
 import org.jspecify.annotations.Nullable;
-import org.pdfclown.common.util.io.IndentPrintWriter;
+import org.pdfclown.common.util.io.IndentWriter;
 
 // SourceName: nl.talsmasoftware.umldoclet.uml.Link
 /**
@@ -124,7 +125,7 @@ public class Link extends UmlNode {
   }
 
   @Override
-  public <T extends IndentPrintWriter> T writeTo(T out) {
+  public IndentWriter writeTo(IndentWriter out) throws IOException {
     if (target != null) {
       out.append("[[").append(relativeTarget().orElseGet(target::toASCIIString)).append("]]");
     }

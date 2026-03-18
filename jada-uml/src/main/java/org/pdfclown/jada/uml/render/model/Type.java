@@ -20,10 +20,11 @@ package org.pdfclown.jada.uml.render.model;
 import static java.util.Locale.ENGLISH;
 import static java.util.Objects.requireNonNull;
 
+import java.io.IOException;
 import java.util.Collection;
 import org.jspecify.annotations.Nullable;
 import org.pdfclown.common.util.annot.LazyNonNull;
-import org.pdfclown.common.util.io.IndentPrintWriter;
+import org.pdfclown.common.util.io.IndentWriter;
 import org.pdfclown.jada.uml.UmlConfig.TypeMode;
 
 // SourceName: nl.talsmasoftware.umldoclet.uml.Type
@@ -149,9 +150,9 @@ public class Type extends UmlNode {
   }
 
   @Override
-  public <T extends IndentPrintWriter> T writeChildrenTo(T out) {
+  public IndentWriter writeChildrenTo(IndentWriter out) throws IOException {
     if (!getChildren().isEmpty() && !Classification.ANNOTATION.equals(classfication)) {
-      out.append('{').newline();
+      out.append('{').nl();
       super.writeChildrenTo(out.withIndent());
       out.append('}');
     }
@@ -159,15 +160,15 @@ public class Type extends UmlNode {
   }
 
   @Override
-  public <T extends IndentPrintWriter> T writeTo(T out) {
-    out.append(classfication.toUml()).whitespace();
-    writeNameTo(out).whitespace();
+  public IndentWriter writeTo(IndentWriter out) throws IOException {
+    out.append(classfication.toUml()).space();
+    writeNameTo(out).space();
     if (deprecated) {
-      out.append("<<deprecated>>").whitespace();
+      out.append("<<deprecated>>").space();
     }
-    link().writeTo(out).whitespace();
+    link().writeTo(out).space();
     writeChildrenTo(out);
-    out.newline();
+    out.nl();
     return out;
   }
 
@@ -193,7 +194,7 @@ public class Type extends UmlNode {
     return link;
   }
 
-  private <T extends IndentPrintWriter> T writeNameTo(T out) {
+  private IndentWriter writeNameTo(IndentWriter out) throws IOException {
     if (packageNameInclusive && isPackageLocalNamed()) {
       out.append("\"<size:14>").append(getPackageLocalName())
           .append("\\n<size:10>").append(namespace.getName())

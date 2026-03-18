@@ -33,6 +33,7 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 import static org.pdfclown.jada.uml.__test.UmlMocks.mockUmlConfig;
 
+import java.io.IOException;
 import java.io.StringWriter;
 import java.nio.file.Path;
 import java.util.LinkedHashSet;
@@ -41,7 +42,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.pdfclown.common.util.io.Indent;
-import org.pdfclown.common.util.io.IndentPrintWriter;
+import org.pdfclown.common.util.io.IndentWriter;
 import org.pdfclown.jada.core.JadaConfig;
 import org.pdfclown.jada.uml.UmlConfig;
 import org.pdfclown.jada.uml.UmlConfig.ImageConfig;
@@ -75,13 +76,13 @@ class DiagramTest extends BaseTest {
 
   // SourceName: testCustomBackgroundcolor
   @Test
-  void _customBackgroundcolor() {
+  void _customBackgroundcolor() throws IOException {
     when(config.getPlantumlCustomDirectives())
         .thenReturn(singletonList("skinparam backgroundcolor green"));
     var output = new StringWriter();
     var testDiagram = new TestDiagram(config,
         Path.of("target/test-classes/custom-directive.puml"));
-    var writer = IndentPrintWriter.of(output, Indent.NONE);
+    var writer = IndentWriter.of(output, Indent.NONE);
     testDiagram.writeTo(writer);
 
     assertThat(asList(output.toString().split("\\n")), hasItem("skinparam backgroundcolor green"));
@@ -90,13 +91,13 @@ class DiagramTest extends BaseTest {
 
   // SourceName: testCustomDirective
   @Test
-  void _customDirective() {
+  void _customDirective() throws IOException {
     when(config.getPlantumlCustomDirectives())
         .thenReturn(singletonList("skinparam handwritten true"));
     var output = new StringWriter();
     var testDiagram = new TestDiagram(config,
         Path.of("target/test-classes/custom-directive.puml"));
-    var writer = IndentPrintWriter.of(output, Indent.NONE);
+    var writer = IndentWriter.of(output, Indent.NONE);
     testDiagram.writeTo(writer);
 
     assertThat(asList(output.toString().split("\\n")), hasItem("skinparam handwritten true"));
