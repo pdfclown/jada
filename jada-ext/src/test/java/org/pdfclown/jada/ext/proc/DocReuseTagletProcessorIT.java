@@ -93,14 +93,14 @@ class DocReuseTagletProcessorIT extends BaseIT {
     process.run();
 
     Assertions.assertFileTreeEquals(
-        ResourceNames.name(S + UNDERSCORE + sqn(this), "expected", getTestMethodName()),
+        ResourceNames.name(S + UNDERSCORE + sqn(this), "expected", getTestName()),
         process.getConfig().getBuildDirectory(), this);
   }
 
   private SrcFileProcess prepareTest(Class<?> baseType, boolean timeThresholdInitialized)
       throws IOException {
     final var sourceDir = getEnv().typeSrcPath(baseType).getParent();
-    final var targetBaseDir = getEnv().outputPath(getTestMethodName());
+    final var targetBaseDir = getEnv().outputPath(getTestName());
     final var targetDir = targetBaseDir.resolve(ResourceNames.relBased(EMPTY, baseType));
     copyDirectory(sourceDir, resetDirectory(targetDir));
 

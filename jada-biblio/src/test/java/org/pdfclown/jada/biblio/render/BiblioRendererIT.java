@@ -45,8 +45,8 @@ class BiblioRendererIT extends BaseIT {
 
   private void render() throws IOException, SAXException {
     final var sourceBaseDir = getEnv().resourcePath(EMPTY);
-    final var sourceDir = sourceBaseDir.resolve(getTestMethodName());
-    final var targetDir = resetDirectory(getEnv().outputPath(getTestMethodName()));
+    final var sourceDir = sourceBaseDir.resolve(getTestName());
+    final var targetDir = resetDirectory(getEnv().outputPath(getTestName()));
 
     Files.copy(sourceDir.resolve("index.html"), targetDir.resolve("index.html"));
     Files.copy(sourceDir.resolve("index-all.html"), targetDir.resolve("index-all.html"));
