@@ -28,7 +28,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.pdfclown.common.build.test.assertion.Assertions.Expected;
-import org.pdfclown.common.build.test.assertion.Assertions.ExpectedGeneration;
 import org.pdfclown.jada.core.JadaConfig;
 import org.pdfclown.jada.core.__test.BaseTest;
 
@@ -121,7 +120,7 @@ class FileOptimizerTest extends BaseTest {
     assertParameterizedOf(
         () -> fileOptimizer.isProcessable(Path.of(filename), null),
         expected,
-        () -> new ExpectedGeneration<>(of(
+        () -> expectedGeneration(of(
             entry("filename", filename),
             entry("debug", debug))));
   }

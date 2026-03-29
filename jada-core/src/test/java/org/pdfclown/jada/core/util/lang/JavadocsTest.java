@@ -34,7 +34,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.pdfclown.common.build.test.assertion.Assertions.Expected;
-import org.pdfclown.common.build.test.assertion.Assertions.ExpectedGeneration;
 import org.pdfclown.jada.core.__test.BaseTest;
 
 /**
@@ -108,7 +107,7 @@ class JavadocsTest extends BaseTest {
           return ret;
         },
         expected,
-        () -> new ExpectedGeneration<List<String>>(tagNames, content)
+        () -> this.<List<String>>expectedGeneration(tagNames, content)
             .setExpectedSourceCodeGenerator($ -> "asList(\n%s)".formatted(
                 Stream.iterate(0, $$ -> $$ < $.size(), $$ -> $$ + 2)
                     .map($$ -> literal($.get($$)) + COMMA + literal($.get($$ + 1)))
@@ -192,7 +191,7 @@ class JavadocsTest extends BaseTest {
     assertParameterizedOf(
         () -> Javadocs.normal(content),
         expected,
-        () -> new ExpectedGeneration<>(of(
+        () -> expectedGeneration(of(
             entry("content", content))));
   }
 }
