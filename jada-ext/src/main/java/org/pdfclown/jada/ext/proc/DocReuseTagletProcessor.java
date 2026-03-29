@@ -35,6 +35,7 @@ import static org.pdfclown.common.util.Objects.textLiteral;
 import static org.pdfclown.common.util.Objects.typeOf;
 import static org.pdfclown.common.util.Strings.EMPTY;
 import static org.pdfclown.common.util.Strings.S;
+import static org.pdfclown.common.util.Strings.STR_LENGTH;
 import static org.pdfclown.common.util.Strings.indexOfElse;
 import static org.pdfclown.common.util.io.Files.FILE_EXTENSION__JAVA;
 import static org.pdfclown.jada.core.util.lang.Javadocs.TAG_NAME__LINK;
@@ -189,7 +190,7 @@ public class DocReuseTagletProcessor extends JavaProcessor {
       if (link.charAt(0) == HASH)
         return fragmentRef(base) + link;
 
-      int linkPartSeparatorIndex = indexOfElse(link, DOT, -1);
+      int linkPartSeparatorIndex = indexOfElse(link, DOT, STR_LENGTH);
       String linkPart = link.substring(0, linkPartSeparatorIndex);
 
       if (base instanceof TypeDeclaration<?> typeDeclaration) {
@@ -314,7 +315,7 @@ public class DocReuseTagletProcessor extends JavaProcessor {
             }
             String tagName = inlineTagName(m);
             String tagValue = inlineTagValue(m);
-            int labelSeparatorIndex = indexOfElse(tagValue, SPACE, -1);
+            int labelSeparatorIndex = indexOfElse(tagValue, SPACE, STR_LENGTH);
             String link = tagValue.substring(0, labelSeparatorIndex);
             String fullLink = resolveLink(link, getBase(), file);
             String label = EMPTY;
@@ -622,13 +623,13 @@ public class DocReuseTagletProcessor extends JavaProcessor {
                  */
                 String localKey;
                 {
-                  int localKeySeparatorIndex = indexOfElse(tagValue, COLON, -1);
+                  int localKeySeparatorIndex = indexOfElse(tagValue, COLON, STR_LENGTH);
                   elementKey = tagValue.substring(0, localKeySeparatorIndex);
                   localKey = tagValue.substring(localKeySeparatorIndex);
                 }
 
-                int elementKeyPartSeparatorIndex = min(indexOfElse(elementKey, DOT, -1),
-                    indexOfElse(elementKey, HASH, -1));
+                int elementKeyPartSeparatorIndex = min(indexOfElse(elementKey, DOT, STR_LENGTH),
+                    indexOfElse(elementKey, HASH, STR_LENGTH));
                 String elementKeyPart = elementKey.substring(0, elementKeyPartSeparatorIndex);
                 var ownMember = false /*
                                        * Whether the key part represents a type's own member (field
@@ -653,7 +654,7 @@ public class DocReuseTagletProcessor extends JavaProcessor {
                   // HASH prefix (local member)?
                   else if (elementKey.charAt(0) == HASH) {
                     ownMember = true;
-                    elementKeyPartSeparatorIndex = indexOfElse(elementKey, DOT, 1, -1);
+                    elementKeyPartSeparatorIndex = indexOfElse(elementKey, DOT, 1, STR_LENGTH);
                     elementKeyPart = elementKey.substring(1, elementKeyPartSeparatorIndex);
                   }
                   // DOT prefix.
@@ -910,13 +911,13 @@ public class DocReuseTagletProcessor extends JavaProcessor {
   }
 
   private Path resolveFragmentFile(String fragmentKey, Path baseDir, Path file) {
-    var elementKey = fragmentKey.substring(0, indexOfElse(fragmentKey, COLON, 0, -1));
+    var elementKey = fragmentKey.substring(0, indexOfElse(fragmentKey, COLON, 0, STR_LENGTH));
     var path = baseDir;
     var elementKeyPartSeparatorIndex = -1;
     while (true) {
       var startIndex = elementKeyPartSeparatorIndex + 1;
       var elementKeyPart = elementKey.substring(startIndex,
-          elementKeyPartSeparatorIndex = indexOfElse(elementKey, DOT, startIndex, -1));
+          elementKeyPartSeparatorIndex = indexOfElse(elementKey, DOT, startIndex, STR_LENGTH));
       // Package level reached?
       if (!exists(path = path.resolve(elementKeyPart))) {
         /*
