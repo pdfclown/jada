@@ -18,8 +18,8 @@
 package org.pdfclown.jada.uml.proc;
 
 import static org.pdfclown.common.util.Exceptions.runtime;
-import static org.pdfclown.common.util.Objects.objTo;
 import static org.pdfclown.common.util.Strings.EMPTY;
+import static org.pdfclown.common.util.function.Functions.to;
 import static org.pdfclown.common.util.io.Files.FILE_EXTENSION__SVG;
 import static org.pdfclown.common.util.io.Files.filename;
 import static org.pdfclown.common.util.io.Files.isExtension;
@@ -144,7 +144,7 @@ public class PageProcessor extends JadaHtmlProcessor {
       String diagramRelativePath = relativize(docFile, diagram.diagramFile).toString();
       Inserter inserter = diagram.createInserter(diagramRelativePath);
       Document doc = Jsoups.parse(docContent);
-      return objTo(inserter.process(doc, docFile, getConfig()), Document::outerHtml);
+      return to(inserter.process(doc, docFile, getConfig()), Document::outerHtml);
     } catch (IOException ex) {
       throw runtime(ex);
     }

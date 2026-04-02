@@ -13,9 +13,9 @@
 package org.pdfclown.jada.uml.util;
 
 import static org.pdfclown.common.util.Chars.SPACE;
-import static org.pdfclown.common.util.Objects.objToElse;
 import static org.pdfclown.common.util.Objects.sqn;
 import static org.pdfclown.common.util.Strings.NULL;
+import static org.pdfclown.common.util.function.Functions.toElse;
 
 import org.jspecify.annotations.Nullable;
 
@@ -105,7 +105,7 @@ public final class Plantumls {
    * </p>
    */
   public static String pumlNsFqn(@Nullable Class<?> type) {
-    return objToElse(type, $ -> $.getPackageName() + PUML_NS_SEPARATOR + pumlNsSqn($), NULL);
+    return toElse(type, $ -> $.getPackageName() + PUML_NS_SEPARATOR + pumlNsSqn($), NULL);
   }
 
   /**

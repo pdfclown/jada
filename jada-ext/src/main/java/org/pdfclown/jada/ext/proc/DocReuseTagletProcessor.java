@@ -29,7 +29,6 @@ import static org.pdfclown.common.util.Exceptions.unexpected;
 import static org.pdfclown.common.util.Exceptions.unsupported;
 import static org.pdfclown.common.util.Objects.anyThat;
 import static org.pdfclown.common.util.Objects.found;
-import static org.pdfclown.common.util.Objects.objToElse;
 import static org.pdfclown.common.util.Objects.sfqnd;
 import static org.pdfclown.common.util.Objects.textLiteral;
 import static org.pdfclown.common.util.Objects.typeOf;
@@ -37,6 +36,7 @@ import static org.pdfclown.common.util.Strings.EMPTY;
 import static org.pdfclown.common.util.Strings.S;
 import static org.pdfclown.common.util.Strings.STR_LENGTH;
 import static org.pdfclown.common.util.Strings.indexOfElse;
+import static org.pdfclown.common.util.function.Functions.toElse;
 import static org.pdfclown.common.util.io.Files.FILE_EXTENSION__JAVA;
 import static org.pdfclown.jada.core.util.lang.Javadocs.TAG_NAME__LINK;
 import static org.pdfclown.jada.core.util.lang.Javadocs.TAG_NAME__LINKPLAIN;
@@ -736,7 +736,7 @@ public class DocReuseTagletProcessor extends JavaProcessor {
                   }
                   if (ownMember)
                     throw runtime("{}: member \"{}(*)\" NOT FOUND{}", file, elementKeyPart,
-                        objToElse(containerNode, $$ -> " inside " + fragmentLocation($$), EMPTY));
+                        toElse(containerNode, $$ -> " inside " + fragmentLocation($$), EMPTY));
                 }
 
                 // [Name resolution 2] Import (simple name; module scope).
