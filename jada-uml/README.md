@@ -2,7 +2,7 @@
 
 # JadaUML
 
-[![JDK Compatibility](https://img.shields.io/badge/Java-17%2B-blue)](https://openjdk.org/projects/jdk/17/)
+[![JDK Compatibility](https://img.shields.io/badge/Java-17-blue)](https://openjdk.org/projects/jdk/17/)
 [![maven](https://img.shields.io/maven-central/v/org.pdfclown/jada-uml)](https://search.maven.org/artifact/org.pdfclown/jada-uml/0.3.0/jar)
 [![javadoc](https://javadoc.io/badge2/org.pdfclown/jada-uml/javadoc.svg)](https://javadoc.io/doc/org.pdfclown/jada-uml/0.3.0/index.html)
 

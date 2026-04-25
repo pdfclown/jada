@@ -2,7 +2,7 @@
 
 # JadaMaven
 
-[![JDK Compatibility](https://img.shields.io/badge/Java-17%2B-blue)](https://openjdk.org/projects/jdk/17/)
+[![JDK Compatibility](https://img.shields.io/badge/Java-17-blue)](https://openjdk.org/projects/jdk/17/)
 [![maven](https://img.shields.io/maven-central/v/org.pdfclown/jada-maven-plugin)](https://search.maven.org/artifact/org.pdfclown/jada-maven-plugin/0.3.0/jar)
 [![javadoc](https://javadoc.io/badge2/org.pdfclown/jada-maven-plugin/javadoc.svg)](https://javadoc.io/doc/org.pdfclown/jada-maven-plugin/0.3.0/index.html)
 

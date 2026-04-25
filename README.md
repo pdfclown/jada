@@ -10,9 +10,9 @@
 with multiple pre/post-processors<br>
 to transform its output in more flexible and convenient ways*
 
-[![JDK Compatibility](https://img.shields.io/badge/Java-17%2B-blue)](https://openjdk.org/projects/jdk/17/)
+[![JDK Compatibility](https://img.shields.io/badge/Java-17-blue)](https://openjdk.org/projects/jdk/17/)
 [![maven](https://img.shields.io/maven-central/v/org.pdfclown/jada-bom)](https://search.maven.org/artifact/org.pdfclown/jada-bom/0.3.0/pom)<br>
-[![build](https://img.shields.io/github/actions/workflow/status/pdfclown/jada/build.yml?branch=main&label=build%20%28main%29)](https://github.com/pdfclown/jada/actions/workflows/build.yml)
+[![build](https://img.shields.io/github/actions/workflow/status/pdfclown/jada/build.yml?branch=main&label=build)](https://github.com/pdfclown/jada/actions/workflows/build.yml)
 [![REUSE status](https://api.reuse.software/badge/github.com/pdfclown/jada)](https://api.reuse.software/info/github.com/pdfclown/jada)
 
 </div>
