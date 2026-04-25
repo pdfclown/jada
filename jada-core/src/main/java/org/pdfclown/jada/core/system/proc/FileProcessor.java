@@ -38,7 +38,6 @@ public abstract class FileProcessor<T> implements SystemObject {
   @SuppressWarnings("NotNullFieldNotInitialized")
   private @InitNonNull SystemConfig config;
 
-  @SuppressWarnings("null")
   protected FileProcessor(FileSerializer<T> serializer) {
     this.serializer = serializer;
   }
