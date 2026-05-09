@@ -81,7 +81,6 @@ import jdk.javadoc.doclet.Reporter;
 import jdk.javadoc.doclet.StandardDoclet;
 import jdk.javadoc.doclet.Taglet;
 import org.greenrobot.eventbus.EventBus;
-import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 import org.pdfclown.common.util.ArgumentException;
 import org.pdfclown.common.util.annot.InitNonNull;
@@ -301,16 +300,16 @@ public class Jada implements Doclet, JadaComponent {
       }
     }
 
-    protected final @NonNull T base;
+    protected final T base;
 
-    private JadaCandidate(@NonNull T base) {
+    private JadaCandidate(T base) {
       this.base = base;
     }
 
     /**
      * Component.
      */
-    public @NonNull T getBase() {
+    public T getBase() {
       return base;
     }
 

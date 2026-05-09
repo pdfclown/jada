@@ -30,7 +30,6 @@ import static org.pdfclown.jada.uml.internal.Internals.FILENAME__PACKAGE;
 import static org.pdfclown.jada.uml.internal.util.io.Files.FILE_EXTENSION__PLANTUML;
 
 import java.util.stream.Stream;
-import org.jspecify.annotations.NonNull;
 import org.junit.jupiter.api.Test;
 import org.pdfclown.jada.core.test.assertion.Assertions.JavadocAssertArgs;
 import org.pdfclown.jada.uml.__test.BaseIT;
@@ -48,7 +47,7 @@ public class Issue152_InnerClassVisibilityIT extends BaseIT {
   }
 
   @Override
-  protected void onSingleRunInit(@NonNull JavadocAssertArgs args) {
+  protected void onSingleRunInit(JavadocAssertArgs args) {
     args.arg("--show-types", "public");
   }
 

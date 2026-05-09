@@ -13,7 +13,6 @@
 package org.pdfclown.jada.core.system.proc;
 
 import java.nio.file.Path;
-import org.jspecify.annotations.NonNull;
 
 /**
  * File serializer.
@@ -30,7 +29,6 @@ public interface FileSerializer<T> {
    *          Source file.
    * @return Object deserialized from {@code path}.
    */
-  @NonNull
   T deserialize(Path file);
 
   /**
@@ -41,5 +39,5 @@ public interface FileSerializer<T> {
    * @param file
    *          Target file.
    */
-  void serialize(@NonNull T obj, Path file);
+  void serialize(T obj, Path file);
 }

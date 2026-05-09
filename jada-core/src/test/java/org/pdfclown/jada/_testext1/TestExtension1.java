@@ -12,11 +12,10 @@
  */
 package org.pdfclown.jada._testext1;
 
-import org.jspecify.annotations.NonNull;
 import org.pdfclown.jada.core.JadaExtConfig;
 import org.pdfclown.jada.core.JadaExtension;
 
-@SuppressWarnings("FieldMayBeFinal")
+@SuppressWarnings({ "FieldMayBeFinal", "NullableProblems" })
 public class TestExtension1 extends JadaExtension {
   public static class TestExtConfig extends JadaExtConfig {
   }
@@ -28,12 +27,12 @@ public class TestExtension1 extends JadaExtension {
   }
 
   @Override
-  public @NonNull JadaExtConfig getExtConfig() {
+  public JadaExtConfig getExtConfig() {
     return extConfig;
   }
 
   @Override
-  public @NonNull String getName() {
+  public String getName() {
     return "TestExt1";
   }
 }
