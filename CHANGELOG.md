@@ -1,3 +1,35 @@
+## v0.4.0 (2026-05-12)
+
+### BREAKING CHANGE
+
+- `--jada-file-optimize-exclude` CLI argument replaced
+with `--jada-file-optimize-filter`
+
+### Feat
+
+- **core**: replace `--jada-file-optimize-exclude` CLI argument with `--jada-file-optimize-filter`
+
+### Fix
+
+- **deps**: bump org.pdfclown:pdfclown-common-base from 0.6.0 to 0.7.0
+- update code to org.pdfclown:pdfclown-common-base dependency change (commit 5f02c68)
+- update code to org.pdfclown:pdfclown-common-base dependency change (commit bcd0be3)
+- update code to org.pdfclown:pdfclown-common-base dependency change (commit 5e2be86)
+- **uml**: reconcile codebase with upstream project (commit ca9cac7)
+- update code to org.pdfclown:pdfclown-common-base dependency change (commit 22d00c9)
+- update code to org.pdfclown:pdfclown-common-base dependency change (commit a186f7e)
+- **uml**: reconcile codebase with upstream project (commit 9bd5908)
+- **uml**: reconcile codebase with upstream project (commit 43cd08a)
+- **deps**: bump net.sourceforge.plantuml:plantuml-asl from 1.2025.10 to 1.2026.2 (#12)
+- **deps**: bump org.pdfclown:pdfclown-common-base from 0.5.0 to 0.6.0
+
+### Refactor
+
+- remove redundant `NonNull` annotations
+- remove `@SuppressWarnings` for potential nulls
+- specify `ExpectedGeneration` type parameter
+- **core**: remove temporary pdfclown-common code
+
 ## v0.3.0 (2026-02-26)
 
 ### BREAKING CHANGE
