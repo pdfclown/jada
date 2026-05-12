@@ -42,7 +42,7 @@ import static org.pdfclown.common.util.system.Clis.parseResource;
 import static org.pdfclown.jada.core.JadaConfig.OPTION__BASE_DOCLET;
 import static org.pdfclown.jada.core.JadaConfig.OPTION__DEBUG;
 import static org.pdfclown.jada.core.JadaConfig.OPTION__DOCLET_EXTENSIONS;
-import static org.pdfclown.jada.core.JadaConfig.OPTION__EXCLUDED_OPTIMIZATION_FILES;
+import static org.pdfclown.jada.core.JadaConfig.OPTION__FILE_OPTIMIZATION_FILTER;
 import static org.pdfclown.jada.core.JadaConfig.OPTION__HELP;
 import static org.pdfclown.jada.core.JadaConfig.OPTION__HELP_EXTRA;
 import static org.pdfclown.jada.core.JadaConfig.OPTION__INPUT_ENCODING;
@@ -60,12 +60,10 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URLClassLoader;
 import java.nio.file.Path;
-import java.util.AbstractCollection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -90,11 +88,13 @@ import org.pdfclown.common.util.annot.InitNonNull;
 import org.pdfclown.common.util.io.PathResource;
 import org.pdfclown.common.util.io.Resource;
 import org.pdfclown.common.util.reflect.Reflects;
+import org.pdfclown.common.util.system.Clis.ListIncrementalAdapter;
 import org.pdfclown.jada.core.JadaConfig.Attachment;
 import org.pdfclown.jada.core.event.MainProcessEvent;
 import org.pdfclown.jada.core.event.PostProcessEvent;
 import org.pdfclown.jada.core.internal.Internals;
 import org.pdfclown.jada.core.internal.JadaMessage;
+import org.pdfclown.jada.core.internal.temp.util.system.Clis.FileInclusionFilter;
 import org.pdfclown.jada.core.proc.FileOptimizer;
 import org.pdfclown.jada.core.proc.JadaFileProcess;
 import org.pdfclown.jada.core.proc.JadaResourceAttach;
@@ -644,7 +644,7 @@ public class Jada implements Doclet, JadaComponent {
                 var extensions = candidates.elect(JadaExtension.class);
                 parseListIncremental($args.get(0),
                     $ -> $.map($$ -> selectCandidate($$, extensions)),
-                    new AbstractCollection<JadaExtension>() {
+                    new ListIncrementalAdapter<JadaExtension>() {
                       @Override
                       public boolean add(JadaExtension e) {
                         config.addExtension(e);
@@ -657,24 +657,31 @@ public class Jada implements Doclet, JadaComponent {
                       }
 
                       @Override
-                      public Iterator<JadaExtension> iterator() {
-                        return config.getExtensions().values().iterator();
-                      }
-
-                      @Override
                       public boolean remove(Object o) {
                         return config.removeExtension((JadaExtension) o);
                       }
-
-                      @Override
-                      public int size() {
-                        return config.getExtensions().size();
-                      }
                     });
               })
-          .add(OPTION__EXCLUDED_OPTIMIZATION_FILES, List.of("[+-]?<path-glob>(,<path-glob>)*"),
+          .add(OPTION__FILE_OPTIMIZATION_FILTER, List.of("[+-]?<path-glob>(,<path-glob>)*"),
               $args -> parseListIncremental($args.get(0), identity(),
-                  config.getExcludedOptimizationFiles()))
+                  new ListIncrementalAdapter<String>() {
+                    final FileInclusionFilter base = config.getFileOptimizationFilter();
+
+                    @Override
+                    public boolean add(String e) {
+                      return base.getIncludes().add(e);
+                    }
+
+                    @Override
+                    public void clear() {
+                      base.clear();
+                    }
+
+                    @Override
+                    public boolean remove(Object o) {
+                      return base.getExcludes().add((String) o);
+                    }
+                  }))
           .add(OPTION__LOG_LEVEL, List.of(Arrays.stream(LogLevel.values())
               .map(LogLevel::toString)
               .collect(joining("|", "(", ")"))),

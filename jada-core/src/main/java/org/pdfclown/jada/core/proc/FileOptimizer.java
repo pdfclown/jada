@@ -13,12 +13,9 @@
 package org.pdfclown.jada.core.proc;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static java.util.stream.Collectors.joining;
 import static org.apache.commons.lang3.exception.ExceptionUtils.getStackTrace;
-import static org.pdfclown.common.util.Chars.PIPE;
 import static org.pdfclown.common.util.Exceptions.unexpected;
 import static org.pdfclown.common.util.Objects.anyThat;
-import static org.pdfclown.common.util.Strings.S;
 import static org.pdfclown.common.util.io.Files.FILE_EXTENSION__CSS;
 import static org.pdfclown.common.util.io.Files.FILE_EXTENSION__JAVASCRIPT;
 import static org.pdfclown.common.util.io.Files.baseName;
@@ -39,17 +36,17 @@ import java.io.StringReader;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import javax.tools.Diagnostic.Kind;
-import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 import org.pdfclown.common.util.annot.LazyNonNull;
-import org.pdfclown.common.util.regex.Patterns;
 import org.pdfclown.jada.core.JadaConfig;
 import org.pdfclown.jada.core.internal.JadaMessage;
+import org.pdfclown.jada.core.internal.temp.util.io.ResourceNames;
 import org.pdfclown.jada.core.system.SystemConfig;
 import org.pdfclown.jada.core.system.proc.FileProcess;
 import org.pdfclown.jada.core.system.proc.FileProcess.Context;
@@ -69,15 +66,10 @@ import org.pdfclown.jada.core.system.proc.TextSerializer;
  * been optimized.
  * </p>
  * <p>
- * <span class="important">IMPORTANT: In order to retain the header comment with essential
- * information such as copyright notice and license, it MUST be formatted as in the following
- * example (note the exclamation mark in the opening comment marker):</span>
+ * Header comments with essential information such as copyright notice and license are automatically
+ * preserved applying the conventional minification preventer (that is, opening comment marker
+ * followed by exclamation mark, {@code "/*!"}).
  * </p>
- * <pre class="lang-javascript" data-line=""><code>
- * &#47;*!
- *  * Copyright 2023-2025 Foo Inc.
- *  * MIT License
- *  *&#47;</code></pre>
  * <p>
  * NOTE: In {@linkplain JadaConfig#isDebug() debug mode}, optimization is disabled to ease source
  * code inspection and stepping.
@@ -86,7 +78,13 @@ import org.pdfclown.jada.core.system.proc.TextSerializer;
  * @author Stefano Chizzolini
  */
 public class FileOptimizer extends JadaFileProcessor<String> {
-  private @LazyNonNull @Nullable Pattern excludedFilesPattern;
+  private static final Pattern PATTERN__COPYRIGHT_COMMENT = Pattern.compile(
+      "/\\*([^!].*?(?:copyright|\\(c\\)|©|license).*?\\*/)",
+      Pattern.DOTALL | Pattern.CASE_INSENSITIVE);
+
+  private static final String FILE_QUALIFIER__MINIFIED = ".min";
+
+  private @LazyNonNull @Nullable Predicate<String> includedFilesPredicate;
 
   /**
    */
@@ -127,11 +125,23 @@ public class FileOptimizer extends JadaFileProcessor<String> {
     return !getConfig().isDebug()
         && anyThat(extension(file), String::equalsIgnoreCase, FILE_EXTENSION__CSS,
             FILE_EXTENSION__JAVASCRIPT)
-        && !isFileExcluded(file);
+        && isFileIncluded(context.getBaseDir(file).relativize(file));
   }
 
   @Override
-  protected @Nullable String processContent(@NonNull String content, Path file, Context context) {
+  protected @Nullable String processContent(String content, Path file, Context context) {
+    // Ensure copyright notices preservation!
+    var matcher = PATTERN__COPYRIGHT_COMMENT.matcher(content);
+    if (matcher.find()) {
+      var b = new StringBuilder();
+      do {
+        // Replace ordinary comment opening marker with preservation marker!
+        matcher.appendReplacement(b, "/*!$1");
+      } while (matcher.find());
+      matcher.appendTail(b);
+      content = b.toString();
+    }
+
     String ret = null;
     var problems = new StringBuilder();
     String extension = extension(file).toLowerCase();
@@ -196,7 +206,7 @@ public class FileOptimizer extends JadaFileProcessor<String> {
         throw unexpected(extension);
     }
     if (ret != null) {
-      if (problems.length() > 0) {
+      if (!problems.isEmpty()) {
         getLog().print(Kind.WARNING, this, JadaMessage.OPTIMIZATION_ISSUES, file, problems);
       }
       context.changeFile();
@@ -206,24 +216,20 @@ public class FileOptimizer extends JadaFileProcessor<String> {
     return ret;
   }
 
-  private boolean isFileExcluded(Path file) {
-    /*
-     * NOTE: By definition, already optimized files are excluded.
-     */
-    if (baseName(file).endsWith(".min"))
-      return true;
+  /**
+   * @param file
+   *          Relative file.
+   */
+  private boolean isFileIncluded(Path file) {
+    // Already optimized?
+    if (baseName(file).endsWith(FILE_QUALIFIER__MINIFIED))
+      return false /* NOTE: By definition, already-optimized files are excluded */;
 
-    if (excludedFilesPattern == null) {
-      excludedFilesPattern = Pattern.compile(
-          getConfig().getExcludedOptimizationFiles().stream()
-              .map(Patterns::globToRegex)
-              .collect(joining(S + PIPE)));
+    if (includedFilesPredicate == null) {
+      includedFilesPredicate = getConfig().getFileOptimizationFilter().toPredicate();
     }
-    /*
-     * NOTE: Match is done against a subsequence rather than the entire region in order to permit
-     * simple filters like "myScript.js" (otherwise, they would never match the full path!).
-     */
-    return !excludedFilesPattern.pattern().isEmpty()
-        && excludedFilesPattern.matcher(file.toUri().toString()).find();
+
+    var resourceName = ResourceNames.fromPath(file, null);
+    return includedFilesPredicate.test(resourceName);
   }
 }

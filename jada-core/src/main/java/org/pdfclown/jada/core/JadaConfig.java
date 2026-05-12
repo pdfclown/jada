@@ -61,6 +61,7 @@ import org.pdfclown.common.util.annot.LazyNonNull;
 import org.pdfclown.common.util.annot.UnmodifiableView;
 import org.pdfclown.common.util.io.Resource;
 import org.pdfclown.jada.core.internal.JadaMessage;
+import org.pdfclown.jada.core.internal.temp.util.system.Clis.FileInclusionFilter;
 import org.pdfclown.jada.core.system.Logger;
 import org.pdfclown.jada.core.system.SystemConfig;
 import org.pdfclown.jada.core.util.lang.LangModels;
@@ -517,10 +518,10 @@ public class JadaConfig extends SystemConfig implements JadaObject {
   public static final String OPTION__DOCLET_EXTENSIONS =
       "--jada-exts";
   /**
-   * @see #getExcludedOptimizationFiles()
+   * @see #getFileOptimizationFilter()
    */
-  public static final String OPTION__EXCLUDED_OPTIMIZATION_FILES =
-      "--jada-file-optimize-exclude";
+  public static final String OPTION__FILE_OPTIMIZATION_FILTER =
+      "--jada-file-optimize-filter";
   /**
    * @see #isHelp()
    */
@@ -588,9 +589,9 @@ public class JadaConfig extends SystemConfig implements JadaObject {
   private List<Attachment> attachments;
   private @Nullable Path currentOutputFile;
   private boolean debug;
-  private final List<String> excludedOptimizationFiles = new ArrayList<>();
   @SuppressWarnings("NotNullFieldNotInitialized")
   private Map<String, JadaExtension> extensions;
+  private final FileInclusionFilter fileOptimizationFilter = new FileInclusionFilter();
   private boolean help;
   @SuppressWarnings("NotNullFieldNotInitialized")
   private Jada jada;
@@ -745,21 +746,6 @@ public class JadaConfig extends SystemConfig implements JadaObject {
     return currentOutputFile;
   }
 
-  /**
-   * Paths of files excluded from {@linkplain org.pdfclown.jada.core.proc.FileOptimizer
-   * optimization}.
-   * <p>
-   * Paths can be expressed as globs (with {@code '*'} and {@code '?'} wildcards), matched against
-   * paths expressed as URIs to ensure a filesystem-independent format.
-   * </p>
-   * <p>
-   * CLI option: {@value #OPTION__EXCLUDED_OPTIMIZATION_FILES} (repeatable)
-   * </p>
-   */
-  public List<String> getExcludedOptimizationFiles() {
-    return excludedOptimizationFiles;
-  }
-
   @SuppressWarnings("unchecked")
   public <T extends JadaExtension> T getExtension(Class<T> type) {
     return (T) extensions.get(fqn(type));
@@ -773,6 +759,25 @@ public class JadaConfig extends SystemConfig implements JadaObject {
    */
   public @UnmodifiableView Map<String, JadaExtension> getExtensions() {
     return unmodifiableMap(extensions);
+  }
+
+  /**
+   * Path filter for Javadoc tool output files to be
+   * {@linkplain org.pdfclown.jada.core.proc.FileOptimizer optimized}.
+   * <p>
+   * Paths can be expressed as globs (with {@code "**"}, {@code '*'} and {@code '?'} wildcards),
+   * matched against relative paths expressed as resource names — this mechanism emulates <a href=
+   * "https://maven.apache.org/plugins/maven-resources-plugin/examples/include-exclude.html">file
+   * filters commonly used by Apache Maven plugins</a>.
+   * </p>
+   * <p>
+   * CLI option: {@value #OPTION__FILE_OPTIMIZATION_FILTER} (repeatable)
+   * </p>
+   *
+   * @implNote Resource names are used to ensure portability across filesystems.
+   */
+  public FileInclusionFilter getFileOptimizationFilter() {
+    return fileOptimizationFilter;
   }
 
   /**
