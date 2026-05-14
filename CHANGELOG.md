@@ -1,3 +1,9 @@
+## v0.4.1 (2026-05-14)
+
+### Fix
+
+- **core**: fix copyright comments preservation in `FileOptimizer`
+
 ## v0.4.0 (2026-05-12)
 
 ### BREAKING CHANGE

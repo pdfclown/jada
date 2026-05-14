@@ -5,8 +5,8 @@
 *Jada doclet extension for embedding UML diagrams into Javadoc*
 
 [![JDK Compatibility](https://img.shields.io/badge/Java-17-blue)](https://openjdk.org/projects/jdk/17/)
-[![maven](https://img.shields.io/maven-central/v/org.pdfclown/jada-uml)](https://search.maven.org/artifact/org.pdfclown/jada-uml/0.4.0/jar)
-[![javadoc](https://javadoc.io/badge2/org.pdfclown/jada-uml/javadoc.svg)](https://javadoc.io/doc/org.pdfclown/jada-uml/0.4.0/index.html)
+[![maven](https://img.shields.io/maven-central/v/org.pdfclown/jada-uml)](https://search.maven.org/artifact/org.pdfclown/jada-uml/0.4.1/jar)
+[![javadoc](https://javadoc.io/badge2/org.pdfclown/jada-uml/javadoc.svg)](https://javadoc.io/doc/org.pdfclown/jada-uml/0.4.1/index.html)
 
 This project started as a proof of concept for the Jada doclet extension model, porting the excellent [UMLDoclet](https://github.com/talsma-ict/umldoclet) to Jada. Because of its effectiveness, it is now a stable module of the Jada project.
 
