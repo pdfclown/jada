@@ -14,8 +14,11 @@ package org.pdfclown.jada.core.proc;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.apache.commons.lang3.exception.ExceptionUtils.getStackTrace;
-import static org.pdfclown.common.util.Exceptions.unexpected;
-import static org.pdfclown.common.util.Objects.anyThat;
+import static org.pdfclown.common.util.Chars.SPACE;
+import static org.pdfclown.common.util.Chars.STAR;
+import static org.pdfclown.common.util.Objects.nonNull;
+import static org.pdfclown.common.util.Strings.EMPTY;
+import static org.pdfclown.common.util.Strings.S;
 import static org.pdfclown.common.util.io.Files.FILE_EXTENSION__CSS;
 import static org.pdfclown.common.util.io.Files.FILE_EXTENSION__JAVASCRIPT;
 import static org.pdfclown.common.util.io.Files.baseName;
@@ -35,8 +38,10 @@ import java.io.OutputStreamWriter;
 import java.io.StringReader;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.function.Predicate;
+import java.util.function.UnaryOperator;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
@@ -67,9 +72,15 @@ import org.pdfclown.jada.core.system.proc.TextSerializer;
  * </p>
  * <p>
  * Header comments with essential information such as copyright notice and license are automatically
- * preserved applying the conventional minification preventer (that is, opening comment marker
- * followed by exclamation mark, {@code "/*!"}).
+ * preserved injecting the appropriate symbol:
  * </p>
+ * <ul>
+ * <li>CSS: <a href="https://yui.github.io/yuicompressor/css.html">special comment marker for
+ * preservation</a> ({@code "/*!"})</li>
+ * <li>Javascript: <a href=
+ * "https://github.com/google/closure-compiler/wiki/Annotating-JavaScript-for-the-Closure-Compiler#license-preserve-description">preservation
+ * tag</a> ({@code "@preserve"})</li>
+ * </ul>
  * <p>
  * NOTE: In {@linkplain JadaConfig#isDebug() debug mode}, optimization is disabled to ease source
  * code inspection and stepping.
@@ -78,13 +89,148 @@ import org.pdfclown.jada.core.system.proc.TextSerializer;
  * @author Stefano Chizzolini
  */
 public class FileOptimizer extends JadaFileProcessor<String> {
-  private static final Pattern PATTERN__COPYRIGHT_COMMENT = Pattern.compile(
-      "/\\*([^!].*?(?:copyright|\\(c\\)|©|license).*?\\*/)",
-      Pattern.DOTALL | Pattern.CASE_INSENSITIVE);
+  /**
+   * CSS optimizer.
+   *
+   * @author Stefano Chizzolini
+   */
+  private static class CssOptimizer implements FileTypeOptimizer {
+    /**
+     * <a href="https://yui.github.io/yuicompressor/css.html">Special comment marker for
+     * preservation</a>.
+     */
+    private static final String COMMENT_MARKER__PRESERVE = "!";
+
+    @Override
+    public @Nullable String optimize(String content, Path file, Context context,
+        StringBuilder problems) {
+      content = preserveCopyrightComments(content, $ -> !$.startsWith(COMMENT_MARKER__PRESERVE)
+          ? COMMENT_MARKER__PRESERVE
+          : EMPTY);
+
+      var out = new ByteArrayOutputStream();
+      try (var writer = new OutputStreamWriter(out, UTF_8)) {
+        var reader = new StringReader(content);
+        var compressor = new CssCompressor(reader);
+
+        compressor.compress(writer, 500);
+      } catch (IOException ex) {
+        problems.append(getStackTrace(ex));
+      }
+      return out.size() > 0 ? out.toString(UTF_8) : null;
+    }
+  }
+
+  /**
+   * File type optimizer.
+   *
+   * @author Stefano Chizzolini
+   */
+  @FunctionalInterface
+  private interface FileTypeOptimizer {
+    @Nullable
+    String optimize(String content, Path file, Context context, StringBuilder problems);
+  }
+
+  /**
+   * Javascript optimizer.
+   *
+   * @author Stefano Chizzolini
+   */
+  private static class JavascriptOptimizer implements FileTypeOptimizer {
+    /**
+     * <a href=
+     * "https://github.com/google/closure-compiler/wiki/Annotating-JavaScript-for-the-Closure-Compiler#license-preserve-description">Closure
+     * Compiler tag for comment preservation</a>.
+     */
+    private static final String COMMENT_MARKER__PRESERVE = "@preserve";
+
+    @Override
+    public @Nullable String optimize(String content, Path file, Context context,
+        StringBuilder problems) {
+      content = preserveCopyrightComments(content, $ -> (!$.startsWith(S + STAR)
+          /* NOTE: JSDoc tags are recognized only within double-star comments */ ? S + STAR
+          : EMPTY) + SPACE + COMMENT_MARKER__PRESERVE + SPACE);
+
+      Compiler.setLoggingLevel(Level.WARNING);
+      var compiler = new Compiler();
+      var externs = List.<SourceFile>of();
+      var interns = List.of(SourceFile.fromCode(file.toString(), content));
+      var options = new CompilerOptions();
+      {
+        options.setEnvironment(CompilerOptions.Environment.BROWSER);
+        /*
+         * NOTE: Strict mode becomes problematic in case of loosen third-party code, so we opt for
+         * relaxed syntax.
+         */
+        options.setEmitUseStrict(false);
+        /*
+         * NOTE: The compiler emits a JSC_BAD_JSDOC_ANNOTATION warning when encounters a `@callback`
+         * JSDoc tag, as it's not recognised; this option suppresses such noisy warning.
+         */
+        options.setExtraAnnotationNames(Set.of("callback"));
+        CompilationLevel.SIMPLE_OPTIMIZATIONS.setOptionsForCompilationLevel(options);
+      }
+
+      Result result = compiler.compile(externs, interns, options);
+      {
+        var problemFormatter = new LightweightMessageFormatter(compiler, SourceExcerpt.FULL);
+        if (result.warnings != null) {
+          for (JSError warning : result.warnings) {
+            problems.append(problemFormatter.formatWarning(warning));
+          }
+        }
+        if (result.errors != null) {
+          for (JSError error : result.errors) {
+            problems.append(problemFormatter.formatError(error));
+          }
+        }
+      }
+      return result.success ? compiler.toSource() : null;
+    }
+  }
 
   private static final String FILE_QUALIFIER__MINIFIED = ".min";
 
-  private @LazyNonNull @Nullable Predicate<String> includedFilesPredicate;
+  private static final Pattern PATTERN__COPYRIGHT_COMMENT = Pattern.compile(
+      "(/\\*)(.*?(?:copyright|\\(c\\)|©|license).*?\\*/)",
+      Pattern.DOTALL | Pattern.CASE_INSENSITIVE);
+
+  /**
+   * Ensures each copyright comment in the content is marked for preservation, in order to survive
+   * the optimization.
+   *
+   * @param preserveMarkerProvider
+   *          Provides the preservation marker to inject in the comment (empty, if already present).
+   * @return Updated {@code content}.
+   */
+  private static String preserveCopyrightComments(String content,
+      UnaryOperator<String> preserveMarkerProvider) {
+    var matcher = PATTERN__COPYRIGHT_COMMENT.matcher(content);
+    if (matcher.find()) {
+      StringBuilder b = null;
+      do {
+        String preserveMarker = preserveMarkerProvider.apply(matcher.group(2));
+        if (!preserveMarker.isEmpty()) {
+          if (b == null) {
+            b = new StringBuilder();
+          }
+          // Add preservation marker!
+          matcher.appendReplacement(b, "$1" + preserveMarker + "$2");
+        }
+      } while (matcher.find());
+      if (b != null) {
+        matcher.appendTail(b);
+        content = b.toString();
+      }
+    }
+    return content;
+  }
+
+  private final Map<String, FileTypeOptimizer> fileTypeOptimizers = Map.of(
+      FILE_EXTENSION__CSS, new CssOptimizer(),
+      FILE_EXTENSION__JAVASCRIPT, new JavascriptOptimizer());
+  private @LazyNonNull @Nullable Predicate<String> includedFilesFilter;
 
   /**
    */
@@ -123,88 +269,15 @@ public class FileOptimizer extends JadaFileProcessor<String> {
   @Override
   public boolean isProcessable(Path file, FileProcess.Context context) {
     return !getConfig().isDebug()
-        && anyThat(extension(file), String::equalsIgnoreCase, FILE_EXTENSION__CSS,
-            FILE_EXTENSION__JAVASCRIPT)
+        && fileTypeOptimizers.containsKey(extension(file).toLowerCase())
         && isFileIncluded(context.getBaseDir(file).relativize(file));
   }
 
   @Override
   protected @Nullable String processContent(String content, Path file, Context context) {
-    // Ensure copyright notices preservation!
-    var matcher = PATTERN__COPYRIGHT_COMMENT.matcher(content);
-    if (matcher.find()) {
-      var b = new StringBuilder();
-      do {
-        // Replace ordinary comment opening marker with preservation marker!
-        matcher.appendReplacement(b, "/*!$1");
-      } while (matcher.find());
-      matcher.appendTail(b);
-      content = b.toString();
-    }
-
-    String ret = null;
     var problems = new StringBuilder();
-    String extension = extension(file).toLowerCase();
-    switch (extension) {
-      case FILE_EXTENSION__CSS: {
-        var out = new ByteArrayOutputStream();
-        try (var writer = new OutputStreamWriter(out, UTF_8)) {
-          var reader = new StringReader(content);
-          var compressor = new CssCompressor(reader);
-
-          compressor.compress(writer, 500);
-        } catch (IOException ex) {
-          problems.append(getStackTrace(ex));
-        }
-        if (out.size() > 0) {
-          ret = out.toString(UTF_8);
-        }
-      }
-        break;
-      case FILE_EXTENSION__JAVASCRIPT: {
-        var externs = List.<SourceFile>of();
-        var interns = List.of(SourceFile.fromPath(file, UTF_8));
-        var options = new CompilerOptions();
-        {
-          options.setEnvironment(CompilerOptions.Environment.BROWSER);
-          /*
-           * NOTE: Strict mode becomes problematic in case of loosen third-party code, so we opt for
-           * relaxed syntax.
-           */
-          options.setEmitUseStrict(false);
-          /*
-           * NOTE: The compiler emits a JSC_BAD_JSDOC_ANNOTATION warning when encounters a
-           * `@callback` JSDoc tag, as it's not recognised; this option suppresses such noisy
-           * warning.
-           */
-          options.setExtraAnnotationNames(Set.of("callback"));
-          CompilationLevel.SIMPLE_OPTIMIZATIONS.setOptionsForCompilationLevel(options);
-        }
-        Compiler.setLoggingLevel(Level.WARNING);
-        var compiler = new Compiler();
-
-        Result result = compiler.compile(externs, interns, options);
-        {
-          var formatter = new LightweightMessageFormatter(compiler, SourceExcerpt.FULL);
-          if (result.warnings != null) {
-            for (JSError warning : result.warnings) {
-              problems.append(formatter.formatWarning(warning));
-            }
-          }
-          if (result.errors != null) {
-            for (JSError error : result.errors) {
-              problems.append(formatter.formatError(error));
-            }
-          }
-        }
-        if (result.success) {
-          ret = compiler.toSource();
-        }
-      }
-        break;
-      default:
-        throw unexpected(extension);
-    }
+    var ret = fileTypeOptimizers.get(extension(file).toLowerCase())
+        .optimize(content, file, context, problems);
     if (ret != null) {
       if (!problems.isEmpty()) {
         getLog().print(Kind.WARNING, this, JadaMessage.OPTIMIZATION_ISSUES, file, problems);
@@ -223,13 +296,13 @@ public class FileOptimizer extends JadaFileProcessor<String> {
   private boolean isFileIncluded(Path file) {
     // Already optimized?
     if (baseName(file).endsWith(FILE_QUALIFIER__MINIFIED))
-      return false /* NOTE: By definition, already-optimized files are excluded */;
+      return false;
 
-    if (includedFilesPredicate == null) {
-      includedFilesPredicate = getConfig().getFileOptimizationFilter().toPredicate();
+    if (includedFilesFilter == null) {
+      includedFilesFilter = getConfig().getFileOptimizationFilter().toPredicate();
     }
 
-    var resourceName = ResourceNames.fromPath(file, null);
-    return includedFilesPredicate.test(resourceName);
+    var resourceName = nonNull(ResourceNames.fromPath(file, null));
+    return includedFilesFilter.test(resourceName);
   }
 }
