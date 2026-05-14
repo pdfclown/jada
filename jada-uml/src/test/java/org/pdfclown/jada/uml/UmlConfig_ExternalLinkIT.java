@@ -16,7 +16,6 @@ import static java.nio.file.Files.readString;
 import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.stringContainsInOrder;
-import static org.pdfclown.common.build.util.io.ResourceNames.name;
 import static org.pdfclown.common.util.io.Files.FILE_EXTENSION__HTML;
 import static org.pdfclown.common.util.io.Files.relativize;
 import static org.pdfclown.jada.core.util.lang.Javadocs.FILENAME__PACKAGE_LIST;
@@ -29,8 +28,8 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.nio.file.Path;
 import org.junit.jupiter.api.Test;
-import org.pdfclown.common.build.util.io.ResourceNames;
 import org.pdfclown.common.util.Ref;
+import org.pdfclown.common.util.io.ResourceNames;
 import org.pdfclown.jada.uml.__test.BaseIT;
 import org.testcontainers.shaded.org.apache.commons.lang3.function.Failable;
 
@@ -75,7 +74,7 @@ public class UmlConfig_ExternalLinkIT extends BaseIT {
   void _offlineExternalLink() {
     runJavadoc(javadocArgs()
         .setOnRunInit(Failable.asBiConsumer(($args, $outputDir) -> {
-          Path packageListFile = getEnv().outputPath(name(SUBDIR__EXTERNAL_API,
+          Path packageListFile = getEnv().outputPath(ResourceNames.name(SUBDIR__EXTERNAL_API,
               FILENAME__PACKAGE_LIST));
           writeText(packageListFile, Serializable.class.getPackageName());
 

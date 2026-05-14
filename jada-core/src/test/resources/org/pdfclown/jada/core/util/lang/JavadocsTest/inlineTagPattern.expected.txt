@@ -1,0 +1,4 @@
+[tagNames: []] => ["myTag", "WHAT?", "link", "AnotherClass#anotherMethod(int)", "linkplain", "YetAnotherClass#yetAnotherMethod(char[]) yet another method", "myTag", "", "code", "classic Javadoc value", "myTag", "WHAT Markdown?", "link", "AnotherClass#anotherMD(int)", "linkplain", "YetAnotherClass#yetAnotherMD(char[]) yet another method (Markdown)", "code", "Markdown Javadoc value"]
+[tagNames: ["myTag"]] => ["myTag", "WHAT?", "myTag", "", "myTag", "WHAT Markdown?"]
+[tagNames: ["code", "myTag"]] => ["myTag", "WHAT?", "myTag", "", "code", "classic Javadoc value", "myTag", "WHAT Markdown?", "code", "Markdown Javadoc value"]
+[tagNames: ["code", "link"]] => ["link", "AnotherClass#anotherMethod(int)", "linkplain", "YetAnotherClass#yetAnotherMethod(char[]) yet another method", "code", "classic Javadoc value", "link", "AnotherClass#anotherMD(int)", "linkplain", "YetAnotherClass#yetAnotherMD(char[]) yet another method (Markdown)", "code", "Markdown Javadoc value"]

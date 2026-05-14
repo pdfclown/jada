@@ -27,7 +27,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.pdfclown.common.build.system.ProjectDirId;
 import org.pdfclown.common.build.test.IT;
 import org.pdfclown.common.build.test.TestUnit;
-import org.pdfclown.common.build.util.io.ResourceNames;
+import org.pdfclown.common.util.io.ResourceNames;
 import org.pdfclown.jada.core.test.assertion.Assertions.JavadocAssertArgs;
 import org.pdfclown.jada.core.test.assertion.Assertions.JavadocAssertResult;
 

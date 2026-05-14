@@ -12,11 +12,9 @@
  */
 package org.pdfclown.jada.biblio.render;
 
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.pdfclown.common.build.test.assertion.Matchers.matchesFileContent;
-import static org.pdfclown.common.util.Strings.EMPTY;
+import static org.pdfclown.common.build.test.assertion.Verifiers.VERIFIER__FILE;
 import static org.pdfclown.common.util.io.Files.resetDirectory;
 import static org.pdfclown.jada.core.test.JadaMocks.mockJadaConfig;
 
@@ -44,21 +42,19 @@ class BiblioRendererIT extends BaseIT {
   }
 
   private void render() throws IOException, SAXException {
-    final var sourceBaseDir = getEnv().resourcePath(EMPTY);
-    final var sourceDir = sourceBaseDir.resolve(getTestName());
+    final var sourceDir = getEnv().resourcePath(getTestName());
     final var targetDir = resetDirectory(getEnv().outputPath(getTestName()));
 
     Files.copy(sourceDir.resolve("index.html"), targetDir.resolve("index.html"));
     Files.copy(sourceDir.resolve("index-all.html"), targetDir.resolve("index-all.html"));
 
-    var biblioHtmlFile = targetDir.resolve("biblio.html");
+    var targetBiblioHtmlFile = targetDir.resolve("biblio.html");
 
     var config = mock(BiblioConfig.class);
     {
-      Document biblio = Biblios.biblio(sourceBaseDir.resolve("biblio.xml"));
-      //noinspection DataFlowIssue : ignore nullability
+      Document biblio = Biblios.biblio(getEnv().resourcePath("biblio.xml"));
       when(config.getBiblio()).thenReturn(biblio);
-      when(config.getBiblioOutputFile()).thenReturn(biblioHtmlFile);
+      when(config.getBiblioOutputFile()).thenReturn(targetBiblioHtmlFile);
 
       var jadaConfig = mockJadaConfig(null);
       {
@@ -70,9 +66,7 @@ class BiblioRendererIT extends BaseIT {
     var renderer = new BiblioRenderer();
     renderer.render(config);
 
-    assertThat(biblioHtmlFile,
-        matchesFileContent(sourceDir.resolve("expected/biblio.html")));
-    assertThat(targetDir.resolve("index-all.html"),
-        matchesFileContent(sourceDir.resolve("expected/index-all.html")));
+    VERIFIER__FILE.verify(targetBiblioHtmlFile);
+    VERIFIER__FILE.verify(targetDir.resolve("index-all.html"));
   }
 }

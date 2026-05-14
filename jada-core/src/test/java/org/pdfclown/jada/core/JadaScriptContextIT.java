@@ -40,7 +40,7 @@ public class JadaScriptContextIT extends BaseIT {
 
     var scriptLogPattern = Pattern.compile("""
         JadaScriptContext: (\\S+) phase: \
-        ".+org/pdfclown/jada/core/_JadaScriptContextIT/([^/]+)/scripts/(\\S+?)\\.groovy" script \
+        ".+org/pdfclown/jada/core/JadaScriptContextIT/([^/]+)/scripts/(\\S+?)\\.groovy" script \
         hook running""");
 
     var expectedMatches = List.of(

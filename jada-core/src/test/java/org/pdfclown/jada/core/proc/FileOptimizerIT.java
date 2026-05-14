@@ -13,12 +13,11 @@
 package org.pdfclown.jada.core.proc;
 
 import static org.mockito.Mockito.mock;
-import static org.pdfclown.common.build.test.assertion.Matchers.matchesText;
+import static org.pdfclown.common.build.test.assertion.Verifiers.VERIFIER__FILE;
 import static org.pdfclown.common.util.Exceptions.runtime;
 import static org.pdfclown.common.util.Strings.EMPTY;
 import static org.pdfclown.common.util.io.Files.FILE_EXTENSION__CSS;
 import static org.pdfclown.common.util.io.Files.FILE_EXTENSION__JAVASCRIPT;
-import static org.pdfclown.common.util.io.Files.filename;
 import static org.pdfclown.common.util.io.Files.isExtension;
 import static org.pdfclown.jada.core.test.JadaMocks.mockJadaConfig;
 
@@ -26,14 +25,14 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.stream.Stream;
-import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.pdfclown.common.build.test.assertion.Verifier.Namer;
 import org.pdfclown.jada.core.__test.BaseIT;
 import org.pdfclown.jada.core.system.proc.FileProcess;
 
 public class FileOptimizerIT extends BaseIT {
-  private FileOptimizer fileOptimizer;
+  private final FileOptimizer fileOptimizer;
   {
     fileOptimizer = new FileOptimizer();
     fileOptimizer.init(mockJadaConfig(null));
@@ -45,8 +44,8 @@ public class FileOptimizerIT extends BaseIT {
 
   @ParameterizedTest
   @MethodSource
-  void processContent__css(Path path) throws IOException {
-    processContent(path);
+  void processContent__css(Path file) throws IOException {
+    processContent(file);
   }
 
   Stream<Path> processContent__js() {
@@ -55,27 +54,29 @@ public class FileOptimizerIT extends BaseIT {
 
   @ParameterizedTest
   @MethodSource
-  void processContent__js(Path path) throws IOException {
-    processContent(path);
+  void processContent__js(Path file) throws IOException {
+    processContent(file);
   }
 
+  @SuppressWarnings("resource")
   private Stream<Path> files(String extension) {
     try {
       return Files.list(getEnv().resourcePath(EMPTY))
-          .filter($ -> isExtension($, extension))
+          .filter($ -> isExtension($, extension)
+              && !$.toString().contains(Namer.FILE_QUALIFIER__APPROVED))
           .sorted();
     } catch (IOException ex) {
       throw runtime(ex);
     }
   }
 
-  private void processContent(Path path) throws IOException {
-    String input = Files.readString(path);
-    var context = mock(FileProcess.Context.class);
-    String output = fileOptimizer.processContent(input, path, context);
-    Path expectedPath = path.getParent().resolve("expected/" + filename(path));
-    String expectedOutput = Files.readString(expectedPath);
+  private void processContent(Path file) throws IOException {
+    String input = Files.readString(file);
+    String output = fileOptimizer.processContent(input, file, mock(FileProcess.Context.class));
+    assert output != null;
+    Path outputFile = getEnv().outputPath(file.getFileName().toString());
+    Files.writeString(outputFile, output);
 
-    MatcherAssert.assertThat(output, matchesText(expectedOutput));
+    VERIFIER__FILE.verify(outputFile);
   }
 }

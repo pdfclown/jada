@@ -15,11 +15,9 @@ package org.pdfclown.jada.ext.proc;
 import static java.nio.file.Files.exists;
 import static org.apache.commons.io.file.PathUtils.touch;
 import static org.mockito.Mockito.when;
+import static org.pdfclown.common.build.test.assertion.Verifiers.VERIFIER__FILE;
 import static org.pdfclown.common.util.Chars.DOT;
-import static org.pdfclown.common.util.Chars.UNDERSCORE;
-import static org.pdfclown.common.util.Objects.sqn;
 import static org.pdfclown.common.util.Strings.EMPTY;
-import static org.pdfclown.common.util.Strings.S;
 import static org.pdfclown.common.util.io.Files.FILE_EXTENSION__JAVA;
 import static org.pdfclown.common.util.io.Files.copyDirectory;
 import static org.pdfclown.common.util.io.Files.resetDirectory;
@@ -29,11 +27,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import org.junit.jupiter.api.Test;
-import org.pdfclown.common.build.test.assertion.Assertions;
-import org.pdfclown.common.build.util.io.ResourceNames;
+import org.pdfclown.common.util.io.ResourceNames;
 import org.pdfclown.jada.core.system.proc.src.SrcFileProcess;
-import org.pdfclown.jada.ext.proc._DocReuseTagletProcessorIT.alreadyProcessed.ClassA;
-import org.pdfclown.jada.ext.proc._DocReuseTagletProcessorIT.main.Main;
+import org.pdfclown.jada.ext.proc.DocReuseTagletProcessorIT_.alreadyProcessed.ClassA;
+import org.pdfclown.jada.ext.proc.DocReuseTagletProcessorIT_.main.Main;
 import org.pdfclown.jada.ext.proc.__test.BaseIT;
 
 /**
@@ -50,7 +47,7 @@ class DocReuseTagletProcessorIT extends BaseIT {
         ClassA.class,
         false /* timeThresholdInitialized */);
 
-    assertFileTreeEquals(process);
+    verifyFileTree(process);
   }
 
   /**
@@ -66,14 +63,14 @@ class DocReuseTagletProcessorIT extends BaseIT {
 
     // Force `ClassA` processing!
     var classAFile = process.getConfig().getBuildDirectory()
-        .resolve(org.pdfclown.jada.ext.proc._DocReuseTagletProcessorIT.main.a.ClassA.class.getName()
+        .resolve(org.pdfclown.jada.ext.proc.DocReuseTagletProcessorIT_.main.a.ClassA.class.getName()
             .replace(DOT, File.separatorChar) + FILE_EXTENSION__JAVA);
     if (exists(classAFile)) {
       touch(classAFile);
     } else
       throw new FileNotFoundException(classAFile.toString());
 
-    assertFileTreeEquals(process);
+    verifyFileTree(process);
   }
 
   /**
@@ -86,15 +83,7 @@ class DocReuseTagletProcessorIT extends BaseIT {
         Main.class,
         false /* timeThresholdInitialized */);
 
-    assertFileTreeEquals(process);
-  }
-
-  private void assertFileTreeEquals(SrcFileProcess process) {
-    process.run();
-
-    Assertions.assertFileTreeEquals(
-        ResourceNames.name(S + UNDERSCORE + sqn(this), "expected", getTestName()),
-        process.getConfig().getBuildDirectory(), this);
+    verifyFileTree(process);
   }
 
   private SrcFileProcess prepareTest(Class<?> baseType, boolean timeThresholdInitialized)
@@ -122,5 +111,11 @@ class DocReuseTagletProcessorIT extends BaseIT {
       ret.addProcessor(new DocReuseTagletProcessor());
     }
     return ret;
+  }
+
+  private void verifyFileTree(SrcFileProcess process) {
+    process.run();
+
+    VERIFIER__FILE.verify(process.getConfig().getBuildDirectory());
   }
 }

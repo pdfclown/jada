@@ -29,7 +29,7 @@ import static org.pdfclown.jada.uml.util.Plantumls.puml;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.pdfclown.common.build.system.ProjectDirId;
-import org.pdfclown.common.build.util.io.ResourceNames;
+import org.pdfclown.common.util.io.ResourceNames;
 import org.pdfclown.jada.core.Jada;
 import org.pdfclown.jada.core.test.assertion.Assertions.JavadocAssertArgs;
 import org.pdfclown.jada.core.test.assertion.Assertions.JavadocAssertArgs.ArgGroups;

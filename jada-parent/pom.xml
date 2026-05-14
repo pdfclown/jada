@@ -162,8 +162,6 @@
               <option>--log-level INFO</option>
               <option>--biblio-static-entries JLS,JAVADOC-COMMENT</option>
               <option>--uml-package-deps-max-count -1</option>
-              <!-- TODO: remove after updated to next jada version (>0.3.0) -->
-              <option>--jada-file-optimize-exclude "*.js"</option>
             </additionalOptions>
 
             <dependencyLinks

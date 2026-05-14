@@ -1,0 +1,4 @@
+[content: "  something\n  *  and even   \nmore (5 * 4 = 20)\n\t\t*    !"] => "something and even more (5 * 4 = 20) !"
+[content: "something\n  * * and even   \nmore (5 * 4 = 20)\n\t\t!"] => "something * and even more (5 * 4 = 20) !"
+[content: "///  something\n  ///  \t  * and even   \n\t///\t more (5 * 4 = 20)\n\t\t///!"] => "something * and even more (5 * 4 = 20) !"
+[content: "   *     <p>Some text followed by</p><pre>\n   * public class MyClass {\n   *   private int myMethod() {\n      return 0;\n   *   }\n   * }</pre>\n   * <p>And other content\n on several\n\t    *         lines.</p>"] => "<p>Some text followed by</p><pre>\n  public class MyClass {\n    private int myMethod() {\n      return 0;\n    }\n  }</pre> <p>And other content on several lines.</p>"

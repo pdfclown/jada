@@ -1,0 +1,21 @@
+/*
+  SPDX-FileCopyrightText: 2025-2026 Stefano Chizzolini and contributors
+
+  SPDX-License-Identifier: LGPL-3.0-only
+
+  This file (package-info.java) is part of jada-ext module in Jada project
+  <https://github.com/pdfclown/jada>
+
+  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER. If you reuse (entirely or partially)
+  this file, you MUST add your own copyright notice in a separate comment block above this file
+  header, listing the main changes you applied to the original source.
+ */
+/**
+ * <h4>[Name resolution 3] Package-level inner type</h4>
+ * {@jada.reuseDoc ClassA.InnerClassA.SubInnerClassA#size(*)}
+       * <p>
+       * This is from {@link org.pdfclown.jada.ext.proc.DocReuseTagletProcessorIT_.main.a.ClassA.InnerClassA.SubInnerClassA SubInnerClassA}{@code .}{@link org.pdfclown.jada.ext.proc.DocReuseTagletProcessorIT_.main.a.ClassA.InnerClassA.SubInnerClassA#size() size()}
+       * </p>
+       * {@jada.reuseDoc END}
+ */
+package org.pdfclown.jada.ext.proc.DocReuseTagletProcessorIT_.main.a;

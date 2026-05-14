@@ -12,10 +12,10 @@
  */
 package org.pdfclown.jada.ext.proc.__test;
 
-import org.pdfclown.common.build.test.IT;
+import org.pdfclown.jada.core.test.JadaIT;
 
 /**
  * @author Stefano Chizzolini
  */
-public class BaseIT extends IT {
+public class BaseIT extends JadaIT {
 }
