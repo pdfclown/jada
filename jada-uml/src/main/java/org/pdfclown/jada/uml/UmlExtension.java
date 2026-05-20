@@ -18,7 +18,6 @@
 package org.pdfclown.jada.uml;
 
 import static java.lang.Integer.parseInt;
-import static java.util.Objects.requireNonNull;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.joining;
@@ -26,6 +25,7 @@ import static org.pdfclown.common.util.Chars.DOT;
 import static org.pdfclown.common.util.Chars.HYPHEN;
 import static org.pdfclown.common.util.Chars.LF;
 import static org.pdfclown.common.util.Chars.SPACE;
+import static org.pdfclown.common.util.Exceptions.missing;
 import static org.pdfclown.common.util.Strings.EMPTY;
 import static org.pdfclown.common.util.Strings.EOL;
 import static org.pdfclown.common.util.Strings.S;
@@ -203,8 +203,8 @@ public class UmlExtension extends JadaExtension {
 
   private void attachScript(String resourceName) {
     getConfig().addScriptAttachment(Attachment.resource(
-        requireNonNull(Resource.of(getClass().getResource(resourceName)),
-            () -> "\"%s\" resource MISSING".formatted(resourceName)),
+        Resource.of(getClass().getResource(resourceName))
+            .orElseThrow(() -> missing(resourceName, "resource MISSING")),
         NAME));
   }
 
