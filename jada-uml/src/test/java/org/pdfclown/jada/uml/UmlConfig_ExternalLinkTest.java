@@ -27,7 +27,7 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 import static org.pdfclown.common.build.test.assertion.Matchers.matchesEvent;
 import static org.pdfclown.common.util.Strings.EMPTY;
-import static org.pdfclown.jada.uml.__test.UmlMocks.mockUmlConfig;
+import static org.pdfclown.jada.uml.__test.UmlTests.mockUmlConfig;
 
 import java.net.URI;
 import java.nio.file.Path;

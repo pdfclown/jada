@@ -3,7 +3,7 @@
 
   SPDX-License-Identifier: LGPL-3.0-only
 
-  This file (JadaMocks.java) is part of jada-core module in Jada project
+  This file (JadaTests.java) is part of jada-core module in Jada project
   <https://github.com/pdfclown/jada>
 
   DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER. If you reuse (entirely or partially)
@@ -26,11 +26,11 @@ import org.pdfclown.jada.core.system.SystemConfig;
 import org.pdfclown.jada.core.test.assertion.JadaLogCaptor;
 
 /**
- * Jada-related mocks.
+ * Common utilities for Jada unit testing.
  *
  * @author Stefano Chizzolini
  */
-public final class JadaMocks {
+public final class JadaTests {
   /**
    * Mocks Jada configuration.
    *
@@ -102,6 +102,6 @@ public final class JadaMocks {
     return mockSystemConfig(SystemConfig.class, logCaptor);
   }
 
-  private JadaMocks() {
+  private JadaTests() {
   }
 }

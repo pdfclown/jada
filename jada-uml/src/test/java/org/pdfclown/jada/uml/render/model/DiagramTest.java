@@ -31,7 +31,7 @@ import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
-import static org.pdfclown.jada.uml.__test.UmlMocks.mockUmlConfig;
+import static org.pdfclown.jada.uml.__test.UmlTests.mockUmlConfig;
 
 import java.io.IOException;
 import java.io.StringWriter;

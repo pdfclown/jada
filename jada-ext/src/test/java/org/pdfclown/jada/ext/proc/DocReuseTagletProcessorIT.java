@@ -21,7 +21,7 @@ import static org.pdfclown.common.util.Strings.EMPTY;
 import static org.pdfclown.common.util.io.Files.FILE_EXTENSION__JAVA;
 import static org.pdfclown.common.util.io.Files.copyDirectory;
 import static org.pdfclown.common.util.io.Files.resetDirectory;
-import static org.pdfclown.jada.core.test.JadaMocks.mockSystemConfig;
+import static org.pdfclown.jada.core.test.JadaTests.mockSystemConfig;
 
 import java.io.File;
 import java.io.FileNotFoundException;

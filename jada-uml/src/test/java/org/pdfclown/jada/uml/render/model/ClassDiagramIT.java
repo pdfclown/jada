@@ -26,7 +26,7 @@ import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.pdfclown.jada.uml.__test.UmlMocks.mockUmlConfig;
+import static org.pdfclown.jada.uml.__test.UmlTests.mockUmlConfig;
 import static org.pdfclown.jada.uml.util.Plantumls.PUML_REF__EXTENDED_BY;
 
 import java.io.IOException;

@@ -19,7 +19,7 @@ import static org.pdfclown.common.util.Strings.EMPTY;
 import static org.pdfclown.common.util.io.Files.FILE_EXTENSION__CSS;
 import static org.pdfclown.common.util.io.Files.FILE_EXTENSION__JAVASCRIPT;
 import static org.pdfclown.common.util.io.Files.isExtension;
-import static org.pdfclown.jada.core.test.JadaMocks.mockJadaConfig;
+import static org.pdfclown.jada.core.test.JadaTests.mockJadaConfig;
 
 import java.io.IOException;
 import java.nio.file.Files;
