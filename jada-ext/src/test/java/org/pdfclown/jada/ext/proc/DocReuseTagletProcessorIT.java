@@ -51,6 +51,19 @@ class DocReuseTagletProcessorIT extends BaseIT {
   }
 
   /**
+   * Simulates the first run over a code base, when no time threshold is set yet; consequently, all
+   * source files are expected to be processed.
+   */
+  @Test
+  void main__withoutTimeThreshold() throws IOException {
+    SrcFileProcess process = prepareTest(
+        Main.class,
+        false /* timeThresholdInitialized */);
+
+    verifyFileTree(process);
+  }
+
+  /**
    * Simulates a subsequent run over a code base, when the time threshold is already set;
    * consequently, only changed source files (that is, those younger than the threshold) are
    * expected to be processed.
@@ -69,19 +82,6 @@ class DocReuseTagletProcessorIT extends BaseIT {
       touch(classAFile);
     } else
       throw new FileNotFoundException(classAFile.toString());
-
-    verifyFileTree(process);
-  }
-
-  /**
-   * Simulates the first run over a code base, when no time threshold is set yet; consequently, all
-   * source files are expected to be processed.
-   */
-  @Test
-  void main__withoutTimeThreshold() throws IOException {
-    SrcFileProcess process = prepareTest(
-        Main.class,
-        false /* timeThresholdInitialized */);
 
     verifyFileTree(process);
   }

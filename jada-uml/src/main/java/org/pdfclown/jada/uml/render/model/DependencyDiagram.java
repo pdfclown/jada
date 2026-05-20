@@ -184,6 +184,15 @@ public class DependencyDiagram extends Diagram {
     return excludedPackageDependenciesPattern.matcher(packageName).matches();
   }
 
+  private IndentWriter writePackageLinksTo(IndentWriter out) throws IOException {
+    out.writeln("' Package links");
+    getChildren(Reference.class).stream()
+        .flatMap($ -> Stream.of($.from.toString(), $.to.toString()))
+        .distinct().map($packageName -> new Namespace(this, $packageName, null))
+        .forEach(Failable.asConsumer($namespace -> writePackageLinkTo(out, $namespace)));
+    return out;
+  }
+
   private IndentWriter writePackageLinkTo(IndentWriter out, Namespace namespace)
       throws IOException {
     String link = Link.forPackage(namespace).toString().trim();
@@ -191,15 +200,6 @@ public class DependencyDiagram extends Diagram {
       out.append("class \"").append(namespace.getName()).append("\" ").append(link)
           .append(" {").nl().append('}').nl();
     }
-    return out;
-  }
-
-  private IndentWriter writePackageLinksTo(IndentWriter out) throws IOException {
-    out.writeln("' Package links");
-    getChildren(Reference.class).stream()
-        .flatMap($ -> Stream.of($.from.toString(), $.to.toString()))
-        .distinct().map($packageName -> new Namespace(this, $packageName, null))
-        .forEach(Failable.asConsumer($namespace -> writePackageLinkTo(out, $namespace)));
     return out;
   }
 }

@@ -197,6 +197,14 @@ public class JadaConfig extends SystemConfig implements JadaObject {
     }
 
     @Override
+    public PrintWriter append(char c) {
+      if (isWritable()) {
+        base.append(c);
+      }
+      return this;
+    }
+
+    @Override
     public PrintWriter append(CharSequence csq) {
       if (isWritable()) {
         base.append(csq);
@@ -208,14 +216,6 @@ public class JadaConfig extends SystemConfig implements JadaObject {
     public PrintWriter append(CharSequence csq, int start, int end) {
       if (isWritable()) {
         base.append(csq, start, end);
-      }
-      return this;
-    }
-
-    @Override
-    public PrintWriter append(char c) {
-      if (isWritable()) {
-        base.append(c);
       }
       return this;
     }
@@ -249,20 +249,6 @@ public class JadaConfig extends SystemConfig implements JadaObject {
         base.format(format, args);
       }
       return this;
-    }
-
-    @Override
-    public void print(Object obj) {
-      if (isWritable()) {
-        base.print(obj);
-      }
-    }
-
-    @Override
-    public void print(String s) {
-      if (isWritable()) {
-        base.print(s);
-      }
     }
 
     @Override
@@ -315,6 +301,20 @@ public class JadaConfig extends SystemConfig implements JadaObject {
     }
 
     @Override
+    public void print(Object obj) {
+      if (isWritable()) {
+        base.print(obj);
+      }
+    }
+
+    @Override
+    public void print(String s) {
+      if (isWritable()) {
+        base.print(s);
+      }
+    }
+
+    @Override
     public PrintWriter printf(Locale l, String format, Object... args) {
       if (isWritable()) {
         base.printf(l, format, args);
@@ -334,6 +334,55 @@ public class JadaConfig extends SystemConfig implements JadaObject {
     public void println() {
       if (isWritable()) {
         base.println();
+      }
+    }
+
+    @Override
+    public void println(boolean x) {
+      if (isWritable()) {
+        base.println(x);
+      }
+    }
+
+    @Override
+    public void println(char x) {
+      if (isWritable()) {
+        base.println(x);
+      }
+    }
+
+    @Override
+    public void println(char[] x) {
+      if (isWritable()) {
+        base.println(x);
+      }
+    }
+
+    @Override
+    public void println(double x) {
+      if (isWritable()) {
+        base.println(x);
+      }
+    }
+
+    @Override
+    public void println(float x) {
+      if (isWritable()) {
+        base.println(x);
+      }
+    }
+
+    @Override
+    public void println(int x) {
+      if (isWritable()) {
+        base.println(x);
+      }
+    }
+
+    @Override
+    public void println(long x) {
+      if (isWritable()) {
+        base.println(x);
       }
     }
 
@@ -414,69 +463,6 @@ public class JadaConfig extends SystemConfig implements JadaObject {
     }
 
     @Override
-    public void println(boolean x) {
-      if (isWritable()) {
-        base.println(x);
-      }
-    }
-
-    @Override
-    public void println(char x) {
-      if (isWritable()) {
-        base.println(x);
-      }
-    }
-
-    @Override
-    public void println(char[] x) {
-      if (isWritable()) {
-        base.println(x);
-      }
-    }
-
-    @Override
-    public void println(double x) {
-      if (isWritable()) {
-        base.println(x);
-      }
-    }
-
-    @Override
-    public void println(float x) {
-      if (isWritable()) {
-        base.println(x);
-      }
-    }
-
-    @Override
-    public void println(int x) {
-      if (isWritable()) {
-        base.println(x);
-      }
-    }
-
-    @Override
-    public void println(long x) {
-      if (isWritable()) {
-        base.println(x);
-      }
-    }
-
-    @Override
-    public void write(String s) {
-      if (isWritable()) {
-        base.write(s);
-      }
-    }
-
-    @Override
-    public void write(String s, int off, int len) {
-      if (isWritable()) {
-        base.write(s, off, len);
-      }
-    }
-
-    @Override
     public void write(char[] buf) {
       if (isWritable()) {
         base.write(buf);
@@ -494,6 +480,20 @@ public class JadaConfig extends SystemConfig implements JadaObject {
     public void write(int c) {
       if (isWritable()) {
         base.write(c);
+      }
+    }
+
+    @Override
+    public void write(String s) {
+      if (isWritable()) {
+        base.write(s);
+      }
+    }
+
+    @Override
+    public void write(String s, int off, int len) {
+      if (isWritable()) {
+        base.write(s, off, len);
       }
     }
 

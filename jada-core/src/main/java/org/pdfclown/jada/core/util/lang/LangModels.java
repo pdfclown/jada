@@ -136,41 +136,6 @@ public final class LangModels {
   /**
    * Gets the fully-qualified name corresponding to the element.
    */
-  public static FQName fqName(@Nullable Element element) {
-    String moduleName = null;
-    String packageName = null;
-    String localName = null;
-    String memberName = null;
-    String signature = null;
-    {
-      TypeElement currentType = null;
-      while (element != null) {
-        if (element instanceof TypeElement e) {
-          if (currentType == null) {
-            currentType = e;
-          }
-        } else if (element instanceof PackageElement) {
-          packageName = element.toString();
-          if (currentType != null) {
-            localName = currentType.toString().substring(packageName.length() + 1);
-          }
-        } else if (element instanceof ModuleElement e) {
-          if (!e.isUnnamed()) {
-            moduleName = e.toString();
-          }
-        } else if (element instanceof ExecutableElement e) {
-          memberName = e.getSimpleName().toString();
-          signature = e.toString().substring(memberName.length());
-        }
-        element = element.getEnclosingElement();
-      }
-    }
-    return new FQName(moduleName, packageName, localName, memberName, signature);
-  }
-
-  /**
-   * Gets the fully-qualified name corresponding to the element.
-   */
   public static String fqn(Element element) {
     return fqn(element, true);
   }
@@ -205,6 +170,41 @@ public final class LangModels {
       }
     });
     return b.toString();
+  }
+
+  /**
+   * Gets the fully-qualified name corresponding to the element.
+   */
+  public static FQName fqName(@Nullable Element element) {
+    String moduleName = null;
+    String packageName = null;
+    String localName = null;
+    String memberName = null;
+    String signature = null;
+    {
+      TypeElement currentType = null;
+      while (element != null) {
+        if (element instanceof TypeElement e) {
+          if (currentType == null) {
+            currentType = e;
+          }
+        } else if (element instanceof PackageElement) {
+          packageName = element.toString();
+          if (currentType != null) {
+            localName = currentType.toString().substring(packageName.length() + 1);
+          }
+        } else if (element instanceof ModuleElement e) {
+          if (!e.isUnnamed()) {
+            moduleName = e.toString();
+          }
+        } else if (element instanceof ExecutableElement e) {
+          memberName = e.getSimpleName().toString();
+          signature = e.toString().substring(memberName.length());
+        }
+        element = element.getEnclosingElement();
+      }
+    }
+    return new FQName(moduleName, packageName, localName, memberName, signature);
   }
 
   /**
