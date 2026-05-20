@@ -13,7 +13,7 @@
 package org.pdfclown.jada.core.proc;
 
 import static org.mockito.Mockito.mock;
-import static org.pdfclown.common.build.test.assertion.Verifiers.VERIFIER__FILE;
+import static org.pdfclown.common.build.test.assertion.Verifiers.FILE;
 import static org.pdfclown.common.util.Exceptions.runtime;
 import static org.pdfclown.common.util.Strings.EMPTY;
 import static org.pdfclown.common.util.io.Files.FILE_EXTENSION__CSS;
@@ -77,6 +77,6 @@ public class FileOptimizerIT extends BaseIT {
     Path outputFile = getEnv().outputPath(file.getFileName().toString());
     Files.writeString(outputFile, output);
 
-    VERIFIER__FILE.verify(outputFile);
+    FILE.verify(outputFile);
   }
 }

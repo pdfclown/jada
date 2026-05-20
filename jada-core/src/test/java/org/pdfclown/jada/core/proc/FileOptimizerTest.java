@@ -14,7 +14,7 @@ package org.pdfclown.jada.core.proc;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.pdfclown.common.build.test.assertion.Verifiers.VERIFIER__COMBINATION;
+import static org.pdfclown.common.build.test.assertion.Verifiers.COMBINATION;
 import static org.pdfclown.jada.core.test.JadaTests.mockJadaConfig;
 
 import com.google.common.jimfs.Configuration;
@@ -62,7 +62,7 @@ class FileOptimizerTest extends BaseTest {
 
   @Test
   void isProcessable() {
-    VERIFIER__COMBINATION.verify(
+    COMBINATION.verify(
         (file, fileOptimizationFilter, debug) -> {
           configDebug = debug;
 

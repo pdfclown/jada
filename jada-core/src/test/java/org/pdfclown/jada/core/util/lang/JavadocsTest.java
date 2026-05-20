@@ -12,7 +12,7 @@
  */
 package org.pdfclown.jada.core.util.lang;
 
-import static org.pdfclown.common.build.test.assertion.Verifiers.VERIFIER__COMBINATION;
+import static org.pdfclown.common.build.test.assertion.Verifiers.COMBINATION;
 import static org.pdfclown.common.util.Strings.S;
 
 import java.util.ArrayList;
@@ -56,7 +56,7 @@ class JavadocsTest extends BaseTest {
         }
         """;
 
-    VERIFIER__COMBINATION.verify(
+    COMBINATION.verify(
         (Set<String> tagNames) -> {
           var pattern = Javadocs.inlineTagPattern(tagNames);
           var matcher = pattern.matcher(content);
@@ -78,7 +78,7 @@ class JavadocsTest extends BaseTest {
 
   @Test
   void normal() {
-    VERIFIER__COMBINATION.verify(
+    COMBINATION.verify(
         (content) -> Javadocs.normal(content),
         List.of("content"),
         List.of(

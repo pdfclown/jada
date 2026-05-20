@@ -15,7 +15,7 @@ package org.pdfclown.jada.ext.proc;
 import static java.nio.file.Files.exists;
 import static org.apache.commons.io.file.PathUtils.touch;
 import static org.mockito.Mockito.when;
-import static org.pdfclown.common.build.test.assertion.Verifiers.VERIFIER__FILE;
+import static org.pdfclown.common.build.test.assertion.Verifiers.FILE;
 import static org.pdfclown.common.util.Chars.DOT;
 import static org.pdfclown.common.util.Strings.EMPTY;
 import static org.pdfclown.common.util.io.Files.FILE_EXTENSION__JAVA;
@@ -116,6 +116,6 @@ class DocReuseTagletProcessorIT extends BaseIT {
   private void verifyFileTree(SrcFileProcess process) {
     process.run();
 
-    VERIFIER__FILE.verify(process.getConfig().getBuildDirectory());
+    FILE.verify(process.getConfig().getBuildDirectory());
   }
 }

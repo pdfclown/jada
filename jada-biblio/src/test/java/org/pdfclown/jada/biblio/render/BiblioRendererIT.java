@@ -14,7 +14,7 @@ package org.pdfclown.jada.biblio.render;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.pdfclown.common.build.test.assertion.Verifiers.VERIFIER__FILE;
+import static org.pdfclown.common.build.test.assertion.Verifiers.FILE;
 import static org.pdfclown.common.util.io.Files.resetDirectory;
 import static org.pdfclown.jada.core.test.JadaTests.mockJadaConfig;
 
@@ -66,7 +66,7 @@ class BiblioRendererIT extends BaseIT {
     var renderer = new BiblioRenderer();
     renderer.render(config);
 
-    VERIFIER__FILE.verify(targetBiblioHtmlFile);
-    VERIFIER__FILE.verify(targetDir.resolve("index-all.html"));
+    FILE.verify(targetBiblioHtmlFile);
+    FILE.verify(targetDir.resolve("index-all.html"));
   }
 }
