@@ -16,7 +16,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.pdfclown.common.build.test.assertion.Verifiers.VERIFIER__FILE;
 import static org.pdfclown.common.util.io.Files.resetDirectory;
-import static org.pdfclown.jada.core.test.JadaMocks.mockJadaConfig;
+import static org.pdfclown.jada.core.test.JadaTests.mockJadaConfig;
 
 import java.io.IOException;
 import java.nio.file.Files;

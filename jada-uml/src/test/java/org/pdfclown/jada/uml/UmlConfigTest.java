@@ -23,7 +23,7 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.pdfclown.common.build.test.assertion.Matchers.matchesEvent;
-import static org.pdfclown.jada.core.test.JadaMocks.mockJadaConfig;
+import static org.pdfclown.jada.core.test.JadaTests.mockJadaConfig;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

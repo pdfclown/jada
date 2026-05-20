@@ -15,7 +15,7 @@ package org.pdfclown.jada.core.proc;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.pdfclown.common.build.test.assertion.Verifiers.VERIFIER__COMBINATION;
-import static org.pdfclown.jada.core.test.JadaMocks.mockJadaConfig;
+import static org.pdfclown.jada.core.test.JadaTests.mockJadaConfig;
 
 import com.google.common.jimfs.Configuration;
 import com.google.common.jimfs.Jimfs;
