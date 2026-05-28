@@ -19,7 +19,7 @@ import static org.pdfclown.common.util.Objects.basicLiteral;
 import static org.pdfclown.common.util.Objects.fqn;
 import static org.pdfclown.common.util.Strings.isInteger;
 import static org.pdfclown.common.util.Strings.stripEmptyLines;
-import static org.pdfclown.common.util.io.Files.baseName;
+import static org.pdfclown.common.util.io.Files.basename;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -187,7 +187,7 @@ public class PageProcessor extends JadaHtmlProcessor {
      * Adds the literal representation to character constant values.
      */
     addTweak(($doc, $file, $changedRef) -> {
-      if (!baseName($file).equals("constant-values"))
+      if (!basename($file).equals("constant-values"))
         return;
 
       $doc.select("td[class=colFirst]").stream()

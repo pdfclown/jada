@@ -27,7 +27,7 @@ import static org.pdfclown.common.util.Objects.sqn;
 import static org.pdfclown.common.util.Objects.xflat;
 import static org.pdfclown.common.util.Strings.EMPTY;
 import static org.pdfclown.common.util.function.Functions.to;
-import static org.pdfclown.common.util.io.Files.baseName;
+import static org.pdfclown.common.util.io.Files.basename;
 import static org.pdfclown.common.util.reflect.Reflects.stackFrame;
 
 import com.sun.source.util.DocTreePath;
@@ -142,7 +142,7 @@ public class Logger implements Reporter {
               }
               return location.getFileName().toString();
             } else {
-              return baseName(location);
+              return basename(location);
             }
           });
     } else {

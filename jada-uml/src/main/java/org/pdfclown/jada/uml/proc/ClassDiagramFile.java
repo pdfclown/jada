@@ -19,7 +19,7 @@ package org.pdfclown.jada.uml.proc;
 
 import static org.pdfclown.common.util.Chars.DOT;
 import static org.pdfclown.common.util.io.Files.FILE_EXTENSION__HTML;
-import static org.pdfclown.common.util.io.Files.baseName;
+import static org.pdfclown.common.util.io.Files.basename;
 import static org.pdfclown.common.util.io.Files.extension;
 import static org.pdfclown.common.util.io.Files.relativize;
 
@@ -88,7 +88,7 @@ final class ClassDiagramFile extends DiagramFile {
     }
 
     private String getImageTag() {
-      return getImageTag(baseName(diagramRelativePath, true), "uml-class",
+      return getImageTag(basename(diagramRelativePath, true), "uml-class",
           "max-width:60%;float:right;");
     }
   }
@@ -104,7 +104,7 @@ final class ClassDiagramFile extends DiagramFile {
 
     this.extension = extension(diagramFile);
     this.pathToCompare = hasImagesDir
-        ? baseName(diagramFile).replace(DOT, File.separatorChar) + this.extension
+        ? basename(diagramFile).replace(DOT, File.separatorChar) + this.extension
         : relativize(this.baseDir, this.diagramFile).toString();
   }
 

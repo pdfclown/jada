@@ -90,7 +90,7 @@ final class DiagramCollector extends SimpleFileVisitor<Path> {
 
   // SourceName: createDiagramInstance
   private DiagramFile createDiagram(Path file) {
-    return switch (Files.baseName(file = normal(file))) {
+    return switch (Files.basename(file = normal(file))) {
       case FILENAME__PACKAGE -> new PackageDiagramFile(baseDir, file, imageFormat,
           imagesDir != null);
       case FILENAME__PACKAGE_DEPS -> new PackageDependenciesFile(baseDir, file, imageFormat);

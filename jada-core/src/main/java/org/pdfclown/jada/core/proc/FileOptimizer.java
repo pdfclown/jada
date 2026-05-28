@@ -21,7 +21,7 @@ import static org.pdfclown.common.util.Strings.EMPTY;
 import static org.pdfclown.common.util.Strings.S;
 import static org.pdfclown.common.util.io.Files.FILE_EXTENSION__CSS;
 import static org.pdfclown.common.util.io.Files.FILE_EXTENSION__JAVASCRIPT;
-import static org.pdfclown.common.util.io.Files.baseName;
+import static org.pdfclown.common.util.io.Files.basename;
 import static org.pdfclown.common.util.io.Files.extension;
 
 import com.google.javascript.jscomp.CompilationLevel;
@@ -295,7 +295,7 @@ public class FileOptimizer extends JadaFileProcessor<String> {
    */
   private boolean isFileIncluded(Path file) {
     // Already optimized?
-    if (baseName(file).endsWith(FILE_QUALIFIER__MINIFIED))
+    if (basename(file).endsWith(FILE_QUALIFIER__MINIFIED))
       return false;
 
     if (includedFilesFilter == null) {
