@@ -42,7 +42,6 @@ import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
-import org.pdfclown.common.util.annot.Derived;
 import org.pdfclown.jada.core.system.proc.FileProcess.RunResult;
 import org.pdfclown.jada.core.system.proc.FileProcess.RunResult.FileStatus;
 import org.pdfclown.jada.core.system.proc.src.SrcFileProcess;
@@ -118,6 +117,9 @@ public class ProcessSourceMojo extends AbstractMojo {
       "unused" })
   private Set<String> rawInfo;
 
+  /*
+   * DERIVED FIELDS
+   */
   /**
    * Information request.
    * <p>
@@ -131,7 +133,6 @@ public class ProcessSourceMojo extends AbstractMojo {
    *           around this, the parameter is injected as raw list ({@link #rawInfo}), then it is
    *           processed for conversion by implicit-value-aware logic.
    */
-  @Derived
   private final transient Set<Info> info = new HashSet<>();
 
   @Override

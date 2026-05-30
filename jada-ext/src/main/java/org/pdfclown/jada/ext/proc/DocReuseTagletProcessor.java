@@ -72,7 +72,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.tools.Diagnostic.Kind;
 import org.jspecify.annotations.Nullable;
-import org.pdfclown.common.util.annot.Derived;
 import org.pdfclown.common.util.annot.InitNonNull;
 import org.pdfclown.jada.core.system.SystemConfig;
 import org.pdfclown.jada.core.system.proc.FileProcess;
@@ -250,7 +249,9 @@ public class DocReuseTagletProcessor extends JavaProcessor {
      */
     private final String sourceContent;
 
-    @Derived
+    /*
+     * DERIVED FIELDS
+     */
     private transient @Nullable Node base;
     /**
      * Fragment content for reuse outside the {@linkplain #getBase() source container}.
@@ -260,11 +261,8 @@ public class DocReuseTagletProcessor extends JavaProcessor {
      * names for reuse outside the source container.
      * </p>
      */
-    @Derived
     private transient @Nullable String content;
-    @Derived
     private transient @Nullable String normalContent;
-    @Derived
     private transient @Nullable String normalSourceContent;
 
     Fragment(Path file, Node element, String sourceContent) {
