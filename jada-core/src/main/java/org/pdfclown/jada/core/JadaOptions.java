@@ -20,8 +20,10 @@ import static org.pdfclown.common.util.Strings.EMPTY;
 import static org.pdfclown.common.util.Strings.S;
 import static org.pdfclown.jada.core.system.MessageManager.MISSING_KEY_PLACEHOLDER_PREFIX;
 
+import java.io.Serial;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeMap;
@@ -138,6 +140,11 @@ public class JadaOptions {
     }
 
     @Override
+    public int hashCode() {
+      return Objects.hashCode(names);
+    }
+
+    @Override
     @SuppressWarnings("SimplifiableConditionalExpression")
     public boolean process(String opt, List<String> args) {
       return processor.apply(opt, args) && base != null ? base.process(opt, args) : true;
@@ -150,6 +157,7 @@ public class JadaOptions {
   }
 
   private static class OptionException extends ArgumentException {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     public OptionException(String optionName, String optionValue, String description,

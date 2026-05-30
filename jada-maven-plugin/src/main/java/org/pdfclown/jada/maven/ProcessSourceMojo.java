@@ -53,6 +53,7 @@ import org.pdfclown.jada.core.system.proc.src.SrcFileProcessor;
  * @author Stefano Chizzolini
  */
 @Mojo(name = "processSource", defaultPhase = LifecyclePhase.PROCESS_SOURCES)
+@SuppressWarnings("rawtypes")
 public class ProcessSourceMojo extends AbstractMojo {
   /**
    * Information to print.
@@ -187,7 +188,6 @@ public class ProcessSourceMojo extends AbstractMojo {
     }
 
     for (String processor : processors) {
-      @SuppressWarnings("rawtypes")
       Class<? extends SrcFileProcessor> processorType;
       try {
         processorType = Class.forName(processor).asSubclass(SrcFileProcessor.class);

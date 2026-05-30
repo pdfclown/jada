@@ -387,14 +387,9 @@ public class JadaEnvironment extends DocEnvImpl implements JadaObject {
       return base.getBreakIterator();
     }
 
-    /**
-     * <a href=
-     * "https://docs.oracle.com/en/java/javase/17/docs/api/jdk.compiler/com/sun/source/util/DocTrees.html#getCharacters(com.sun.source.doctree.EntityTree)"
-     * >JDK 17</a>
-     */
-    // @Override
+    @Override
     public @Nullable String getCharacters(EntityTree tree) {
-      return Reflects.call(base, "getCharacters", new Class[] { EntityTree.class },
+      return Reflects.call(base, "getCharacters", new Class<?>[] { EntityTree.class },
           new Object[] { tree });
     }
 
@@ -585,14 +580,9 @@ public class JadaEnvironment extends DocEnvImpl implements JadaObject {
       return base.getTree(element);
     }
 
-    /**
-     * <a href=
-     * "https://docs.oracle.com/en/java/javase/17/docs/api/jdk.compiler/com/sun/source/util/DocTrees.html#getType(com.sun.source.util.DocTreePath)"
-     * >JDK 15</a>
-     */
-    // @Override
+    @Override
     public @Nullable TypeMirror getType(DocTreePath path) {
-      return Reflects.call(base, "getType", new Class[] { DocTreePath.class },
+      return Reflects.call(base, "getType", new Class<?>[] { DocTreePath.class },
           new Object[] { path });
     }
 
