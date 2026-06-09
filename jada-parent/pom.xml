@@ -24,12 +24,37 @@
 
   <properties>
     <!--
+      THIRD-PARTY PROPERTIES
+    -->
+    <!-- Enable `source`+`target` javac options (see
+      <https://maven.apache.org/plugins/maven-compiler-plugin/examples/set-compiler-source-and-target.html>)
+
+      NOTE: Modern (9+) javac provides `release` option (see
+      <https://maven.apache.org/plugins/maven-compiler-plugin/examples/set-compiler-release.html>)
+      to enforce source code API compatibility with the Java platform through strict
+      cross-compilation mode, which disallows any access to JDK internals, even if `add-exports`
+      options are explicitly set. Since Jada requires access to those JDK internals, `release`
+      option is not viable, forcing us to fall back to old `source`+`target` options which, in turn,
+      require also `system` option (see `target.jdk.home` property) -->
+    <maven.compiler.release
+        combine.self="override"/>
+    <maven.compiler.source>${target.jdk}</maven.compiler.source>
+    <maven.compiler.target>${target.jdk}</maven.compiler.target>
+
+    <!--
+      OVERRIDDEN PROPERTIES
+    -->
+    <lint.Xwarns>-options,-path</lint.Xwarns>
+    <target.jdk>17</target.jdk>
+    <target.jdk.home>${jdk17.home}</target.jdk.home>
+
+    <!--
       CUSTOM PROPERTIES
     -->
-    <!--
-      Automatic module name (JPMS).
-
-      NOTE: Each module MUST define its own unique JPMS name. -->
+    <!-- JDK 17 home - For non-CI environments only (use `settings.xml` file to set its value) -
+      IMPORTANT: DO NOT REMOVE its self-documenting invalid value message -->
+    <jdk17.home>jdk17.home NOT SET (configure it in settings.xml with the path to local installation of JDK 17)</jdk17.home>
+    <!-- Automatic module name (JPMS) - NOTE: Each module MUST define its own unique JPMS name -->
     <projectJpmsName/>
   </properties>
 
@@ -81,12 +106,16 @@
           <artifactId>maven-compiler-plugin</artifactId>
           <configuration>
             <!--
-              NOTE: option name|value split <arg>s don't work on IDEA 2025.1 (see
+              NOTE: Option names and respective values split into separate <arg>s don't work on
+              IDEA 2025.1; single, equal-separated <arg> needed (see
               <https://youtrack.jetbrains.com/issue/IDEA-371005/Maven-Invalid-compiler-parameters-generated-for-multiple-add-exports-in-pom.xml-compilerArgs>) -->
             <compilerArgs>
               <arg>--add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED</arg>
               <arg>--add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED</arg>
               <arg>--add-exports=jdk.javadoc/jdk.javadoc.internal.tool=ALL-UNNAMED</arg>
+              <!-- NOTE: `system` option is required because of `source`+`target` options, as
+                `release` option is NOT applicable due to exports (see here above) of JDK internals -->
+              <arg>--system=${target.jdk.home}</arg>
             </compilerArgs>
           </configuration>
         </plugin>
@@ -95,16 +124,16 @@
           <artifactId>maven-surefire-plugin</artifactId>
           <configuration>
             <argLine>--add-exports jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED
-              --add-exports jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED
-              --add-exports jdk.javadoc/jdk.javadoc.internal.tool=ALL-UNNAMED</argLine>
+                     --add-exports jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED
+                     --add-exports jdk.javadoc/jdk.javadoc.internal.tool=ALL-UNNAMED</argLine>
           </configuration>
         </plugin>
         <plugin>
           <artifactId>maven-failsafe-plugin</artifactId>
           <configuration>
             <argLine>--add-exports jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED
-              --add-exports jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED
-              --add-exports jdk.javadoc/jdk.javadoc.internal.tool=ALL-UNNAMED</argLine>
+                     --add-exports jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED
+                     --add-exports jdk.javadoc/jdk.javadoc.internal.tool=ALL-UNNAMED</argLine>
           </configuration>
         </plugin>
 
