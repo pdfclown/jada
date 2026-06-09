@@ -33,9 +33,9 @@ In case you want to contribute improvements to the code in the repository, pleas
 
 1. **set up your fork** — see ["Building"](https://github.com/pdfclown/jada/blob/main/docs/building.md#setup) for step-by-step instructions
 2. in your fork, **create the PR branch** where to commit your changes
-   -  the branch name MUST follow the corresponding [convention](https://github.com/pdfclown/pdfclown-common/blob/main/docs/common/maintenance.md#branches)
+   -  the branch name MUST follow the corresponding [convention](https://github.com/pdfclown/pdfclown-common/blob/v0.8.0/docs/common/maintenance.md#branches)
 3. **remain focused in scope** — avoid that your pull request contains unrelated commits
-4. **adhere to the [coding conventions](https://github.com/pdfclown/pdfclown-common/blob/main/docs/common/coding.md)** used throughout the project
+4. **adhere to the [coding conventions](https://github.com/pdfclown/pdfclown-common/blob/v0.8.0/docs/common/coding.md)** used throughout the project
 
    > [!TIP]
    > Code is automatically formatted via Maven build, so it's best you disable your IDE formatting in order to avoid conflicts. If you want just to refresh the code format without recompiling:
@@ -55,7 +55,7 @@ In case you want to contribute improvements to the code in the repository, pleas
    ./mvnw clean install -Pfull
    ```
 8. **submit your pull request** — see ["Creating a pull request from a fork"](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork)
-   - the title of your pull request MUST follow the corresponding [convention](https://github.com/pdfclown/pdfclown-common/blob/main/docs/common/maintenance.md#pull-requests)
+   - the title of your pull request MUST follow the corresponding [convention](https://github.com/pdfclown/pdfclown-common/blob/v0.8.0/docs/common/maintenance.md#pull-requests)
 
 ## License
 
