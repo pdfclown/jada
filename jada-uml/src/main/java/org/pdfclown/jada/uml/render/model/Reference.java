@@ -50,6 +50,8 @@ import org.pdfclown.common.util.io.IndentWriter;
  */
 public class Reference extends UmlNode {
   /**
+   * {@link Reference} side.
+   *
    * @author Sjoerd Talsma (original implementation)
    * @author Stefano Chizzolini (adaptation and redesign for Jada)
    */
@@ -175,6 +177,7 @@ public class Reference extends UmlNode {
   }
 
   /**
+   * Adds a note.
    */
   public Reference addNote(@Nullable String note) {
     final String trimmed = StringUtils.trimToEmpty(note);
@@ -190,7 +193,7 @@ public class Reference extends UmlNode {
   }
 
   /**
-   * @return The canonical type that can be used for equality matching.
+   * Canonical type that can be used for equality matching.
    */
   public Reference canonical() {
     return type.startsWith("<-") || type.startsWith("<..")
@@ -202,7 +205,7 @@ public class Reference extends UmlNode {
   }
 
   /**
-   * Returns whether this reference contains the requested type.
+   * Gets whether this reference contains the requested type.
    *
    * @param typeName
    *          The name of a type to check.
@@ -212,22 +215,28 @@ public class Reference extends UmlNode {
     return from.matches(typeName) || to.matches(typeName);
   }
 
+  /**
+   * @implNote Marked as final to enforce equivalence symmetry.
+   */
   @Override
-  public boolean equals(Object o) {
+  public final boolean equals(Object o) {
     if (this == o)
       return true;
-    else if (o == null || this.getClass() != o.getClass())
+    else if (o instanceof Reference that) {
+      final Reference thisC = this.canonical();
+      final Reference thatC = that.canonical();
+      return thisC.from.equals(thatC.from)
+          && thisC.type.equals(thatC.type)
+          && thisC.to.equals(thatC.to);
+    } else
       return false;
-
-    final Reference thisC = this.canonical();
-    final Reference thatC = ((Reference) o).canonical();
-    return thisC.from.equals(thatC.from)
-        && thisC.type.equals(thatC.type)
-        && thisC.to.equals(thatC.to);
   }
 
+  /**
+   * @implNote Marked as final to enforce equivalence symmetry.
+   */
   @Override
-  public int hashCode() {
+  public final int hashCode() {
     final Reference ref = canonical();
     return Objects.hash(ref.from, ref.type, ref.to);
   }

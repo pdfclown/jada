@@ -335,7 +335,6 @@ public class Jada implements Doclet, JadaComponent {
   private class JadaCandidates implements AutoCloseable {
     private final Map<Class<?>, List<JadaCandidate<?>>> base = new LinkedHashMap<>();
     private final Set<Class<?>> electedTypes = new HashSet<>();
-    private final List<Path> extResourceDirs = new ArrayList<>();
 
     @Override
     public void close() {
@@ -493,6 +492,7 @@ public class Jada implements Doclet, JadaComponent {
   private @InitNonNull JadaEnvironment env;
   @SuppressWarnings("NotNullFieldNotInitialized")
   private @InitNonNull EventBus eventBus;
+  @SuppressWarnings("this-escape")
   private final JadaScriptManager scriptManager = new JadaScriptManager(this);
   @SuppressWarnings("NotNullFieldNotInitialized")
   private @InitNonNull Set<? extends Option> supportedOptions;
@@ -963,15 +963,13 @@ public class Jada implements Doclet, JadaComponent {
     if (!candidates.isDone(Doclet.class)) {
       var baseCandidates = candidates.elect(Doclet.class);
       switch (baseCandidates.size()) {
-        case 0:
-          throw wrongState("No {} candidate available: ensure any implementation is loaded into "
-              + "the classpath", fqn(Doclet.class));
-        case 1:
-          base = baseCandidates.get(0).getBase();
-          break;
-        default:
-          throw wrongState("Multiple {} candidates available: use {} option to choose one",
-              fqn(Doclet.class), OPTION__BASE_DOCLET);
+        case 0 -> throw wrongState(
+            "No {} candidate available: ensure any implementation is loaded into "
+                + "the classpath",
+            fqn(Doclet.class));
+        case 1 -> base = baseCandidates.get(0).getBase();
+        default -> throw wrongState("Multiple {} candidates available: use {} option to choose one",
+            fqn(Doclet.class), OPTION__BASE_DOCLET);
       }
     }
 

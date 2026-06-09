@@ -20,6 +20,7 @@ package org.pdfclown.jada.uml.render.model;
 import static java.util.Objects.requireNonNull;
 import static java.util.Objects.requireNonNullElse;
 import static org.pdfclown.common.util.Exceptions.wrongArg;
+import static org.pdfclown.common.util.Objects.isSameType;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -55,11 +56,17 @@ public abstract class TypeMember extends UmlNode {
     this.type = type;
   }
 
+  /**
+   * @implNote In order to enforce equivalence symmetry yet allow non-isomorphic inheritability,
+   *           {@code o} is compared by exact class match — this violates the Liskov Substitution
+   *           Principle, but is the lesser evil.
+   */
   @Override
+  @SuppressWarnings("EqualsDoesntCheckParameterClass")
   public boolean equals(Object o) {
     if (this == o)
       return true;
-    else if (o == null || this.getClass() != o.getClass())
+    else if (!isSameType(this, o))
       return false;
 
     var that = (TypeMember) o;

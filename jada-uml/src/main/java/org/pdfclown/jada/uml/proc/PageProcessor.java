@@ -65,6 +65,26 @@ public class PageProcessor extends JadaHtmlProcessor {
 
     protected abstract String getDiagramTypeDescription();
 
+    /**
+     * Gets the HTML tag for the associated diagram.
+     *
+     * @param alt
+     *          Alternate description.
+     * @param umlClass
+     *          UML-specific CSS class.
+     * @param style
+     *          Tag style.
+     * @implNote Both (link-agnostic) raster and (link-aware) SVG diagrams are rendered as
+     *           {@code <img>} tag; the latter are then dynamically processed via SVGInject client
+     *           script.
+     */
+    protected String getImageTag(String alt, String umlClass, String style) {
+      return "<img id=\"%s\" class=\"%s %s\" src=\"%s\" style=\"%s\" alt=\"%s UML Diagram\"%s/>"
+          .formatted(IMAGE_ID, IMAGE_CLASS, umlClass, diagramRelativePath, style, alt,
+              isExtension(diagramRelativePath, FILE_EXTENSION__SVG) ? " onload=\"SVGInject(this)\""
+                  : EMPTY);
+    }
+
     protected void logMissingNode(Kind kind, Path file, String nodeDescription,
         String message, JadaConfig config) {
       config.getLog().print(kind, this,
@@ -79,23 +99,6 @@ public class PageProcessor extends JadaHtmlProcessor {
      * @return {@code null}, if no change to {@code doc} occurred.
      */
     protected abstract @Nullable Document process(Document doc, Path docFile, JadaConfig config);
-
-    /**
-     * @param alt
-     *          Alternate description.
-     * @param umlClass
-     *          UML-specific CSS class.
-     * @param style
-     *          Tag style.
-     * @return {@code <object>} tag for {@code SVG} diagrams (link-aware), otherwise {@code <img>}
-     *         tag (without links).
-     */
-    String getImageTag(String alt, String umlClass, String style) {
-      return "<img id=\"%s\" class=\"%s %s\" src=\"%s\" style=\"%s\" alt=\"%s UML Diagram\"%s/>"
-          .formatted(IMAGE_ID, IMAGE_CLASS, umlClass, diagramRelativePath, style, alt,
-              isExtension(diagramRelativePath, FILE_EXTENSION__SVG) ? " onload=\"SVGInject(this)\""
-                  : EMPTY);
-    }
   }
 
   private final Collection<DiagramFile> diagrams;

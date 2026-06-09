@@ -34,11 +34,15 @@ import org.pdfclown.jada.uml.UmlConfig.TypeMode;
 
 // SourceName: nl.talsmasoftware.umldoclet.uml.Parameters
 /**
+ * Parameters.
+ *
  * @author Sjoerd Talsma (original implementation)
  * @author Stefano Chizzolini (adaptation and redesign for Jada)
  */
 public class Parameters extends UmlNode {
   /**
+   * Parameter.
+   *
    * @author Sjoerd Talsma (original implementation)
    * @author Stefano Chizzolini (adaptation and redesign for Jada)
    */

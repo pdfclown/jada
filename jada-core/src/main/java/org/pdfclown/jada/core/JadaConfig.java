@@ -503,84 +503,84 @@ public class JadaConfig extends SystemConfig implements JadaObject {
   }
 
   /**
-   * @see #isDebug()
+   * {@link #isDebug() debug} option.
    */
   public static final String OPTION__DEBUG =
       "--debug";
   /**
-   * @see Jada#getBase() getJada().getBase()
+   * {@link Jada#getBase() jada.base} option.
    */
   public static final String OPTION__BASE_DOCLET =
       "--jada-doclet";
   /**
-   * @see #getExtensions()
+   * {@link #getExtensions() extensions} option.
    */
   public static final String OPTION__DOCLET_EXTENSIONS =
       "--jada-exts";
   /**
-   * @see #getFileOptimizationFilter()
+   * {@link #getFileOptimizationFilter() fileOptimizationFilter} option.
    */
   public static final String OPTION__FILE_OPTIMIZATION_FILTER =
       "--jada-file-optimize-filter";
   /**
-   * @see #isHelp()
+   * {@link #isHelp() help} option.
    */
   public static final String OPTION__HELP =
       "--help";
   /**
-   * @see #isHelp()
+   * Extra-help option.
    */
   public static final String OPTION__HELP_EXTRA =
       "--help-extra";
   /**
-   * @see #getInputEncoding()
+   * {@link #getInputEncoding() inputEncoding} option.
    */
   public static final String OPTION__INPUT_ENCODING =
       "-encoding";
   /**
-   * @see #getLogLevel()
+   * {@link #getLogLevel() logLevel} option.
    */
   public static final String OPTION__LOG_LEVEL =
       "--log-level";
   /**
-   * @see #getOutputDirectory()
+   * {@link #getOutputDirectory() outputDirectory} option.
    */
   public static final String OPTION__OUTPUT_DIR =
       "-d";
   /**
-   * @see #getOutputEncoding()
+   * {@link #getOutputEncoding() outputEncoding} option.
    */
   public static final String OPTION__OUTPUT_ENCODING =
       "-docencoding";
   /**
-   * @see #isQuiet()
+   * {@link #isQuiet() quiet} option.
    */
   public static final String OPTION__QUIET =
       "-quiet";
   /**
-   * @see #getResourceDirectories()
+   * {@link #getResourceDirectories() resourceDirectories} option.
    */
   public static final String OPTION__RESOURCE_DIR =
       "--jada-dir";
   /**
-   * Packages source path (short name).
+   * Packages source path option (short name).
    */
   public static final String OPTION__SOURCE_PATH =
       "-sourcepath";
   /**
-   * Packages source path (long name).
+   * Packages source path option (long name).
    */
   public static final String OPTION__SOURCE_PATH__L =
       "--source-path";
 
   /**
-   * @see #isVerbose()
+   * {@link #isVerbose() verbose} option.
    */
   public static final String OPTION__VERBOSE =
       "-verbose";
 
   /**
-   * @see #isWarningRejected()
+   * {@link #isWarningRejected() warningRejected} option.
    */
   static final String OPTION__REJECT_WARNINGS =
       "-Xwerror";
@@ -1170,7 +1170,7 @@ public class JadaConfig extends SystemConfig implements JadaObject {
   }
 
   /**
-   * Whether logged warnings are assimilated to errors, thus representing execution failure.
+   * Whether logged warnings are assimilated to errors, thus causing execution failure.
    */
   boolean isWarningRejected() {
     return warningRejected;

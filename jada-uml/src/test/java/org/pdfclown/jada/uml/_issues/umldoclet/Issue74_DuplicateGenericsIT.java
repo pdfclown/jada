@@ -40,7 +40,7 @@ public class Issue74_DuplicateGenericsIT extends BaseIT {
 
   @SuppressWarnings("NotNullFieldNotInitialized")
   private @InitNonNull String classPuml;
-  @SuppressWarnings("NotNullFieldNotInitialized")
+  @SuppressWarnings({ "FieldCanBeLocal", "NotNullFieldNotInitialized", "unused" })
   private @InitNonNull String packagePuml;
 
   Issue74_DuplicateGenericsIT() {

@@ -49,6 +49,8 @@ import org.pdfclown.common.build.test.assertion.TestEnvironment;
 import org.pdfclown.common.util.system.Clis.Args;
 import org.pdfclown.jada.core.Jada;
 import org.pdfclown.jada.core.JadaConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Test assertions.
@@ -321,6 +323,8 @@ public final class Assertions {
     }
   }
 
+  private static final Logger log = LoggerFactory.getLogger(Assertions.class);
+
   /**
    * Asserts the javadoc tool is executed with the arguments
    * {@linkplain JavadocAssertArgs#exitcode(int) as expected}.
@@ -421,16 +425,14 @@ public final class Assertions {
         try {
           outStream.writeTo(System.out);
         } catch (IOException ex1) {
-          //TODO log
-          ex1.printStackTrace();
+          log.warn("Buffered stdout dump on assertion failure FAILED", ex1);
         }
       }
       if (errStream != null) {
         try {
           errStream.writeTo(System.err);
         } catch (IOException ex1) {
-          //TODO log
-          ex1.printStackTrace();
+          log.warn("Buffered stderr dump on assertion failure FAILED", ex1);
         }
       }
       throw ex;

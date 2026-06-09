@@ -220,6 +220,8 @@ public class Logger implements Reporter {
   }
 
   /**
+   * Logs a message.
+   *
    * @param kind
    *          Message kind.
    * @param path
@@ -245,6 +247,8 @@ public class Logger implements Reporter {
   }
 
   /**
+   * Logs a message.
+   *
    * @param kind
    *          Message kind.
    * @param path
@@ -266,6 +270,8 @@ public class Logger implements Reporter {
   }
 
   /**
+   * Logs a message.
+   *
    * @param kind
    *          Message kind.
    * @param path
@@ -296,6 +302,8 @@ public class Logger implements Reporter {
   }
 
   /**
+   * Logs a message.
+   *
    * @param kind
    *          Message kind.
    * @param element
@@ -321,6 +329,8 @@ public class Logger implements Reporter {
   }
 
   /**
+   * Logs a message.
+   *
    * @param kind
    *          Message kind.
    * @param element
@@ -342,6 +352,8 @@ public class Logger implements Reporter {
   }
 
   /**
+   * Logs a message.
+   *
    * @param kind
    *          Message kind.
    * @param element
@@ -372,6 +384,8 @@ public class Logger implements Reporter {
   }
 
   /**
+   * Logs a message.
+   *
    * @param kind
    *          Message kind.
    * @param file
@@ -403,6 +417,8 @@ public class Logger implements Reporter {
   }
 
   /**
+   * Logs a message.
+   *
    * @param kind
    *          Message kind.
    * @param file
@@ -432,6 +448,8 @@ public class Logger implements Reporter {
   }
 
   /**
+   * Logs a message.
+   *
    * @param kind
    *          Message kind.
    * @param file
@@ -468,6 +486,8 @@ public class Logger implements Reporter {
   }
 
   /**
+   * Logs a message.
+   *
    * @param kind
    *          Message kind.
    * @param source
@@ -490,6 +510,8 @@ public class Logger implements Reporter {
   }
 
   /**
+   * Logs a message.
+   *
    * @param kind
    *          Message kind.
    * @param source
@@ -509,6 +531,8 @@ public class Logger implements Reporter {
   }
 
   /**
+   * Logs a message.
+   *
    * @param kind
    *          Message kind.
    * @param source
@@ -579,6 +603,8 @@ public class Logger implements Reporter {
   }
 
   /**
+   * Gets whether the given message kind is loggable.
+   *
    * @param kind
    *          Message kind.
    * @implNote Despite the default {@link Reporter} implementation

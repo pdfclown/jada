@@ -64,7 +64,7 @@ public class PackageDiagram extends Diagram {
   protected Path getPlantUmlFile() {
     if (pumlFile == null) {
       var b = new StringBuilder(getConfig().getConfig().getOutputDirectory().toString());
-      if (b.length() > 0 && b.charAt(b.length() - 1) != File.separatorChar) {
+      if (!b.isEmpty() && b.charAt(b.length() - 1) != File.separatorChar) {
         b.append(File.separatorChar);
       }
       if (moduleName != null) {

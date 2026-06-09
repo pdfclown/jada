@@ -74,6 +74,7 @@ public abstract class Diagram extends UmlNode {
   }
 
   /**
+   * Renders this diagram in the selected formats.
    */
   public void render() {
     // Skip empty diagram!

@@ -38,6 +38,7 @@ import java.io.OutputStreamWriter;
 import java.io.StringReader;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -269,14 +270,14 @@ public class FileOptimizer extends JadaFileProcessor<String> {
   @Override
   public boolean isProcessable(Path file, FileProcess.Context context) {
     return !getConfig().isDebug()
-        && fileTypeOptimizers.containsKey(extension(file).toLowerCase())
+        && fileTypeOptimizers.containsKey(extension(file).toLowerCase(Locale.ROOT))
         && isFileIncluded(context.getBaseDir(file).relativize(file));
   }
 
   @Override
   protected @Nullable String processContent(String content, Path file, Context context) {
     var problems = new StringBuilder();
-    var ret = fileTypeOptimizers.get(extension(file).toLowerCase())
+    var ret = fileTypeOptimizers.get(extension(file).toLowerCase(Locale.ROOT))
         .optimize(content, file, context, problems);
     if (ret != null) {
       if (!problems.isEmpty()) {

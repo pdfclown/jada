@@ -33,6 +33,7 @@ import java.util.function.Consumer;
 import jdk.javadoc.doclet.Doclet.Option;
 import org.jspecify.annotations.Nullable;
 import org.pdfclown.common.util.ArgumentException;
+import org.pdfclown.common.util.annot.Immutable;
 import org.pdfclown.jada.core.Jada.JadaCandidate;
 
 /**
@@ -41,6 +42,7 @@ import org.pdfclown.jada.core.Jada.JadaCandidate;
  * @author Stefano Chizzolini
  */
 public class JadaOptions {
+  @Immutable
   static class JadaOption implements Option {
     private static boolean isTextValid(String text) {
       return !text.isEmpty() && !text.startsWith(MISSING_KEY_PLACEHOLDER_PREFIX);
@@ -105,9 +107,12 @@ public class JadaOptions {
       this.parameters = text(base != null ? base.parameters : EMPTY, parameters);
     }
 
+    /**
+     * @implNote Marked as final to enforce equivalence symmetry.
+     */
     @Override
-    public boolean equals(Object o) {
-      return super.equals(o) || (o instanceof Option that
+    public final boolean equals(Object o) {
+      return this == o || (o instanceof Option that
           && optionName(this.getNames()).equals(optionName(that.getNames())));
     }
 
@@ -139,15 +144,18 @@ public class JadaOptions {
       return parameters;
     }
 
+    /**
+     * @implNote Marked as final to enforce equivalence symmetry.
+     */
     @Override
-    public int hashCode() {
+    public final int hashCode() {
       return Objects.hashCode(names);
     }
 
     @Override
     @SuppressWarnings("SimplifiableConditionalExpression")
     public boolean process(String opt, List<String> args) {
-      return processor.apply(opt, args) && base != null ? base.process(opt, args) : true;
+      return (processor.apply(opt, args) && base != null) ? base.process(opt, args) : true;
     }
 
     @Override

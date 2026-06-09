@@ -237,6 +237,9 @@ public class DocReuseTagletProcessor extends JavaProcessor {
     }
 
     private final Node element;
+    /**
+     * Source file.
+     */
     private final Path file;
     /**
      * Fragment content for reuse within the {@linkplain #getBase() source container}.
@@ -347,13 +350,6 @@ public class DocReuseTagletProcessor extends JavaProcessor {
      */
     public Node getElement() {
       return element;
-    }
-
-    /**
-     * Source file.
-     */
-    public Path getFile() {
-      return file;
     }
 
     /**
@@ -535,280 +531,269 @@ public class DocReuseTagletProcessor extends JavaProcessor {
       while (tagMatcher.find()) {
         String tagName = inlineTagName(tagMatcher);
         String tagValue = inlineTagValue(tagMatcher);
-        switch (tagValue) {
-          // Fragment end tag.
-          case PSEUDO_KEY__END: {
-            if (!tagName.equals(c.lastTagName))
-              throw runtime("@{} end tag INVALID at {}: {}",
-                  tagName, fragmentLocation($), c.lastTagName != null
-                      ? "@" + c.lastTagName + " tag expected"
-                      : "@" + tagName + " begin tag missing");
+        // Fragment end tag?
+        if (tagValue.equals(PSEUDO_KEY__END)) {
+          if (!tagName.equals(c.lastTagName))
+            throw runtime("@{} end tag INVALID at {}: {}",
+                tagName, fragmentLocation($), c.lastTagName != null
+                    ? "@" + c.lastTagName + " tag expected"
+                    : "@" + tagName + " begin tag missing");
 
-            String tagFragmentContent = c.commentContent.substring(c.lastFragmentBegin,
-                tagMatcher.start());
-            switch (tagName) {
-              case DocTaglet.NAME: {
+          String tagFragmentContent = c.commentContent.substring(c.lastFragmentBegin,
+              tagMatcher.start());
+          switch (tagName) {
+            case DocTaglet.NAME -> {
+              assert c.lastFragmentKey != null;
+
+              // Store the fragment for later use by @jada.reuseDoc tags!
+              storeFragment(c.lastFragmentKey, tagFragmentContent, $, file, c);
+            }
+            case ReuseDocTaglet.NAME -> {
+              assert c.fragment != null;
+
+              // Tag fragment needs update?
+              if (!c.fragment.isSameContent(tagFragmentContent, $)) {
+                c.out
+                    // Content BEFORE the end tag.
+                    .append(c.commentContent, c.inputStart, c.lastFragmentBegin)
+                    // @jada.reuseDoc content (update).
+                    .append(c.fragment.getContent($))
+                    // @jada.reuseDoc end tag.
+                    .append(tagMatcher.group());
+                c.inputStart = tagMatcher.end();
+
                 assert c.lastFragmentKey != null;
 
-                // Store the fragment for later use by @jada.reuseDoc tags!
-                storeFragment(c.lastFragmentKey, tagFragmentContent, $, file, c);
-                break;
+                logFragmentEvent(Kind.NOTE, tagName, c.lastFragmentKey, "UPDATED", $);
               }
-              case ReuseDocTaglet.NAME: {
-                assert c.fragment != null;
-
-                // Tag fragment needs update?
-                if (!c.fragment.isSameContent(tagFragmentContent, $)) {
-                  c.out
-                      // Content BEFORE the end tag.
-                      .append(c.commentContent, c.inputStart, c.lastFragmentBegin)
-                      // @jada.reuseDoc content (update).
-                      .append(c.fragment.getContent($))
-                      // @jada.reuseDoc end tag.
-                      .append(tagMatcher.group());
-                  c.inputStart = tagMatcher.end();
-
-                  assert c.lastFragmentKey != null;
-
-                  logFragmentEvent(Kind.NOTE, tagName, c.lastFragmentKey, "UPDATED", $);
-                }
-                break;
-              }
-              default:
-                throw unexpectedTag(tagName);
             }
-            c.lastTagName = null;
-            c.lastFragmentKey = null;
-            c.lastFragmentBegin = -1;
-            c.fragment = null;
-            break;
+            default -> throw unexpectedTag(tagName);
           }
-          // Fragment begin tag.
-          default: {
-            // Fragment end tag missing (unbalanced tags)?
-            if (c.lastFragmentKey != null) {
-              normalizeTag(tagMatcher.start(), $, file, c);
+          c.lastTagName = null;
+          c.lastFragmentKey = null;
+          c.lastFragmentBegin = -1;
+          c.fragment = null;
+        }
+        // Fragment begin tag.
+        else {
+          // Fragment end tag missing (unbalanced tags)?
+          if (c.lastFragmentKey != null) {
+            normalizeTag(tagMatcher.start(), $, file, c);
+          }
+
+          // Fragment key resolution.
+          final String fragmentKey;
+          final Path fragmentFile;
+          fragmentKeySwitch: switch (tagName) {
+            // Source key.
+            case DocTaglet.NAME -> {
+              if (!tagValue.isEmpty() && tagValue.charAt(0) == COLON)
+                throw runtime("{}: @{} with INVALID local key {} (colon prefix NOT ALLOWED)",
+                    file, DocTaglet.NAME, textLiteral(tagValue));
+
+              fragmentKey = fragmentRef($) + (!tagValue.isEmpty() ? COLON + tagValue : EMPTY);
+              fragmentFile = null;
             }
+            // Target key.
+            case ReuseDocTaglet.NAME -> {
+              /*
+               * Element name (that is, reference to the Javadoc comment associated to a syntactic
+               * element, such as a type or a type member).
+               *
+               * Corresponds to `tagValue` without `localKey` (for example, if `tagValue` is
+               * "MyClass:myId", `elementKey` is "MyClass").
+               */
+              String elementKey;
+              /*
+               * Fragment identifier local to a Javadoc comment.
+               *
+               * Corresponds to the trailing part of `tagValue`, prefixed by colon (for example, if
+               * `tagValue` is "MyClass:myId", `localKey` is ":myId").
+               */
+              String localKey;
+              {
+                int localKeySeparatorIndex = indexOfElse(tagValue, COLON, STR_LENGTH);
+                elementKey = tagValue.substring(0, localKeySeparatorIndex);
+                localKey = tagValue.substring(localKeySeparatorIndex);
+              }
 
-            // Fragment key resolution.
-            final String fragmentKey;
-            final Path fragmentFile;
-            fragmentKeySwitch: switch (tagName) {
-              // Source key.
-              case DocTaglet.NAME:
-                if (!tagValue.isEmpty() && tagValue.charAt(0) == COLON)
-                  throw runtime("{}: @{} with INVALID local key {} (colon prefix NOT ALLOWED)",
-                      file, DocTaglet.NAME, textLiteral(tagValue));
-
-                fragmentKey = fragmentRef($) + (!tagValue.isEmpty() ? COLON + tagValue : EMPTY);
-                fragmentFile = null;
-                break;
-              // Target key.
-              case ReuseDocTaglet.NAME: {
-                /*
-                 * Element name (that is, reference to the Javadoc comment associated to a syntactic
-                 * element, such as a type or a type member).
-                 *
-                 * Corresponds to `tagValue` without `localKey` (for example, if `tagValue` is
-                 * "MyClass:myId", `elementKey` is "MyClass").
-                 */
-                String elementKey;
-                /*
-                 * Fragment identifier local to a Javadoc comment.
-                 *
-                 * Corresponds to the trailing part of `tagValue`, prefixed by colon (for example,
-                 * if `tagValue` is "MyClass:myId", `localKey` is ":myId").
-                 */
-                String localKey;
-                {
-                  int localKeySeparatorIndex = indexOfElse(tagValue, COLON, STR_LENGTH);
-                  elementKey = tagValue.substring(0, localKeySeparatorIndex);
-                  localKey = tagValue.substring(localKeySeparatorIndex);
-                }
-
-                int elementKeyPartSeparatorIndex = min(indexOfElse(elementKey, DOT, STR_LENGTH),
-                    indexOfElse(elementKey, HASH, STR_LENGTH));
-                String elementKeyPart = elementKey.substring(0, elementKeyPartSeparatorIndex);
-                var ownMember = false /*
-                                       * Whether the key part represents a type's own member (field
-                                       * or callable, NOT inner type)
-                                       */;
-                if (elementKeyPart.isEmpty()) {
-                  if (elementKey.isEmpty()) {
-                    /*
-                     * [Name resolution 0] Local callable member overload.
-                     *
-                     * NOTE: Implicit element key is applicable to callable member overloads only.
-                     */
-                    if ($ instanceof CallableDeclaration) {
-                      fragmentKey = fragmentRef($) + localKey;
-                      fragmentFile = null;
-                      break;
-                    } else
-                      throw runtime("""
-                          {}: @{} with implicit element key (valid only within callable member \
-                          overloads)""", file, ReuseDocTaglet.NAME);
-                  }
-                  // HASH prefix (local member)?
-                  else if (elementKey.charAt(0) == HASH) {
-                    ownMember = true;
-                    elementKeyPartSeparatorIndex = indexOfElse(elementKey, DOT, 1, STR_LENGTH);
-                    elementKeyPart = elementKey.substring(1, elementKeyPartSeparatorIndex);
-                  }
-                  // DOT prefix.
-                  else
+              int elementKeyPartSeparatorIndex = min(indexOfElse(elementKey, DOT, STR_LENGTH),
+                  indexOfElse(elementKey, HASH, STR_LENGTH));
+              String elementKeyPart = elementKey.substring(0, elementKeyPartSeparatorIndex);
+              var ownMember = false /*
+                                     * Whether the key part represents a type's own member (field or
+                                     * callable, NOT inner type)
+                                     */;
+              if (elementKeyPart.isEmpty()) {
+                if (elementKey.isEmpty()) {
+                  /*
+                   * [Name resolution 0] Local callable member overload.
+                   *
+                   * NOTE: Implicit element key is applicable to callable member overloads only.
+                   */
+                  if ($ instanceof CallableDeclaration) {
+                    fragmentKey = fragmentRef($) + localKey;
+                    fragmentFile = null;
+                    break;
+                  } else
                     throw runtime("""
-                        {}: @{} with INVALID reference key {} (dot prefix NOT ALLOWED)""", file,
-                        ReuseDocTaglet.NAME, textLiteral(tagValue));
+                        {}: @{} with implicit element key (valid only within callable member \
+                        overloads)""", file, ReuseDocTaglet.NAME);
                 }
-
-                var callable = false;
-                if (ownMember) {
-                  int callableMemberParamsSeparatorIndex =
-                      elementKeyPart.indexOf(ROUND_BRACKET_OPEN);
-                  // Callable member?
-                  if (found(callableMemberParamsSeparatorIndex)) {
-                    /*
-                     * NOTE: Callable member references are expected to be terminal (that is, they
-                     * MUST end `elementKey`), to end with ')', and to represent parameters with
-                     * '*'.
-                     */
-                    if (!elementKey.endsWith(elementKeyPart)
-                        || elementKeyPart.charAt(elementKeyPart.length() - 1) != ROUND_BRACKET_CLOSE
-                        || !elementKeyPart.substring(callableMemberParamsSeparatorIndex + 1,
-                            elementKeyPart.length() - 1).equals(S + STAR))
-                      throw runtime("""
-                          {}: {} reference to callable member MALFORMED (should be "{}(*)")""",
-                          file, textLiteral(elementKeyPart),
-                          elementKeyPart.substring(0, callableMemberParamsSeparatorIndex));
-
-                    callable = true;
-                    elementKeyPart = elementKeyPart.substring(0,
-                        callableMemberParamsSeparatorIndex);
-                  }
+                // HASH prefix (local member)?
+                else if (elementKey.charAt(0) == HASH) {
+                  ownMember = true;
+                  elementKeyPartSeparatorIndex = indexOfElse(elementKey, DOT, 1, STR_LENGTH);
+                  elementKeyPart = elementKey.substring(1, elementKeyPartSeparatorIndex);
                 }
+                // DOT prefix.
+                else
+                  throw runtime("""
+                      {}: @{} with INVALID reference key {} (dot prefix NOT ALLOWED)""", file,
+                      ReuseDocTaglet.NAME, textLiteral(tagValue));
+              }
 
-                // [Name resolution 1] Local member (simple name; class scope).
-                {
-                  TypeDeclaration<?> containerNode = null;
-                  if ($ instanceof TypeDeclaration) {
-                    // [Name resolution 1.1] Child member.
-                    containerNode = (TypeDeclaration<?>) $;
-                  } else if ($ instanceof BodyDeclaration) {
-                    // [Name resolution 1.2] Sibling member.
-                    containerNode = (TypeDeclaration<?>) $.getParentNode().orElseThrow();
-                  } else if (callable)
-                    throw unexpected(typeOf($), """
-                        {}: structure UNEXPECTED as context of callable member reference \
-                        "{}(*)\"""", file, elementKeyPart);
+              var callable = false;
+              if (ownMember) {
+                int callableMemberParamsSeparatorIndex =
+                    elementKeyPart.indexOf(ROUND_BRACKET_OPEN);
+                // Callable member?
+                if (found(callableMemberParamsSeparatorIndex)) {
+                  /*
+                   * NOTE: Callable member references are expected to be terminal (that is, they
+                   * MUST end `elementKey`), to end with ')', and to represent parameters with '*'.
+                   */
+                  if (!elementKey.endsWith(elementKeyPart)
+                      || elementKeyPart.charAt(elementKeyPart.length() - 1) != ROUND_BRACKET_CLOSE
+                      || !elementKeyPart.substring(callableMemberParamsSeparatorIndex + 1,
+                          elementKeyPart.length() - 1).equals(S + STAR))
+                    throw runtime("""
+                        {}: {} reference to callable member MALFORMED (should be "{}(*)")""",
+                        file, textLiteral(elementKeyPart),
+                        elementKeyPart.substring(0, callableMemberParamsSeparatorIndex));
 
-                  if (containerNode != null) {
-                    for (var member : containerNode.getMembers()) {
-                      if (member instanceof NodeWithJavadoc) {
-                        NodeWithSimpleName<?> namedNode;
-                        if (member instanceof NodeWithSimpleName<?> nodeWithSimpleName) {
-                          if ((!callable == member instanceof CallableDeclaration)
-                              || (!callable && ownMember)) {
-                            continue;
-                          }
+                  callable = true;
+                  elementKeyPart = elementKeyPart.substring(0,
+                      callableMemberParamsSeparatorIndex);
+                }
+              }
 
-                          namedNode = nodeWithSimpleName;
-                        } else if (member instanceof FieldDeclaration fieldDeclaration) {
-                          if (callable || !ownMember) {
-                            continue;
-                          }
+              // [Name resolution 1] Local member (simple name; class scope).
+              {
+                TypeDeclaration<?> containerNode = null;
+                if ($ instanceof TypeDeclaration) {
+                  // [Name resolution 1.1] Child member.
+                  containerNode = (TypeDeclaration<?>) $;
+                } else if ($ instanceof BodyDeclaration) {
+                  // [Name resolution 1.2] Sibling member.
+                  containerNode = (TypeDeclaration<?>) $.getParentNode().orElseThrow();
+                } else if (callable)
+                  throw unexpected(typeOf($), """
+                      {}: structure UNEXPECTED as context of callable member reference \
+                      "{}(*)\"""", file, elementKeyPart);
 
-                          namedNode = fieldDeclaration.getVariable(0);
-                        } else {
+                if (containerNode != null) {
+                  for (var member : containerNode.getMembers()) {
+                    if (member instanceof NodeWithJavadoc) {
+                      NodeWithSimpleName<?> namedNode;
+                      if (member instanceof NodeWithSimpleName<?> nodeWithSimpleName) {
+                        if ((!callable == member instanceof CallableDeclaration)
+                            || (!callable && ownMember)) {
                           continue;
                         }
 
-                        if (namedNode.getNameAsString().equals(elementKeyPart)) {
-                          fragmentKey = fragmentRef((Node) namedNode)
-                              + elementKey.substring(elementKeyPartSeparatorIndex) + localKey;
-                          fragmentFile = null;
-                          break fragmentKeySwitch;
+                        namedNode = nodeWithSimpleName;
+                      } else if (member instanceof FieldDeclaration fieldDeclaration) {
+                        if (callable || !ownMember) {
+                          continue;
                         }
+
+                        namedNode = fieldDeclaration.getVariable(0);
+                      } else {
+                        continue;
+                      }
+
+                      if (namedNode.getNameAsString().equals(elementKeyPart)) {
+                        fragmentKey = fragmentRef((Node) namedNode)
+                            + elementKey.substring(elementKeyPartSeparatorIndex) + localKey;
+                        fragmentFile = null;
+                        break fragmentKeySwitch;
                       }
                     }
                   }
-                  if (ownMember)
-                    throw runtime("{}: member \"{}(*)\" NOT FOUND{}", file, elementKeyPart,
-                        toElse(containerNode, $$ -> " inside " + fragmentLocation($$), EMPTY));
                 }
+                if (ownMember)
+                  throw runtime("{}: member \"{}(*)\" NOT FOUND{}", file, elementKeyPart,
+                      toElse(containerNode, $$ -> " inside " + fragmentLocation($$), EMPTY));
+              }
 
-                // [Name resolution 2] Import (simple name; module scope).
-                for (var import_ : content.getImports()) {
-                  if (import_.getName().getId().equals(elementKeyPart)) {
-                    fragmentKey = import_.getName().getQualifier().orElseThrow().toString()
-                        + DOT + tagValue;
-                    fragmentFile = resolveFragmentFile(fragmentKey, baseDir, file);
-                    break fragmentKeySwitch;
-                  }
+              // [Name resolution 2] Import (simple name; module scope).
+              for (var import_ : content.getImports()) {
+                if (import_.getName().getId().equals(elementKeyPart)) {
+                  fragmentKey = import_.getName().getQualifier().orElseThrow().toString()
+                      + DOT + tagValue;
+                  fragmentFile = resolveFragmentFile(fragmentKey, baseDir, file);
+                  break fragmentKeySwitch;
                 }
+              }
 
-                // [Name resolution 3] Package-level type (simple name; package scope).
-                Path path = file.getParent().resolve(elementKeyPart + FILE_EXTENSION__JAVA);
-                if (exists(path)) {
-                  fragmentKey = content.getPackageDeclaration()
-                      .map($$ -> $$.getNameAsString() + DOT).orElse(EMPTY) + tagValue;
-                  fragmentFile = path;
-                  break;
-                }
-
-                // [Name resolution 4] Module-level type (fully-qualified name; module scope).
-                fragmentKey = tagValue;
-                fragmentFile = resolveFragmentFile(fragmentKey, baseDir, file);
+              // [Name resolution 3] Package-level type (simple name; package scope).
+              Path path = file.getParent().resolve(elementKeyPart + FILE_EXTENSION__JAVA);
+              if (exists(path)) {
+                fragmentKey = content.getPackageDeclaration()
+                    .map($$ -> $$.getNameAsString() + DOT).orElse(EMPTY) + tagValue;
+                fragmentFile = path;
                 break;
               }
-              default:
-                throw unexpectedTag(tagName);
-            }
 
-            // Store information for fragment end tag!
-            c.lastTagName = tagName;
-            c.lastFragmentKey = fragmentKey;
-            c.lastFragmentBegin = tagMatcher.end();
-            switch (c.lastTagName) {
-              case DocTaglet.NAME:
-                c.fragment = null;
-
-                if (thresholdFileTime > 0) {
-                  /*
-                   * Force ALL the files to be processed!
-                   *
-                   * NOTE: Normally, due to `thresholdFileTime`, only changed files are processed;
-                   * in case a changed file contains a source fragment though, the processing MUST
-                   * be extended to ALL the files to ensure that every possible target is
-                   * synchronized, since currently there is no way to detect whether that source
-                   * fragment itself has changed or not (ideally, a caching mechanism should be
-                   * implemented to keep track of fragment checksums in order to process only
-                   * relevant files).
-                   *
-                   * TODO: implement checksum caching to optimize fragment change detection.
-                   */
-                  thresholdFileTime = 0;
-                }
-                break;
-              case ReuseDocTaglet.NAME:
-                c.fragment = fragments.get(c.lastFragmentKey);
-                if (c.fragment != null) {
-                  unsolvedFragmentKeys.remove(c.lastFragmentKey);
-                } else {
-                  // If no fragment is available yet, postpone!
-                  context.postponeFile();
-                  unsolvedFragmentFiles.add(file);
-                  unsolvedFragmentKeys.add(c.lastFragmentKey);
-                  if (fragmentFile != null) {
-                    unsolvedFragmentFiles.add(fragmentFile);
-                  }
-                  logFragmentEvent(Kind.OTHER, c.lastTagName, c.lastFragmentKey, "POSTPONED", $);
-                  return;
-                }
-                break;
-              default:
-                throw unexpectedTag(c.lastTagName);
+              // [Name resolution 4] Module-level type (fully-qualified name; module scope).
+              fragmentKey = tagValue;
+              fragmentFile = resolveFragmentFile(fragmentKey, baseDir, file);
             }
+            default -> throw unexpectedTag(tagName);
+          }
+
+          // Store information for fragment end tag!
+          c.lastTagName = tagName;
+          c.lastFragmentKey = fragmentKey;
+          c.lastFragmentBegin = tagMatcher.end();
+          switch (c.lastTagName) {
+            case DocTaglet.NAME -> {
+              c.fragment = null;
+
+              if (thresholdFileTime > 0) {
+                /*
+                 * Force ALL the files to be processed!
+                 *
+                 * NOTE: Normally, due to `thresholdFileTime`, only changed files are processed; in
+                 * case a changed file contains a source fragment though, the processing MUST be
+                 * extended to ALL the files to ensure that every possible target is synchronized,
+                 * since currently there is no way to detect whether that source fragment itself has
+                 * changed or not (ideally, a caching mechanism should be implemented to keep track
+                 * of fragment checksums in order to process only relevant files).
+                 *
+                 * TODO: implement checksum caching to optimize fragment change detection.
+                 */
+                thresholdFileTime = 0;
+              }
+            }
+            case ReuseDocTaglet.NAME -> {
+              c.fragment = fragments.get(c.lastFragmentKey);
+              if (c.fragment != null) {
+                unsolvedFragmentKeys.remove(c.lastFragmentKey);
+              } else {
+                // If no fragment is available yet, postpone!
+                context.postponeFile();
+                unsolvedFragmentFiles.add(file);
+                unsolvedFragmentKeys.add(c.lastFragmentKey);
+                if (fragmentFile != null) {
+                  unsolvedFragmentFiles.add(fragmentFile);
+                }
+                logFragmentEvent(Kind.OTHER, c.lastTagName, c.lastFragmentKey, "POSTPONED", $);
+                return;
+              }
+            }
+            default -> throw unexpectedTag(c.lastTagName);
           }
         }
       }
@@ -818,13 +803,13 @@ public class DocReuseTagletProcessor extends JavaProcessor {
         normalizeTag(c.commentContent.length(), $, file, c);
       }
       // Content changed (balanced tags)?
-      else if (c.out.length() > 0) {
+      else if (!c.out.isEmpty()) {
         // Trailing content.
         c.out.append(c.commentContent.substring(c.inputStart));
       }
 
       // Update the source code!
-      if (c.out.length() > 0) {
+      if (!c.out.isEmpty()) {
         //noinspection UnusedAssignment
         $.setComment(comment = new TraditionalJavadocComment(c.out.toString()));
         context.changeFile();
@@ -867,7 +852,7 @@ public class DocReuseTagletProcessor extends JavaProcessor {
     String midContent = c.commentContent.substring(c.lastFragmentBegin, lastFragmentEnd);
     String endTag = inlineTag(c.lastTagName, PSEUDO_KEY__END);
     switch (c.lastTagName) {
-      case DocTaglet.NAME: {
+      case DocTaglet.NAME -> {
         // Store the fragment for later use by jada.reuseDoc tags!
         c.fragment = storeFragment(c.lastFragmentKey, midContent, node, file, c);
 
@@ -882,9 +867,8 @@ public class DocReuseTagletProcessor extends JavaProcessor {
             .append(endTag);
 
         logFragmentEvent(Kind.NOTE, c.lastTagName, c.lastFragmentKey, "NORMALIZED", node);
-        break;
       }
-      case ReuseDocTaglet.NAME: {
+      case ReuseDocTaglet.NAME -> {
         assert c.fragment != null;
 
         /*
@@ -900,10 +884,8 @@ public class DocReuseTagletProcessor extends JavaProcessor {
             .append(midContent);
 
         logFragmentEvent(Kind.NOTE, c.lastTagName, c.lastFragmentKey, "UPDATED+NORMALIZED", node);
-        break;
       }
-      default:
-        throw unexpectedTag(c.lastTagName);
+      default -> throw unexpectedTag(c.lastTagName);
     }
     c.inputStart = lastFragmentEnd;
   }

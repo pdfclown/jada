@@ -93,14 +93,11 @@ public abstract class FileProcess<T extends FileProcessor<?>> implements SystemO
      */
     public void changeFile() {
       switch (fileStatus) {
-        case DONE_UNCHANGED:
-          fileStatus = FileStatus.DONE_CHANGED;
-          break;
-        case POSTPONED:
-          fileStatus = FileStatus.CHANGED;
-          break;
-        default:
+        case DONE_UNCHANGED -> fileStatus = FileStatus.DONE_CHANGED;
+        case POSTPONED -> fileStatus = FileStatus.CHANGED;
+        default -> {
           // NOP
+        }
       }
     }
 
@@ -208,14 +205,11 @@ public abstract class FileProcess<T extends FileProcessor<?>> implements SystemO
      */
     public void postponeFile() {
       switch (fileStatus) {
-        case DONE_UNCHANGED:
-          fileStatus = FileStatus.POSTPONED;
-          break;
-        case DONE_CHANGED:
-          fileStatus = FileStatus.CHANGED;
-          break;
-        default:
+        case DONE_UNCHANGED -> fileStatus = FileStatus.POSTPONED;
+        case DONE_CHANGED -> fileStatus = FileStatus.CHANGED;
+        default -> {
           // NOP
+        }
       }
     }
 
@@ -294,6 +288,7 @@ public abstract class FileProcess<T extends FileProcessor<?>> implements SystemO
    *
    * @author Stefano Chizzolini
    */
+  @SuppressWarnings("SameNameButDifferent")
   public static class RunResult {
     /**
      * {@link RunResult} builder.

@@ -85,6 +85,7 @@ public abstract class SystemConfig implements SystemObject {
   protected SystemConfig() {
   }
 
+  @SuppressWarnings("this-escape")
   protected SystemConfig(Locale locale, Reporter reporter) {
     this.locale = locale;
 

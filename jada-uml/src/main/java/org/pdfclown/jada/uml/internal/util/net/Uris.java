@@ -97,13 +97,17 @@ public final class Uris {
     return uri;
   }
 
-  // TODO use UTF-8 before escaping, this only works for ascii (which is all we currently need)
+  /*
+   * TODO use Unicode codepoints before escaping, this only works for BMP (which is all we currently
+   * need).
+   */
   private static void appendEncoded(StringBuilder b, String value) {
-    for (char ch : value.toCharArray()) {
-      if (isUnreserved(ch)) {
-        b.append(ch);
+    for (int i = 0; i < value.length(); i++) {
+      char c = value.charAt(i);
+      if (isUnreserved(c)) {
+        b.append(c);
       } else {
-        appendEscapedByte(b, (byte) ch);
+        appendEscapedByte(b, (byte) c);
       }
     }
   }

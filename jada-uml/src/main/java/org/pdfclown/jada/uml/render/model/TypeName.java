@@ -18,7 +18,9 @@
 package org.pdfclown.jada.uml.render.model;
 
 import static java.util.Objects.requireNonNull;
+import static org.apache.commons.lang3.StringUtils.isEmpty;
 import static org.pdfclown.common.util.Exceptions.runtime;
+import static org.pdfclown.common.util.Objects.isSameType;
 import static org.pdfclown.common.util.Objects.textLiteral;
 
 import java.io.IOException;
@@ -72,6 +74,8 @@ public class TypeName {
    */
   public static class Variable extends TypeName {
     /**
+     * Creates an upper-bound variable.
+     *
      * @param bound
      *          Upper bound.
      */
@@ -80,6 +84,8 @@ public class TypeName {
     }
 
     /**
+     * Creates a lower-bound variable.
+     *
      * @param bound
      *          Lower bound.
      */
@@ -139,9 +145,15 @@ public class TypeName {
     this.generics = requireNonNull(generics, "`generics`").clone();
   }
 
+  /**
+   * @implNote In order to enforce equivalence symmetry yet allow non-isomorphic inheritability,
+   *           {@code o} is compared by exact class match — this violates the Liskov Substitution
+   *           Principle, but is the lesser evil.
+   */
   @Override
+  @SuppressWarnings("EqualsDoesntCheckParameterClass")
   public boolean equals(Object o) {
-    return this == o || (o != null && this.getClass() == o.getClass()
+    return this == o || (isSameType(this, o)
         && this.qualifiedName.equals(((TypeName) o).qualifiedName));
   }
 
@@ -149,23 +161,34 @@ public class TypeName {
     return generics.clone();
   }
 
+  /**
+   * Package name.
+   */
   public @Nullable String getPackageName() {
     return packageName;
   }
 
   /**
+   * Qualified name.
    */
-  public String getQualified(@Nullable String separator) {
-    int plen = packageName != null ? packageName.length() : 0;
-    return qualifiedName.length() > plen && plen > 0 && separator != null && !separator.isEmpty()
-        ? packageName + separator + qualifiedName.substring(plen + 1)
-        : qualifiedName;
-  }
-
   public String getQualifiedName() {
     return qualifiedName;
   }
 
+  /**
+   * Gets the qualified name, possibly combining {@link #getPackageName() packageName} and
+   * {@link #getQualifiedName() qualifiedName}.
+   */
+  public String getQualifiedName(@Nullable String separator) {
+    int plen = packageName != null ? packageName.length() : 0;
+    return qualifiedName.length() > plen && plen > 0 && !isEmpty(separator)
+        ? packageName + separator + qualifiedName.substring(plen + 1)
+        : qualifiedName;
+  }
+
+  /**
+   * Simple name.
+   */
   public String getSimpleName() {
     return simpleName;
   }

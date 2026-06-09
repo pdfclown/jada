@@ -513,62 +513,62 @@ public class UmlConfig extends JadaExtConfig {
   }
 
   /**
-   * @see #isCyclicPackageDependenciesChecked()
+   * {@link #isCyclicPackageDependenciesChecked() cyclicPackageDependenciesChecked} option.
    */
   public static final String OPTION__CYCLIC_PACKAGE_DEPENDENCIES_CHECKED =
       "--uml-package-deps-check-cyclic";
   /**
-   * @see #isEmptyDiagramRendered()
+   * {@link #isEmptyDiagramRendered() emptyDiagramRendered} option.
    */
   public static final String OPTION__EMPTY_DIAGRAM_RENDERED =
       "--uml-empty-diagrams-render";
   /**
-   * @see #getExcludedPackageDependencies()
+   * {@link #getExcludedPackageDependencies() excludedPackageDependencies} option.
    */
   public static final String OPTION__EXCLUDED_PACKAGE_DEPENDENCIES =
       "--uml-package-deps-exclude";
   /**
-   * @see #getExcludedTypeReferences()
+   * {@link #getExcludedTypeReferences() excludedTypeReferences} option.
    */
   public static final String OPTION__EXCLUDED_TYPE_REFERENCES =
       "--uml-type-refs-exclude";
   /**
-   * @see ImageConfig#getSubDirectory() getImageConfig().getDirectory()
+   * {@link ImageConfig#getSubDirectory() imageConfig.directory} option.
    */
   public static final String OPTION__IMAGE_DIR =
       "--uml-image-dir";
   /**
-   * @see ImageConfig#getFormats() getImageConfig().getFormats()
+   * {@link ImageConfig#getFormats() imageConfig.formats} option.
    */
   public static final String OPTION__IMAGE_FORMAT =
       "--uml-image-format";
   /**
-   * @see #getPackageDependenciesMaxCount()
+   * {@link #getPackageDependenciesMaxCount() packageDependenciesMaxCount} option.
    */
   public static final String OPTION__PACKAGE_DEPENDENCIES_MAX_COUNT =
       "--uml-package-deps-max-count";
   /**
-   * @see #getPlantumlCustomDirectives()
+   * {@link #getPlantumlCustomDirectives() plantumlCustomDirectives} option.
    */
   public static final String OPTION__PLANTUML_CUSTOM_DIRECTIVE =
       "--uml-custom-directive";
   /**
-   * PlantUML server timeout.
+   * PlantUML server timeout (seconds) option.
    */
   public static final String OPTION__PLANTUML_SERVER_TIMEOUT =
       "--uml-server-timeout";
   /**
-   * @see #getPlantumlServerUrl()
+   * {@link #getPlantumlServerUrl() plantumlServerUrl} option.
    */
   public static final String OPTION__PLANTUML_SERVER_URL =
       "--uml-server-url";
   /**
-   * @see MethodConfig#isPropertiesFlattened() getMethodConfig().isPropertiesFlattened()
+   * {@link MethodConfig#isPropertiesFlattened() methodConfig.propertiesFlattened} option.
    */
   public static final String OPTION__PROPERTIES_FLATTENED =
       "--uml-properties-flatten";
   /**
-   * @see #getStaticFieldsMaxCount()
+   * {@link #getStaticFieldsMaxCount() staticFieldsMaxCount} option.
    */
   public static final String OPTION__STATIC_FIELDS_MAX_COUNT =
       "--uml-static-fields-max-count";
@@ -609,17 +609,6 @@ public class UmlConfig extends JadaExtConfig {
    * <span class="warning">(For internal use only)</span>
    */
   protected UmlConfig() {
-  }
-
-  // SourceName: renderEmptyDiagrams()
-  /**
-   * Whether empty diagrams are rendered.
-   * <p>
-   * CLI option: {@value #OPTION__EMPTY_DIAGRAM_RENDERED}
-   * </p>
-   */
-  public boolean isEmptyDiagramRendered() {
-    return emptyDiagramRendered;
   }
 
   // SourceName: excludedPackageDependencies()
@@ -765,6 +754,17 @@ public class UmlConfig extends JadaExtConfig {
    */
   public boolean isCyclicPackageDependenciesChecked() {
     return cyclicPackageDependenciesChecked;
+  }
+
+  // SourceName: renderEmptyDiagrams()
+  /**
+   * Whether empty diagrams are rendered.
+   * <p>
+   * CLI option: {@value #OPTION__EMPTY_DIAGRAM_RENDERED}
+   * </p>
+   */
+  public boolean isEmptyDiagramRendered() {
+    return emptyDiagramRendered;
   }
 
   /**

@@ -35,7 +35,7 @@ public class ClassA extends Main {
    * </p>
    * {@jada.doc END}
    */
-  public class END {
+  public static class END {
   }
 
   /**
@@ -44,8 +44,8 @@ public class ClassA extends Main {
    * This is from {@link InnerClassA}
    * </p>
    {@jada.doc END}*/
-  public class InnerClassA {
-    public class SubInnerClassA {
+  public static class InnerClassA {
+    public static class SubInnerClassA {
       /**
        * <h4>[Callable member fragment]</h4> {@jada.doc}
        * <p>
@@ -53,12 +53,12 @@ public class ClassA extends Main {
        * </p>
        * {@jada.doc END}
        */
-      int size() {
+      public int size() {
         return 0;
       }
     }
 
-    String getValue() {
+    public String getValue() {
       return "";
     }
   }

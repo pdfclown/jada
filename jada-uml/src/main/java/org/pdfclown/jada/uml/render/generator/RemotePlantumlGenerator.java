@@ -18,6 +18,7 @@
 package org.pdfclown.jada.uml.render.generator;
 
 import static java.util.Objects.requireNonNull;
+import static org.pdfclown.common.util.Chars.SLASH;
 import static org.pdfclown.common.util.Exceptions.runtime;
 import static org.pdfclown.common.util.Exceptions.wrongArg;
 
@@ -25,6 +26,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.regex.Pattern;
 import net.sourceforge.plantuml.FileFormat;
@@ -40,13 +42,14 @@ import net.sourceforge.plantuml.code.TranscoderImpl;
  */
 // SourceName: nl.talsmasoftware.umldoclet.uml.plantuml.RemotePlantumlGenerator
 /**
+ * Remote server-based PlantUML diagram generator.
+ *
  * @author Sjoerd Talsma (original implementation)
  * @author Stefano Chizzolini (adaptation and redesign for Jada)
  */
 public class RemotePlantumlGenerator implements PlantumlGenerator {
   // SourceName: HTTP_URLS
-  public static final Pattern PATTERN__HTTP_URL = Pattern.compile(
-      "^https?://");
+  public static final Pattern PATTERN__HTTP_URL = Pattern.compile("^https?://");
 
   // SourceName: DEFAULT_PLANTUML_BASE_URL
   private static final String PLANTUML_BASE_URL__DEFAULT = "https://www.plantuml.com/plantuml/";
@@ -72,7 +75,8 @@ public class RemotePlantumlGenerator implements PlantumlGenerator {
   public void generatePlantumlDiagramFromSource(String plantumlSource, FileFormat format,
       OutputStream out) {
     final String encodedDiagram = encodeDiagram(plantumlSource);
-    final String diagramUrl = baseUrl + format.name().toLowerCase() + '/' + encodedDiagram;
+    final String diagramUrl = baseUrl + format.name().toLowerCase(Locale.ROOT)
+        + SLASH + encodedDiagram;
     try (InputStream in = new URL(diagramUrl).openConnection().getInputStream()) {
       final byte[] buf = new byte[4096];
       for (int read = in.read(buf); read >= 0; read = in.read(buf)) {

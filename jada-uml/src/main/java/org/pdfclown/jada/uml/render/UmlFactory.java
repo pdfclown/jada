@@ -18,6 +18,7 @@
 package org.pdfclown.jada.uml.render;
 
 import static java.util.Objects.requireNonNull;
+import static java.util.function.Predicate.not;
 import static java.util.stream.Collectors.toCollection;
 import static java.util.stream.Collectors.toList;
 import static javax.lang.model.element.ElementKind.ENUM;
@@ -40,7 +41,6 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
-import java.util.function.Predicate;
 import java.util.stream.Stream;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
@@ -84,9 +84,6 @@ import org.pdfclown.jada.uml.render.model.UmlNode;
 public class UmlFactory {
   private static final UmlPostProcessors POST_PROCESSORS = new UmlPostProcessors();
 
-  private static final Predicate<UmlNode> IS_ABSTRACT_METHOD =
-      $node -> $node instanceof Method method && method.isAbstract();
-
   static Visibility visibilityOf(Set<Modifier> modifiers) {
     return modifiers.contains(Modifier.PRIVATE) ? Visibility.PRIVATE
         : modifiers.contains(Modifier.PROTECTED) ? Visibility.PROTECTED
@@ -120,16 +117,17 @@ public class UmlFactory {
         : PUML_REF__IMPLEMENTS;
   }
 
+  // SourceName: IS_ABSTRACT_METHOD
+  private static boolean isAbstractMethod(UmlNode node) {
+    return node instanceof Method m && m.isAbstract();
+  }
+
   private static boolean isBooleanPrimitive(TypeMirror type) {
     return "boolean".equals(TypeNameVisitor.INSTANCE.visit(type).getQualifiedName());
   }
 
   private static boolean isVarArgsMethod(Element element) {
     return element instanceof ExecutableElement e && e.isVarArgs();
-  }
-
-  private static <T> Predicate<T> not(Predicate<T> predicate) {
-    return $ -> !predicate.test($);
   }
 
   private static @Nullable String propertyName(ExecutableElement method) {
@@ -187,6 +185,7 @@ public class UmlFactory {
   }
 
   /**
+   * Creates the class diagram corresponding to an element.
    */
   public Diagram createClassDiagram(TypeElement classElement) {
     Type type = createAndPopulateType(null, classElement);
@@ -213,7 +212,7 @@ public class UmlFactory {
         classDiagram.addChild(sep);
         Type superType = createAndPopulateType(null, (TypeElement) superclassElement);
         // Only keep abstract methods of supertype.
-        superType.removeChildren(not(IS_ABSTRACT_METHOD));
+        superType.removeChildren(not(UmlFactory::isAbstractMethod));
         classDiagram.addChild(superType);
         sep = UmlCharacters.EMPTY;
         references.add(new Reference(
@@ -232,11 +231,10 @@ public class UmlFactory {
       }
       if (!extension.getExtConfig().getExcludedTypeReferences()
           .contains(ifName.getQualifiedName())) {
-        Element implementedInterface = extension.getEnv().getTypeUtils().asElement(interfaceType);
-        if (implementedInterface instanceof TypeElement) {
+        if (extension.getEnv().getTypeUtils().asElement(interfaceType) instanceof TypeElement e) {
           classDiagram.addChild(sep);
-          Type implementedType = createAndPopulateType(null, (TypeElement) implementedInterface);
-          implementedType.removeChildren(not(IS_ABSTRACT_METHOD));
+          Type implementedType = createAndPopulateType(null, e);
+          implementedType.removeChildren(not(UmlFactory::isAbstractMethod));
           classDiagram.addChild(implementedType);
           sep = UmlCharacters.EMPTY;
         }
@@ -258,12 +256,12 @@ public class UmlFactory {
       }
       if (!extension.getExtConfig().getExcludedTypeReferences()
           .contains(enclosingTypeName.getQualifiedName())) {
-        Element enclosingElement = classElement.getEnclosingElement();
-        if (enclosingElement instanceof TypeElement) {
+        if (classElement.getEnclosingElement() instanceof TypeElement e) {
           classDiagram.addChild(sep);
-          Type enclosingType = createAndPopulateType(null, (TypeElement) enclosingElement);
-          enclosingType.removeChildren(not(IS_ABSTRACT_METHOD));
+          Type enclosingType = createAndPopulateType(null, e);
+          enclosingType.removeChildren(not(UmlFactory::isAbstractMethod));
           classDiagram.addChild(enclosingType);
+          //noinspection UnusedAssignment
           sep = UmlCharacters.EMPTY;
         }
         references.add(new Reference(
@@ -307,6 +305,7 @@ public class UmlFactory {
   }
 
   /**
+   * Creates the package diagram corresponding to an element.
    */
   public Diagram createPackageDiagram(PackageElement packageElement) {
     final ModuleElement module = extension.getEnv().getElementUtils().getModuleOf(packageElement);
@@ -436,13 +435,12 @@ public class UmlFactory {
 
   private void addForeignType(@Nullable Map<String, Collection<Type>> foreignTypes,
       Element typeElement) {
-    if (foreignTypes != null && typeElement instanceof TypeElement) {
-      Type type = createAndPopulateType(null, (TypeElement) typeElement);
-      if (typeElement.getKind().isClass()) {
+    if (foreignTypes != null && typeElement instanceof TypeElement e) {
+      Type type = createAndPopulateType(null, e);
+      if (e.getKind().isClass()) {
         type.removeChildren($ -> $ instanceof Method method && !method.isAbstract());
       }
-      foreignTypes.computeIfAbsent(type.getPackageName(), $k -> new LinkedHashSet<>())
-          .add(type);
+      foreignTypes.computeIfAbsent(type.getPackageName(), $k -> new LinkedHashSet<>()).add(type);
     }
   }
 
@@ -499,9 +497,9 @@ public class UmlFactory {
       if (!extension.getExtConfig().getExcludedTypeReferences()
           .contains(superclassName.getQualifiedName())) {
         references.add(new Reference(
-            Reference.from(type.getName().getQualified(separator), null),
+            Reference.from(type.getName().getQualifiedName(separator), null),
             PUML_REF__EXTENDS,
-            Reference.to(superclassName.getQualified(separator), null)));
+            Reference.to(superclassName.getQualifiedName(separator), null)));
         if (!namespace.contains(superclassName)) {
           addForeignType(foreignTypes, superclassElement);
         }
@@ -514,9 +512,9 @@ public class UmlFactory {
       if (!extension.getExtConfig().getExcludedTypeReferences()
           .contains(interfaceName.getQualifiedName())) {
         references.add(new Reference(
-            Reference.from(type.getName().getQualified(separator), null),
+            Reference.from(type.getName().getQualifiedName(separator), null),
             interfaceReferenceTypeFrom(type),
-            Reference.to(interfaceName.getQualified(separator), null)));
+            Reference.to(interfaceName.getQualifiedName(separator), null)));
         // TODO Figure out what to do IF the interface is found BUT has a different typename
         if (!namespace.contains(interfaceName)) {
           addForeignType(foreignTypes, extension.getEnv().getTypeUtils().asElement($interfaceType));
@@ -530,9 +528,9 @@ public class UmlFactory {
       TypeName parentType =
           TypeNameVisitor.INSTANCE.visit(typeElement.getEnclosingElement().asType());
       references.add(new Reference(
-          Reference.from(parentType.getQualified(separator), null),
+          Reference.from(parentType.getQualifiedName(separator), null),
           PUML_REF__ENCLOSES,
-          Reference.to(type.getName().getQualified(separator), null)));
+          Reference.to(type.getName().getQualifiedName(separator), null)));
       // No check needed whether parent type lives in our namespace.
     }
 
@@ -549,9 +547,10 @@ public class UmlFactory {
                 typeNameWithCardinality.apply(propertyType($method));
             if (namespace.contains(returnType.typeName)) {
               addReference(references, new Reference(
-                  Reference.from(type.getName().getQualified(separator), null),
+                  Reference.from(type.getName().getQualifiedName(separator), null),
                   PUML_REF__ASSOCIATES,
-                  Reference.to(returnType.typeName.getQualified(separator), returnType.cardinality),
+                  Reference.to(returnType.typeName.getQualifiedName(separator),
+                      returnType.cardinality),
                   propertyName));
               type.removeChildren($ -> $ instanceof Method m
                   && m.getName().equals($method.getSimpleName().toString()));

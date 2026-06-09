@@ -193,13 +193,13 @@ class UmlPostProcessors {
      * </p>
      */
     private void add(TypeMember member) {
-      if (member instanceof Field) {
-        field = (Field) member;
-      } else if (member instanceof Method) {
+      if (member instanceof Field f) {
+        field = f;
+      } else if (member instanceof Method m) {
         if (member.getName().startsWith("set")) {
-          setter = (Method) member;
+          setter = m;
         } else {
-          getter = (Method) member;
+          getter = m;
         }
       }
     }

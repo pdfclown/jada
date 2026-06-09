@@ -58,7 +58,7 @@ public class FileOptimizerIT extends BaseIT {
     processContent(file);
   }
 
-  @SuppressWarnings("resource")
+  @SuppressWarnings({ "resource", "StreamResourceLeak" })
   private Stream<Path> files(String extension) {
     try {
       return Files.list(getEnv().resourcePath(EMPTY))

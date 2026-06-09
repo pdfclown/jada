@@ -18,6 +18,7 @@ import static java.nio.file.Files.getLastModifiedTime;
 import static java.util.Objects.requireNonNull;
 import static org.pdfclown.common.util.Exceptions.runtime;
 import static org.pdfclown.common.util.Exceptions.wrongArg;
+import static org.pdfclown.common.util.Objects.anyThat;
 import static org.pdfclown.common.util.Objects.textLiteral;
 
 import java.io.File;
@@ -29,6 +30,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.spi.ToolProvider;
@@ -87,6 +89,7 @@ public class JadaDebug extends Debug {
         return Clis.parseArgs(value);
       }
 
+      @Override
       public List<String> convert(String value) {
         return parse(value);
       }
@@ -209,17 +212,12 @@ public class JadaDebug extends Debug {
       }
       debug.run();
     } catch (Exception ex) {
-      if (ex instanceof ArgumentException argEx) {
-        switch (argEx.getArgName()) {
-          case ARGNAME__JADA_PROJECT_DIR:
-          case ARGNAME__JAVADOC_TARGET_DIR:
-            exit(ex.getMessage(), null, cli);
-            // FALLTHRU -- compiler is oblivious that at this point the process already exited.
-          default:
-            // NOP
-        }
+      if (ex instanceof ArgumentException argEx && anyThat(argEx.getArgName(), Objects::equals,
+          ARGNAME__JADA_PROJECT_DIR, ARGNAME__JAVADOC_TARGET_DIR)) {
+        exit(ex.getMessage(), null, cli);
+      } else {
+        exit(null, ex, null);
       }
-      exit(null, ex, null);
     }
   }
 

@@ -27,11 +27,14 @@ import org.pdfclown.jada.uml.UmlConfig;
 
 // SourceName: nl.talsmasoftware.umldoclet.uml.plantuml.PlantumlGenerator
 /**
+ * PlantUML diagram generator.
+ *
  * @author Sjoerd Talsma (original implementation)
  * @author Stefano Chizzolini (adaptation and redesign for Jada)
  */
 public interface PlantumlGenerator {
   /**
+   * Gets the diagram generator matching the given configuration.
    */
   static PlantumlGenerator getPlantumlGenerator(UmlConfig config) {
     return Optional.ofNullable(config.getPlantumlServerUrl())

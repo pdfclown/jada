@@ -29,6 +29,8 @@ import org.pdfclown.jada.uml.UmlConfig.TypeMode;
 
 // SourceName: nl.talsmasoftware.umldoclet.uml.Type
 /**
+ * Type.
+ *
  * @author Sjoerd Talsma (original implementation)
  * @author Stefano Chizzolini (adaptation and redesign for Jada)
  */
@@ -61,10 +63,12 @@ public class Type extends UmlNode {
   private boolean packageNameInclusive;
   private @LazyNonNull @Nullable Link link;
 
+  @SuppressWarnings("this-escape")
   public Type(Namespace namespace, Classification classification, TypeName name) {
     this(namespace, classification, name, false, false, null);
   }
 
+  @SuppressWarnings("this-escape")
   private Type(Namespace namespace, Classification classification, TypeName name,
       boolean deprecated, boolean packageNameInclusive,
       @Nullable Collection<? extends UmlNode> children) {
@@ -91,10 +95,13 @@ public class Type extends UmlNode {
     return this;
   }
 
+  /**
+   * @implNote Marked as final to enforce equivalence symmetry.
+   */
   @Override
-  public boolean equals(Object o) {
-    return this == o || (o != null && this.getClass() == o.getClass()
-        && this.name.equals(((Type) o).name));
+  public final boolean equals(Object o) {
+    return this == o || (o instanceof Type that
+        && this.name.equals(that.name));
   }
 
   public Classification getClassfication() {
@@ -103,26 +110,36 @@ public class Type extends UmlNode {
 
   // SourceName: getModulename
   /**
-   * @return (empty means unnamed module)
+   * Module name.
+   *
+   * @return Empty, if unnamed module.
    */
   public String getModuleName() {
     return namespace.getModuleName();
   }
 
+  /**
+   * Type name.
+   */
   public TypeName getName() {
     return name;
   }
 
   // SourceName: getPackagename
   /**
-   * @return (empty means default package)
+   * Package name.
+   *
+   * @return Empty, if default package.
    */
   public String getPackageName() {
     return namespace.getName();
   }
 
+  /**
+   * @implNote Marked as final to enforce equivalence symmetry.
+   */
   @Override
-  public int hashCode() {
+  public final int hashCode() {
     return name.hashCode();
   }
 
@@ -132,6 +149,7 @@ public class Type extends UmlNode {
   }
 
   /**
+   * Updates generic type variables.
    */
   public void updateGenericTypeVariables(@Nullable TypeName name) {
     if (name != null && name.getQualifiedName().equals(this.name.getQualifiedName())) {

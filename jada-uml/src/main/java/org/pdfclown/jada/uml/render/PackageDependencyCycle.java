@@ -24,7 +24,6 @@ import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
-import java.util.LinkedList;
 import java.util.RandomAccess;
 import java.util.Set;
 import org.jspecify.annotations.Nullable;
@@ -56,7 +55,7 @@ public class PackageDependencyCycle extends AbstractList<PackageDependency>
    *           returned as a new set.
    */
   public static Set<PackageDependencyCycle> detectCycles(Iterable<PackageDependency> dependencies) {
-    var chains = new LinkedList<PackageDependency[]>();
+    var chains = new ArrayList<PackageDependency[]>();
     for (var dependency : dependencies) {
       var newChains = new ArrayList<PackageDependency[]>();
       for (var chain : chains) {
@@ -106,6 +105,7 @@ public class PackageDependencyCycle extends AbstractList<PackageDependency>
    * @throws IllegalArgumentException
    *           if {@code dependencies} do NOT form a cycle.
    */
+  @SuppressWarnings("this-escape")
   public PackageDependencyCycle(PackageDependency... dependencies) {
     if (dependencies.length < 1)
       throw wrongArg("dependencies", dependencies, "A dependency cycle CANNOT be empty");

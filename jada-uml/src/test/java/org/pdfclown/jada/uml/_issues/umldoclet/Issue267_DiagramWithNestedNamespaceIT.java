@@ -31,6 +31,7 @@ import static org.pdfclown.common.util.io.Files.FILE_EXTENSION__SVG;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.Locale;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.SourceStringReader;
@@ -60,7 +61,7 @@ public class Issue267_DiagramWithNestedNamespaceIT extends BaseIT {
         } catch (IOException ex) {
           fail("I/O error generating image " + svgDiagram, ex);
         }
-      }).toLowerCase();
+      }).toLowerCase(Locale.ROOT);
     }
 
     {
@@ -69,7 +70,7 @@ public class Issue267_DiagramWithNestedNamespaceIT extends BaseIT {
       assertThat(output, not(containsString("exception")));
     }
     {
-      String svgcontent = readString(svgDiagram).toLowerCase();
+      String svgcontent = readString(svgDiagram).toLowerCase(Locale.ROOT);
       assertThat(svgcontent, not(containsString("error")));
       assertThat(svgcontent, not(containsString("exception")));
     }

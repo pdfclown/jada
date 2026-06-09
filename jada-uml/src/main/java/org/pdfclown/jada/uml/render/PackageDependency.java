@@ -20,6 +20,7 @@ package org.pdfclown.jada.uml.render;
 import static java.util.Objects.requireNonNull;
 
 import java.util.Objects;
+import org.pdfclown.common.util.annot.Immutable;
 
 // SourceName: nl.talsmasoftware.umldoclet.javadoc.dependencies.PackageDependency
 /**
@@ -37,6 +38,7 @@ import java.util.Objects;
  * @author Sjoerd Talsma (original implementation)
  * @author Stefano Chizzolini (adaptation and redesign for Jada)
  */
+@Immutable
 public class PackageDependency {
   /**
    * The qualified name of the dependent package. This package contains at least one element that
@@ -63,20 +65,21 @@ public class PackageDependency {
     this.toPackage = requireNonNull(toPackage, "`toPackage`");
   }
 
+  /**
+   * @implNote Marked as final to enforce equivalence symmetry.
+   */
   @Override
-  public boolean equals(Object o) {
-    if (this == o)
-      return true;
-    else if (o == null || this.getClass() != o.getClass())
-      return false;
-
-    var that = (PackageDependency) o;
-    return this.fromPackage.equals(that.fromPackage)
-        && this.toPackage.equals(that.toPackage);
+  public final boolean equals(Object o) {
+    return this == o || (o instanceof PackageDependency that
+        && this.fromPackage.equals(that.fromPackage)
+        && this.toPackage.equals(that.toPackage));
   }
 
+  /**
+   * @implNote Marked as final to enforce equivalence symmetry.
+   */
   @Override
-  public int hashCode() {
+  public final int hashCode() {
     return Objects.hash(fromPackage, toPackage);
   }
 

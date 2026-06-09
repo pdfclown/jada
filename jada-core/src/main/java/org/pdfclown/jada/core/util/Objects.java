@@ -26,6 +26,7 @@ public final class Objects {
   private enum TypesSingleton {
     INSTANCE;
 
+    @SuppressWarnings("ImmutableEnumChecker")
     final ScanResult value = new ClassGraph()
         .enableClassInfo()
         .addClassLoader(Objects.class.getClassLoader())

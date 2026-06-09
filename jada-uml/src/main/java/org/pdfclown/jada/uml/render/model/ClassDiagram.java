@@ -40,6 +40,7 @@ public class ClassDiagram extends Diagram {
 
   /**
    */
+  @SuppressWarnings("this-escape")
   public ClassDiagram(UmlConfig config, Type type) {
     super(config);
 
@@ -56,6 +57,7 @@ public class ClassDiagram extends Diagram {
   }
 
   /**
+   * Type defined in this diagram.
    */
   public Type getType() {
     return getChildren().stream()
@@ -73,7 +75,7 @@ public class ClassDiagram extends Diagram {
     if (pumlFile == null) {
       final Type type = getType();
       var b = new StringBuilder(getConfig().getConfig().getOutputDirectory().toString());
-      if (b.length() > 0 && b.charAt(b.length() - 1) != File.separatorChar) {
+      if (!b.isEmpty() && b.charAt(b.length() - 1) != File.separatorChar) {
         b.append(File.separatorChar);
       }
 

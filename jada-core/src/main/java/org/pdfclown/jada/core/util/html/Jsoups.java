@@ -33,6 +33,7 @@ public final class Jsoups {
    * and equivalent attributes and child nodes.
    * </p>
    */
+  @SuppressWarnings("ReferenceEquality")
   public static boolean equal(Node n1, Node n2) {
     if (n1 == n2)
       return true;

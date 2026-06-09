@@ -97,6 +97,7 @@ public class Issue71_DeprecationIT extends BaseIT {
   }
 
   @Deprecated
+  @SuppressWarnings("InlineMeSuggester")
   public Object getDeprecatedPropertyByAnnotation() {
     return null;
   }

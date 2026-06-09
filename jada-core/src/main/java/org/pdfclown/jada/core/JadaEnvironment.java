@@ -12,7 +12,6 @@
  */
 package org.pdfclown.jada.core;
 
-import static java.util.Objects.requireNonNull;
 import static org.pdfclown.common.util.Exceptions.unsupported;
 import static org.pdfclown.common.util.Exceptions.wrongArgOpt;
 import static org.pdfclown.common.util.Objects.typeOf;
@@ -55,7 +54,7 @@ import javax.lang.model.type.ErrorType;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
-import javax.tools.Diagnostic.Kind;
+import javax.tools.Diagnostic;
 import javax.tools.FileObject;
 import javax.tools.JavaFileManager;
 import javax.tools.JavaFileObject;
@@ -182,8 +181,11 @@ public class JadaEnvironment extends DocEnvImpl implements JadaObject {
        * internal classes (ouch!).
        */
       private @LazyNonNull @Nullable List<? extends DocTree> blockTags;
+      @SuppressWarnings("HidingField")
       private @LazyNonNull @Nullable List<? extends DocTree> body;
+      @SuppressWarnings("HidingField")
       private @LazyNonNull @Nullable List<? extends DocTree> firstSentence;
+      @SuppressWarnings("HidingField")
       private @LazyNonNull @Nullable List<DocTree> fullBody;
 
       public JadaDocComment(DocCommentTree base, Object location,
@@ -202,7 +204,7 @@ public class JadaEnvironment extends DocEnvImpl implements JadaObject {
       }
 
       @Override
-      public <@Nullable R, @Nullable D> R accept(DocTreeVisitor<R, D> visitor, D data) {
+      public <R, D> R accept(DocTreeVisitor<R, D> visitor, D data) {
         return base.accept(visitor, data);
       }
 
@@ -294,6 +296,7 @@ public class JadaEnvironment extends DocEnvImpl implements JadaObject {
     }
 
     /**
+     * Filters Javadoc at the given location.
      */
     public @Nullable DocCommentTree filterDocComment(FileObject location) {
       return filterDocComment(docTrees.getDocCommentTree(fileFilter.filterDocFile(location)),
@@ -301,25 +304,27 @@ public class JadaEnvironment extends DocEnvImpl implements JadaObject {
     }
 
     /**
+     * Filters Javadoc at the given location.
      */
     public @Nullable DocCommentTree filterDocComment(TreePath location) {
       return filterDocComment(docTrees.getDocCommentTree(location), location);
     }
 
     /**
+     * Filters the given Javadoc nodes.
      */
     public List<? extends DocTree> filterDocFragment(List<? extends DocTree> nodes,
         DocFragmentRole role, Object location) {
       switch (filters.size()) {
-        case 0:
-          break;
-        case 1:
-          nodes = filters.element().filterDocFragment(nodes, role, location);
-          break;
-        default:
+        case 0 -> {
+          // NOP
+        }
+        case 1 -> nodes = filters.element().filterDocFragment(nodes, role, location);
+        default -> {
           for (var filter : filters) {
             nodes = filter.filterDocFragment(nodes, role, location);
           }
+        }
       }
       return nodes;
     }
@@ -365,6 +370,8 @@ public class JadaEnvironment extends DocEnvImpl implements JadaObject {
   }
 
   /**
+   * Syntax tree.
+   *
    * @author Stefano Chizzolini
    */
   public static class JadaDocTrees extends DocTrees {
@@ -602,13 +609,14 @@ public class JadaEnvironment extends DocEnvImpl implements JadaObject {
     }
 
     @Override
-    public void printMessage(Kind kind, CharSequence msg, DocTree t, DocCommentTree c,
+    public void printMessage(Diagnostic.Kind kind, CharSequence msg, DocTree t, DocCommentTree c,
         CompilationUnitTree root) {
       base.printMessage(kind, msg, t, c, root);
     }
 
     @Override
-    public void printMessage(Kind kind, CharSequence msg, Tree t, CompilationUnitTree root) {
+    public void printMessage(Diagnostic.Kind kind, CharSequence msg, Tree t,
+        CompilationUnitTree root) {
       base.printMessage(kind, msg, t, root);
     }
 
@@ -671,33 +679,36 @@ public class JadaEnvironment extends DocEnvImpl implements JadaObject {
   }
 
   /**
+   * Gets the source file associated to the given element.
    */
-  public Path getFilePath(Element location) {
-    return getFilePath(docTrees.base.getPath(location));
+  public Path getFilePath(Element element) {
+    return getFilePath(docTrees.base.getPath(element));
   }
 
   /**
+   * Gets the source file at the given location.
    */
   public Path getFilePath(FileObject location) {
     return Path.of(location.toUri());
   }
 
   /**
+   * Gets the source file associated to the given entity.
    */
-  public Path getFilePath(Object location) {
-    requireNonNull(location, "`location`");
-    if (location instanceof Element element)
+  public Path getFilePath(Object entity) {
+    if (entity instanceof Element element)
       return getFilePath(element);
-    else if (location instanceof TreePath treePath)
+    else if (entity instanceof TreePath treePath)
       return getFilePath(treePath);
-    else if (location instanceof FileObject fileObject)
+    else if (entity instanceof FileObject fileObject)
       return getFilePath(fileObject);
     else
-      throw wrongArgOpt("location", typeOf(location), null, Set.of(Element.class, TreePath.class,
+      throw wrongArgOpt("entity", typeOf(entity), null, Set.of(Element.class, TreePath.class,
           FileObject.class));
   }
 
   /**
+   * Gets the source file of the compilation unit at the given location.
    */
   public Path getFilePath(TreePath location) {
     return Path.of(location.getCompilationUnit().getSourceFile().toUri());

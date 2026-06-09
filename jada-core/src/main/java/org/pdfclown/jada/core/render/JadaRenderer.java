@@ -53,6 +53,8 @@ public abstract class JadaRenderer implements Nameable {
    * TODO: add param values from tag (for example: {@myTag rendererName paramValue1 paramValue2}).
    */
   /**
+   * Renders a taglet at the given file.
+   *
    * @return {@code null} if rendering is postponed.
    */
   public abstract String render(Path path, Jada jada);

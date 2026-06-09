@@ -25,6 +25,8 @@ import net.sourceforge.plantuml.SourceStringReader;
 
 // SourceName: nl.talsmasoftware.umldoclet.uml.plantuml.BuiltinPlantumlGenerator
 /**
+ * Built-in PlantUML diagram generator.
+ *
  * @author Sjoerd Talsma (original implementation)
  * @author Stefano Chizzolini (adaptation and redesign for Jada)
  */

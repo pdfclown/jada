@@ -103,16 +103,15 @@ public abstract class JadaExtension implements JadaComponent {
   void onProblem(Kind kind) {
     var problemStatus = Status.of(kind);
     switch (problemStatus) {
-      case ERROR:
+      case ERROR -> {
         errorCount++;
         jada.extErrorCount++;
-        break;
-      case WARNING:
+      }
+      case WARNING -> {
         warningCount++;
         jada.extWarningCount++;
-        break;
-      default:
-        throw unexpected(kind);
+      }
+      default -> throw unexpected(kind);
     }
   }
 }

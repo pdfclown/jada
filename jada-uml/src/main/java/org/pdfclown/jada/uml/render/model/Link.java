@@ -48,6 +48,7 @@ public class Link extends UmlNode {
   private static final ThreadLocal<@Nullable Path> BASE_DIRECTORY = new ThreadLocal<>();
 
   /**
+   * Creates a link for the given package.
    */
   public static Link forPackage(Namespace namespace) {
     final String destinationDirectory =
@@ -64,6 +65,7 @@ public class Link extends UmlNode {
   }
 
   /**
+   * Creates a link for the given type.
    */
   public static Link forType(Type type) {
     final String destinationDirectory = type.getConfig().getConfig().getOutputDirectory()

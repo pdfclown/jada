@@ -51,6 +51,7 @@ public class RemotePlantumlGeneratorIT extends BaseIT {
   static final String testUml = "@startuml\r\nBob -> Alice : hello\r\n@enduml";
 
   @Container
+  @SuppressWarnings("rawtypes")
   static final GenericContainer PLANTUML_SERVER = new GenericContainer(
       DockerImageName.parse("plantuml/plantuml-server")).withExposedPorts(8080);
 

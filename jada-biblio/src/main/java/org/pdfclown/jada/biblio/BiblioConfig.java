@@ -76,12 +76,12 @@ public class BiblioConfig extends JadaExtConfig {
   }
 
   /**
-   * @see #getStaticBiblioEntryIds()
+   * {@link #getStaticBiblioEntryIds() staticBiblioEntryIds} option.
    */
   public static final String OPTION__STATIC_ENTRIES =
       "--biblio-static-entries";
   /**
-   * @see #isUsedBiblioEntriesOnly()
+   * {@link #isUsedBiblioEntriesOnly() usedBiblioEntriesOnly} option.
    */
   public static final String OPTION__USED_ENTRIES_ONLY =
       "--biblio-used-only";

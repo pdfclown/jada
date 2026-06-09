@@ -65,7 +65,7 @@ public final class LangModels {
         b.append(packageName);
       }
       if (localName != null) {
-        if (b.length() > 0) {
+        if (!b.isEmpty()) {
           b.append('.');
         }
         b.append(localName);
@@ -148,25 +148,28 @@ public final class LangModels {
    */
   public static String fqn(Element element, boolean signed) {
     var b = new StringBuilder();
-    evalAncestors(element, true, $ -> {
-      switch ($.getKind()) {
-        case CLASS:
-        case INTERFACE:
+    evalAncestors(element, true, $ -> switch ($.getKind()) {
+      case //
+          CLASS, //
+          INTERFACE -> {
+        b.insert(0, $);
+        yield EMPTY;
+      }
+      case //
+          CONSTRUCTOR, //
+          METHOD -> {
+        if (signed) {
           b.insert(0, $);
-          return EMPTY;
-        case CONSTRUCTOR:
-        case METHOD:
-          if (signed) {
-            b.insert(0, $);
-          } else {
-            b.insert(0, "(*)");
-            b.insert(0, $.getSimpleName());
-          }
-          b.insert(0, '.');
-          return null;
-        default:
-          b.insert(0, $);
-          return null;
+        } else {
+          b.insert(0, "(*)");
+          b.insert(0, $.getSimpleName());
+        }
+        b.insert(0, '.');
+        yield null;
+      }
+      default -> {
+        b.insert(0, $);
+        yield null;
       }
     });
     return b.toString();

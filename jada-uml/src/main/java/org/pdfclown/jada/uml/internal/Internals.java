@@ -13,6 +13,8 @@
 package org.pdfclown.jada.uml.internal;
 
 /**
+ * Internal utilities.
+ *
  * @author Stefano Chizzolini
  */
 public final class Internals {

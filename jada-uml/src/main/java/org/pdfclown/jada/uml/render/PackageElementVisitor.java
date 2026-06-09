@@ -60,7 +60,7 @@ final class PackageElementVisitor extends SimpleElementVisitor9<@Nullable String
   }
 
   /**
-   * When we reach an unknown element, we also {@linkplain #defaultAction( Element, Void) visit the
+   * When we reach an unknown element, we also {@linkplain #defaultAction(Element, Void) visit the
    * enclosing element}.
    */
   @Override

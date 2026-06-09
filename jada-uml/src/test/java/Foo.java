@@ -25,5 +25,6 @@
  * @author Sjoerd Talsma (original implementation)
  * @author Stefano Chizzolini (adaptation and redesign for Jada)
  */
+@SuppressWarnings("DefaultPackage")
 public class Foo {
 }

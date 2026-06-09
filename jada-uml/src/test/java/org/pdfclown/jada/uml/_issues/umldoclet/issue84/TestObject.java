@@ -19,6 +19,7 @@ package org.pdfclown.jada.uml._issues.umldoclet.issue84;
 
 import static org.pdfclown.common.util.Objects.toStringWithProperties;
 
+import java.util.Locale;
 import java.util.Objects;
 
 // SourceName: nl.talsmasoftware.umldoclet.javadoc.TestObject
@@ -42,7 +43,7 @@ public class TestObject implements Comparable<TestObject> {
     else if (otherValue == null)
       return 1;
 
-    int diff = value.toLowerCase().compareTo(other.value.toLowerCase());
+    int diff = value.toLowerCase(Locale.ROOT).compareTo(other.value.toLowerCase(Locale.ROOT));
     return diff == 0 ? value.compareTo(other.value) : diff;
   }
 

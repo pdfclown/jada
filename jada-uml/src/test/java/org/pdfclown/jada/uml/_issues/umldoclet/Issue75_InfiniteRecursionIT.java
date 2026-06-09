@@ -35,6 +35,7 @@ import org.pdfclown.jada.uml.__test.BaseIT;
  * @author Stefano Chizzolini (adaptation and redesign for Jada)
  */
 public class Issue75_InfiniteRecursionIT extends BaseIT {
+  @SuppressWarnings("JavaLangClash")
   public interface Comparable<T> {
     <U extends Comparable<? super U>> Comparator<T> thenComparing(
         Function<? super T, ? extends U> keyExtractor);

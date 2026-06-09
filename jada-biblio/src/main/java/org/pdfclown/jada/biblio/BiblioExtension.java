@@ -304,20 +304,24 @@ public class BiblioExtension extends JadaExtension {
     final var localName = e.getLocalName();
     switch (localName) {
       // Publication tags.
-      case XML_TAG__DOC:
-      case XML_TAG__PART:
-      case XML_TAG__REF:
-      case XML_TAG__SPEC:
-      case XML_TAG__VERSION:
-        break;
+      case //
+          XML_TAG__DOC, //
+          XML_TAG__PART, //
+          XML_TAG__REF, //
+          XML_TAG__SPEC, //
+          XML_TAG__VERSION -> {
+        // NOP
+      }
       // Non-publication tags.
-      case XML_TAG__SEE:
+      case XML_TAG__SEE -> {
         return;
+      }
       // Unknown tags.
-      default:
+      default -> {
         getLog().print(Kind.WARNING, this, BiblioMessage.BIBLIO_DATA_ELEMENT_UNKNOWN, localName,
             abbreviate(Xmls.toString(e), 80));
         return;
+      }
     }
 
     String id = e.getAttribute(XML_ATTR__ID);
@@ -329,14 +333,11 @@ public class BiblioExtension extends JadaExtension {
     if (parentId != null) {
       var b = new StringBuilder(parentId);
       switch (localName) {
-        case XML_TAG__PART:
-          b.append(BiblioRef.SEPARATOR__PART);
-          break;
-        case XML_TAG__VERSION:
-          b.append(BiblioRef.SEPARATOR__VERSION);
-          break;
-        default:
+        case XML_TAG__PART -> b.append(BiblioRef.SEPARATOR__PART);
+        case XML_TAG__VERSION -> b.append(BiblioRef.SEPARATOR__VERSION);
+        default -> {
           // NOP
+        }
       }
       id = b.append(id).toString();
     }

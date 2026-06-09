@@ -71,6 +71,7 @@ public class ProcessSourceMojo extends AbstractMojo {
       realSubTypes(SrcFileProcessor.class).forEach($$ -> $.getLog().info("- " + fqnd($$)));
     });
 
+    @SuppressWarnings("ImmutableEnumChecker")
     final Consumer<org.apache.maven.plugin.Mojo> printer;
 
     Info(Consumer<org.apache.maven.plugin.Mojo> printer) {

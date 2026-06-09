@@ -22,8 +22,6 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasToString;
 import static org.hamcrest.Matchers.is;
-import static org.pdfclown.jada.uml.render.model.Reference.from;
-import static org.pdfclown.jada.uml.render.model.Reference.to;
 import static org.pdfclown.jada.uml.util.Plantumls.PUML_REF__ASSOCIATED_BY;
 import static org.pdfclown.jada.uml.util.Plantumls.PUML_REF__ASSOCIATES;
 
@@ -39,8 +37,10 @@ class ReferenceTest extends BaseTest {
   // SourceName: testCanonical
   @Test
   void canonical() {
-    var ref1 = new Reference(from("type1", null), PUML_REF__ASSOCIATES, to("type2", "*"));
-    var ref2 = new Reference(from("type2", "*"), PUML_REF__ASSOCIATED_BY, to("type1", null));
+    var ref1 = new Reference(Reference.from("type1", null), PUML_REF__ASSOCIATES,
+        Reference.to("type2", "*"));
+    var ref2 = new Reference(Reference.from("type2", "*"), PUML_REF__ASSOCIATED_BY,
+        Reference.to("type1", null));
 
     assertThat(ref1, is(equalTo(ref2)));
     assertThat(ref2, is(equalTo(ref1)));
@@ -52,8 +52,8 @@ class ReferenceTest extends BaseTest {
   // SourceName: testSelfReference
   @Test
   void isSelfReference() {
-    var ref = new Reference(from(getClass().getName(), null), PUML_REF__ASSOCIATES,
-        to(getClass().getName(), null));
+    var ref = new Reference(Reference.from(getClass().getName(), null), PUML_REF__ASSOCIATES,
+        Reference.to(getClass().getName(), null));
 
     assertThat(ref.isSelfReference(), is(true));
   }

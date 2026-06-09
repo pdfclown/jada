@@ -47,6 +47,7 @@ import static org.pdfclown.jada.uml.internal.util.io.Files.FILE_EXTENSION__PLANT
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -160,12 +161,12 @@ public class UmlExtension extends JadaExtension {
         .add(OPTION__IMAGE_FORMAT, options.getText(OPTION__IMAGE_FORMAT, EMPTY,
             Arrays.stream(Format.values())
                 .map($ -> (S + LF + HYPHEN + SPACE + "%s (%s)").formatted(
-                    $.name().toLowerCase(), $.fileExtension))
+                    $.name().toLowerCase(Locale.ROOT), $.fileExtension))
                 .collect(joining())),
             List.of("%s(,%s)*".formatted(imageFormatParameter, imageFormatParameter)),
             $args -> parseListIncremental($args.get(0),
                 $ -> $.map($$ -> Format.valueOf(($$.startsWith(S + DOT) ? $$.substring(1) : $$)
-                    .toUpperCase())),
+                    .toUpperCase(Locale.ROOT))),
                 extConfig.getImageConfig().getFormats()))
         .add(OPTION__PACKAGE_DEPENDENCIES_MAX_COUNT, List.of("<count>"),
             $args -> extConfig.setPackageDependenciesMaxCount(parseInt($args.get(0))))

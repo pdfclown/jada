@@ -112,6 +112,7 @@ public abstract class JadaIT extends IT {
     this((Class<?>) null);
   }
 
+  @SuppressWarnings("this-escape")
   protected JadaIT(@Nullable Class<?> sourceType) {
     this(sourceType, null, List.of());
   }
@@ -124,6 +125,7 @@ public abstract class JadaIT extends IT {
    * @param sourceDirId
    *          (default: {@link ProjectDirId#TEST_TYPE_SOURCE})
    */
+  @SuppressWarnings("this-escape")
   protected JadaIT(@Nullable ProjectDirId sourceDirId, List<String> sourcePackages) {
     this(null, sourceDirId, sourcePackages);
   }
@@ -136,6 +138,7 @@ public abstract class JadaIT extends IT {
     this(null, sourcePackage);
   }
 
+  @SuppressWarnings("this-escape")
   private JadaIT(@Nullable Class<?> sourceType, @Nullable ProjectDirId sourceDirId,
       List<String> sourcePackages) {
     this.sourcePackages = requireNonNull(sourcePackages, "`sourcePackages`");

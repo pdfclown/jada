@@ -54,18 +54,10 @@ class PluginConfig extends SystemConfig {
     @Override
     public void print(Kind kind, String message) {
       switch (kind) {
-        case MANDATORY_WARNING:
-        case WARNING:
-          base.warn(message);
-          break;
-        case ERROR:
-          base.error(message);
-          break;
-        case NOTE:
-          base.info(message);
-          break;
-        default:
-          base.debug(message);
+        case MANDATORY_WARNING, WARNING -> base.warn(message);
+        case ERROR -> base.error(message);
+        case NOTE -> base.info(message);
+        default -> base.debug(message);
       }
     }
   }

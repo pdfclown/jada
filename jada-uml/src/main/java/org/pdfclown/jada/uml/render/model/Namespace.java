@@ -73,22 +73,33 @@ public class Namespace extends UmlNode {
     return typeName != null && typeName.getQualifiedName().startsWith(name + ".");
   }
 
+  /**
+   * @implNote Marked as final to enforce equivalence symmetry.
+   */
   @Override
-  public boolean equals(Object o) {
-    return this == o || (o != null && this.getClass() == o.getClass()
-        && this.name.equals(((Namespace) o).name));
+  public final boolean equals(Object o) {
+    return this == o || (o instanceof Namespace that
+        && this.name.equals(that.name));
   }
 
   public String getModuleName() {
     return moduleName;
   }
 
+  /**
+   * Namespace name.
+   *
+   * @return Empty, if default package.
+   */
   public String getName() {
     return name;
   }
 
+  /**
+   * @implNote Marked as final to enforce equivalence symmetry.
+   */
   @Override
-  public int hashCode() {
+  public final int hashCode() {
     return name.hashCode();
   }
 

@@ -20,6 +20,7 @@ package org.pdfclown.jada.uml.render;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.IdentityHashMap;
+import java.util.Locale;
 import java.util.Set;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.QualifiedNameable;
@@ -84,14 +85,14 @@ final class TypeNameVisitor extends SimpleTypeVisitor9<TypeName, Void> {
   @Override
   public TypeName visitNoType(NoType noType, Void parameter) {
     // "void", "package", "module", "none"
-    final String none = noType.getKind().name().toLowerCase();
+    final String none = noType.getKind().name().toLowerCase(Locale.ROOT);
     return new TypeName(null, none, none);
   }
 
   @Override
   public TypeName visitPrimitive(PrimitiveType primitiveType, Void parameter) {
     // "byte", "char", "short", "int", "long", "float", "double", "boolean"
-    final String primitive = primitiveType.getKind().name().toLowerCase();
+    final String primitive = primitiveType.getKind().name().toLowerCase(Locale.ROOT);
     return new TypeName(null, primitive, primitive);
   }
 
