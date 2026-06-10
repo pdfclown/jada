@@ -58,8 +58,6 @@ public class RemotePlantumlGenerator implements PlantumlGenerator {
 
   private final String baseUrl;
 
-  /**
-   */
   public RemotePlantumlGenerator(String baseUrl) {
     baseUrl = Objects.toString(baseUrl, PLANTUML_BASE_URL__DEFAULT);
     if (!PATTERN__HTTP_URL.matcher(baseUrl).find())

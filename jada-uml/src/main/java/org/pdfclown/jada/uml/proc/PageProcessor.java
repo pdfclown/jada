@@ -103,8 +103,6 @@ public class PageProcessor extends JadaHtmlProcessor {
 
   private final Collection<DiagramFile> diagrams;
 
-  /**
-   */
   public PageProcessor(UmlConfig config) {
     try {
       diagrams = new DiagramCollector(config).collectDiagrams();

@@ -38,8 +38,6 @@ import org.pdfclown.jada.uml.UmlConfig;
 public class ClassDiagram extends Diagram {
   private @LazyNonNull @Nullable Path pumlFile;
 
-  /**
-   */
   @SuppressWarnings("this-escape")
   public ClassDiagram(UmlConfig config, Type type) {
     super(config);

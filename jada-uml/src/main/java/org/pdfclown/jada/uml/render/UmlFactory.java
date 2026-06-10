@@ -176,8 +176,6 @@ public class UmlFactory {
   private @LazyNonNull @Nullable Collection<ExecutableElement> methodsFromExcludedSuperclasses;
   private final Function<TypeMirror, TypeNameWithCardinality> typeNameWithCardinality;
 
-  /**
-   */
   public UmlFactory(UmlExtension extension) {
     this.extension = requireNonNull(extension, "`extension`");
 

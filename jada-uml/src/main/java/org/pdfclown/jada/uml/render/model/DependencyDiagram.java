@@ -60,8 +60,6 @@ public class DependencyDiagram extends Diagram {
   private @LazyNonNull @Nullable Path pumlFile;
   private final String pumlFileName;
 
-  /**
-   */
   public DependencyDiagram(UmlConfig config, @Nullable String moduleName, String pumlFileName) {
     super(config);
 

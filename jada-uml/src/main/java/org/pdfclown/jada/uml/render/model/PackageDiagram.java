@@ -51,8 +51,6 @@ public class PackageDiagram extends Diagram {
   private final String packageName;
   private @LazyNonNull @Nullable Path pumlFile;
 
-  /**
-   */
   public PackageDiagram(UmlConfig config, String packageName, @Nullable String moduleName) {
     super(config);
 

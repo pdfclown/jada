@@ -599,8 +599,6 @@ public class UmlConfig extends JadaExtConfig {
   private @Nullable String plantumlServerUrl;
   private int staticFieldsMaxCount = STATIC_FIELDS_MAX_COUNT__DEFAULT;
 
-  /**
-   */
   public UmlConfig(UmlExtension extension) {
     super(extension);
   }

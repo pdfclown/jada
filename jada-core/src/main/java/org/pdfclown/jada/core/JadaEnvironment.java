@@ -640,8 +640,6 @@ public class JadaEnvironment extends DocEnvImpl implements JadaObject {
   @SuppressWarnings("NotNullFieldNotInitialized")
   private Jada jada;
 
-  /**
-   */
   public JadaEnvironment(DocletEnvironment base, Jada jada) {
     super(((DocEnvImpl) base).toolEnv, ((DocEnvImpl) base).etable);
 

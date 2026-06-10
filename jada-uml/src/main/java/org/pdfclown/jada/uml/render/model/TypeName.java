@@ -135,8 +135,6 @@ public class TypeName {
   // SourceName: simple
   private final String simpleName;
 
-  /**
-   */
   public TypeName(@Nullable String packageName, String simpleName, String qualifiedName,
       TypeName... generics) {
     this.packageName = packageName;

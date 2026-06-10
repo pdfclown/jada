@@ -233,8 +233,6 @@ public class FileOptimizer extends JadaFileProcessor<String> {
       FILE_EXTENSION__JAVASCRIPT, new JavascriptOptimizer());
   private @LazyNonNull @Nullable Predicate<String> includedFilesFilter;
 
-  /**
-   */
   public FileOptimizer() {
     super(new TextSerializer());
 

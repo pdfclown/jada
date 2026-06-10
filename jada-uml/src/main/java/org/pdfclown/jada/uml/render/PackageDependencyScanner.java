@@ -51,8 +51,6 @@ public class PackageDependencyScanner
   private final UmlExtension extension;
   private @Nullable String moduleName;
 
-  /**
-   */
   public PackageDependencyScanner(UmlExtension extension) {
     super(new LinkedHashSet<>());
 
