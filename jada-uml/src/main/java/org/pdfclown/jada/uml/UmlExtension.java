@@ -29,6 +29,8 @@ import static org.pdfclown.common.util.Exceptions.missing;
 import static org.pdfclown.common.util.Strings.EMPTY;
 import static org.pdfclown.common.util.Strings.EOL;
 import static org.pdfclown.common.util.Strings.S;
+import static org.pdfclown.common.util.Strings.lcase;
+import static org.pdfclown.common.util.Strings.ucase;
 import static org.pdfclown.common.util.system.Clis.parseListIncremental;
 import static org.pdfclown.jada.core.util.lang.Javadocs.FILENAME__PACKAGE_DEPS;
 import static org.pdfclown.jada.uml.UmlConfig.OPTION__CYCLIC_PACKAGE_DEPENDENCIES_CHECKED;
@@ -47,7 +49,6 @@ import static org.pdfclown.jada.uml.internal.util.io.Files.FILE_EXTENSION__PLANT
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -161,12 +162,12 @@ public class UmlExtension extends JadaExtension {
         .add(OPTION__IMAGE_FORMAT, options.getText(OPTION__IMAGE_FORMAT, EMPTY,
             Arrays.stream(Format.values())
                 .map($ -> (S + LF + HYPHEN + SPACE + "%s (%s)").formatted(
-                    $.name().toLowerCase(Locale.ROOT), $.fileExtension))
+                    lcase($.name()), $.fileExtension))
                 .collect(joining())),
             List.of("%s(,%s)*".formatted(imageFormatParameter, imageFormatParameter)),
             $args -> parseListIncremental($args.get(0),
-                $ -> $.map($$ -> Format.valueOf(($$.startsWith(S + DOT) ? $$.substring(1) : $$)
-                    .toUpperCase(Locale.ROOT))),
+                $ -> $.map($$ -> Format.valueOf(
+                    ucase($$.startsWith(S + DOT) ? $$.substring(1) : $$))),
                 extConfig.getImageConfig().getFormats()))
         .add(OPTION__PACKAGE_DEPENDENCIES_MAX_COUNT, List.of("<count>"),
             $args -> extConfig.setPackageDependenciesMaxCount(parseInt($args.get(0))))

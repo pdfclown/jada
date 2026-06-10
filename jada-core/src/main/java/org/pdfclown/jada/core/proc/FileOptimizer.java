@@ -19,6 +19,7 @@ import static org.pdfclown.common.util.Chars.STAR;
 import static org.pdfclown.common.util.Objects.nonNull;
 import static org.pdfclown.common.util.Strings.EMPTY;
 import static org.pdfclown.common.util.Strings.S;
+import static org.pdfclown.common.util.Strings.lcase;
 import static org.pdfclown.common.util.io.Files.FILE_EXTENSION__CSS;
 import static org.pdfclown.common.util.io.Files.FILE_EXTENSION__JAVASCRIPT;
 import static org.pdfclown.common.util.io.Files.basename;
@@ -38,7 +39,6 @@ import java.io.OutputStreamWriter;
 import java.io.StringReader;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -270,14 +270,14 @@ public class FileOptimizer extends JadaFileProcessor<String> {
   @Override
   public boolean isProcessable(Path file, FileProcess.Context context) {
     return !getConfig().isDebug()
-        && fileTypeOptimizers.containsKey(extension(file).toLowerCase(Locale.ROOT))
+        && fileTypeOptimizers.containsKey(lcase(extension(file)))
         && isFileIncluded(context.getBaseDir(file).relativize(file));
   }
 
   @Override
   protected @Nullable String processContent(String content, Path file, Context context) {
     var problems = new StringBuilder();
-    var ret = fileTypeOptimizers.get(extension(file).toLowerCase(Locale.ROOT))
+    var ret = fileTypeOptimizers.get(lcase(extension(file)))
         .optimize(content, file, context, problems);
     if (ret != null) {
       if (!problems.isEmpty()) {

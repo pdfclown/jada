@@ -17,8 +17,10 @@
  */
 package org.pdfclown.jada.uml.render.model;
 
-import static java.util.Locale.ENGLISH;
 import static java.util.Objects.requireNonNull;
+import static org.pdfclown.common.util.Chars.SPACE;
+import static org.pdfclown.common.util.Chars.UNDERSCORE;
+import static org.pdfclown.common.util.Strings.lcase;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -49,7 +51,7 @@ public class Type extends UmlNode {
     CLASS;
 
     public String toUml() {
-      return name().toLowerCase(ENGLISH).replace('_', ' ');
+      return lcase(name()).replace(UNDERSCORE, SPACE);
     }
   }
 

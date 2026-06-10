@@ -21,12 +21,12 @@ import static java.util.Objects.requireNonNull;
 import static org.pdfclown.common.util.Chars.SLASH;
 import static org.pdfclown.common.util.Exceptions.runtime;
 import static org.pdfclown.common.util.Exceptions.wrongArg;
+import static org.pdfclown.common.util.Strings.lcase;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.regex.Pattern;
 import net.sourceforge.plantuml.FileFormat;
@@ -75,8 +75,7 @@ public class RemotePlantumlGenerator implements PlantumlGenerator {
   public void generatePlantumlDiagramFromSource(String plantumlSource, FileFormat format,
       OutputStream out) {
     final String encodedDiagram = encodeDiagram(plantumlSource);
-    final String diagramUrl = baseUrl + format.name().toLowerCase(Locale.ROOT)
-        + SLASH + encodedDiagram;
+    final String diagramUrl = baseUrl + lcase(format.name()) + SLASH + encodedDiagram;
     try (InputStream in = new URL(diagramUrl).openConnection().getInputStream()) {
       final byte[] buf = new byte[4096];
       for (int read = in.read(buf); read >= 0; read = in.read(buf)) {

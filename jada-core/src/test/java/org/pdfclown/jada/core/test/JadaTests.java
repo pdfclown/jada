@@ -77,7 +77,7 @@ public final class JadaTests {
 
       when(ret.getInputCharset()).thenReturn(UTF_8);
       when(ret.getOutputCharset()).thenReturn(UTF_8);
-      when(ret.getLocale()).thenReturn(Locale.US);
+      when(ret.getLocale()).thenReturn(Locale.ROOT);
       when(ret.getMessageManager()).thenReturn(new MessageManager(ret));
       when(ret.getLog()).thenReturn(log);
     }

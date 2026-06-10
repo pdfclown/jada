@@ -26,12 +26,12 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.pdfclown.common.build.test.assertion.Executions.interceptSystemStreams;
+import static org.pdfclown.common.util.Strings.lcase;
 import static org.pdfclown.common.util.io.Files.FILE_EXTENSION__SVG;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.Locale;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.SourceStringReader;
@@ -55,13 +55,13 @@ public class Issue267_DiagramWithNestedNamespaceIT extends BaseIT {
 
     String output;
     try (var out = new FileOutputStream(svgDiagram.toFile())) {
-      output = interceptSystemStreams(() -> {
+      output = lcase(interceptSystemStreams(() -> {
         try {
           new SourceStringReader(puml).outputImage(out, new FileFormatOption(FileFormat.SVG));
         } catch (IOException ex) {
           fail("I/O error generating image " + svgDiagram, ex);
         }
-      }).toLowerCase(Locale.ROOT);
+      }));
     }
 
     {
@@ -70,7 +70,7 @@ public class Issue267_DiagramWithNestedNamespaceIT extends BaseIT {
       assertThat(output, not(containsString("exception")));
     }
     {
-      String svgcontent = readString(svgDiagram).toLowerCase(Locale.ROOT);
+      String svgcontent = lcase(readString(svgDiagram));
       assertThat(svgcontent, not(containsString("error")));
       assertThat(svgcontent, not(containsString("exception")));
     }

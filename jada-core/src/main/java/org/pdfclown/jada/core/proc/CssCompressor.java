@@ -35,11 +35,12 @@
  */
 package org.pdfclown.jada.core.proc;
 
+import static org.pdfclown.common.util.Strings.lcase;
+
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -62,7 +63,7 @@ class CssCompressor {
       int start = matcher.start();
       boolean isUrl = false;
       if (start >= 3) {
-        String prefix = input.substring(Math.max(0, start - 4), start).toLowerCase(Locale.ROOT);
+        String prefix = lcase(input.substring(Math.max(0, start - 4), start));
         isUrl = prefix.endsWith("url");
       }
       if (isUrl) {
@@ -274,7 +275,7 @@ class CssCompressor {
     p = Pattern.compile("(?i):first-(line|letter)([{,])");
     m = p.matcher(css);
     while (m.find()) {
-      m.appendReplacement(sb, ":first-" + m.group(1).toLowerCase(Locale.ROOT) + " " + m.group(2));
+      m.appendReplacement(sb, ":first-" + lcase(m.group(1)) + " " + m.group(2));
     }
     m.appendTail(sb);
     css = sb.toString();
@@ -288,7 +289,7 @@ class CssCompressor {
     m = p.matcher(css);
     while (m.find()) {
       String s = m.group(1).replaceAll("\\\\", "\\\\\\\\").replaceAll("\\$", "\\\\\\$");
-      m.appendReplacement(sb, m.group(2).toLowerCase(Locale.ROOT) + m.group(3) + s);
+      m.appendReplacement(sb, lcase(m.group(2)) + m.group(3) + s);
     }
     m.appendTail(sb);
     css = sb.toString();
@@ -299,7 +300,7 @@ class CssCompressor {
     p = Pattern.compile("(?i)^((\\s*)(@charset)( [^;]+;\\s*))+");
     m = p.matcher(css);
     while (m.find()) {
-      m.appendReplacement(sb, m.group(2) + m.group(3).toLowerCase(Locale.ROOT) + m.group(4));
+      m.appendReplacement(sb, m.group(2) + lcase(m.group(3)) + m.group(4));
     }
     m.appendTail(sb);
     css = sb.toString();
@@ -310,7 +311,7 @@ class CssCompressor {
         + "|media|page|namespace)");
     m = p.matcher(css);
     while (m.find()) {
-      m.appendReplacement(sb, '@' + m.group(1).toLowerCase(Locale.ROOT));
+      m.appendReplacement(sb, '@' + lcase(m.group(1)));
     }
     m.appendTail(sb);
     css = sb.toString();
@@ -322,7 +323,7 @@ class CssCompressor {
         + "|only-(?:child|of-type)|root|:selection|target|visited)");
     m = p.matcher(css);
     while (m.find()) {
-      m.appendReplacement(sb, ":" + m.group(1).toLowerCase(Locale.ROOT));
+      m.appendReplacement(sb, ":" + lcase(m.group(1)));
     }
     m.appendTail(sb);
     css = normalizeSpace(sb.toString());
@@ -333,7 +334,7 @@ class CssCompressor {
         + "|(?:-(?:moz|webkit)-)?any)\\(");
     m = p.matcher(css);
     while (m.find()) {
-      m.appendReplacement(sb, ":" + m.group(1).toLowerCase(Locale.ROOT) + '(');
+      m.appendReplacement(sb, ":" + lcase(m.group(1)) + '(');
     }
     m.appendTail(sb);
     css = normalizeSpace(sb.toString());
@@ -347,7 +348,7 @@ class CssCompressor {
         + "|(?:repeating-)?(?:linear|radial)-gradient)|-webkit-gradient)");
     m = p.matcher(css);
     while (m.find()) {
-      m.appendReplacement(sb, m.group(1) + m.group(2).toLowerCase(Locale.ROOT));
+      m.appendReplacement(sb, m.group(1) + lcase(m.group(2)));
     }
     m.appendTail(sb);
     css = sb.toString();
@@ -417,7 +418,7 @@ class CssCompressor {
         + "|box-shadow|text-shadow):0([;}])");
     m = p.matcher(css);
     while (m.find()) {
-      m.appendReplacement(sb, m.group(1).toLowerCase(Locale.ROOT) + ":0 0" + m.group(2));
+      m.appendReplacement(sb, lcase(m.group(1)) + ":0 0" + m.group(2));
     }
     m.appendTail(sb);
     css = sb.toString();
@@ -482,12 +483,11 @@ class CssCompressor {
             && m.group(6).equalsIgnoreCase(m.group(7))) {
 
           // #AABBCC pattern
-          sb.append("#").append((m.group(3) + m.group(5) + m.group(7)).toLowerCase(Locale.ROOT));
+          sb.append("#").append(lcase(m.group(3) + m.group(5) + m.group(7)));
         } else {
           // Non-compressible color, restore, but lower case.
-          sb.append("#")
-              .append((m.group(2) + m.group(3) + m.group(4) + m.group(5) + m.group(6) + m.group(7))
-                  .toLowerCase(Locale.ROOT));
+          sb.append("#").append(
+              lcase(m.group(2) + m.group(3) + m.group(4) + m.group(5) + m.group(6) + m.group(7)));
         }
       }
 
@@ -515,7 +515,7 @@ class CssCompressor {
         + "|outline|background):none([;}])");
     m = p.matcher(css);
     while (m.find()) {
-      m.appendReplacement(sb, m.group(1).toLowerCase(Locale.ROOT) + ":0" + m.group(2));
+      m.appendReplacement(sb, lcase(m.group(1)) + ":0" + m.group(2));
     }
     m.appendTail(sb);
     css = sb.toString();
