@@ -26,10 +26,6 @@
   <suppress
     checks="MethodName"
     message="'TODO'|'EOF'"/>
-  <!-- Allow empty javadoc summaries (sometimes they are simply redundant, such as in setters). -->
-  <suppress
-    checks="SummaryJavadoc"
-    message="Summary javadoc is missing"/>
 
   <!-- Allow regular line wrapping indentation on inline variable assignment.
     This is a temporary fix to the faulty behavior of IndentationCheck, which currently
