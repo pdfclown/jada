@@ -153,9 +153,8 @@ public class JadaOptions {
     }
 
     @Override
-    @SuppressWarnings("SimplifiableConditionalExpression")
     public boolean process(String opt, List<String> args) {
-      return (processor.apply(opt, args) && base != null) ? base.process(opt, args) : true;
+      return !processor.apply(opt, args) || base == null || base.process(opt, args);
     }
 
     @Override
