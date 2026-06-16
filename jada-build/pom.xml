@@ -74,8 +74,7 @@
       <artifactId>junit-jupiter</artifactId>
       <version>${testcontainers.junit.version}</version>
     </dependency>
-    <!--
-      NOTE: org.apache.commons:commons-compress is temporarily referenced here to override the
+    <!-- NOTE: org.apache.commons:commons-compress is temporarily referenced here to override the
       transitive dependency of org.testcontainers:junit-jupiter, whose version (1.24.0) is affected
       by severe vulnerabilities <https://github.com/testcontainers/testcontainers-java/issues/8338>.
 
@@ -94,9 +93,8 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
         <configuration>
-          <!--
-            NOTE: Dependencies are declared for use by consuming artifacts, no matter whether they
-            are locally unused. -->
+          <!-- NOTE: Dependencies are declared for use by consuming artifacts, no matter whether
+            they are locally unused -->
           <ignoredUnusedDeclaredDependencies>*</ignoredUnusedDeclaredDependencies>
         </configuration>
       </plugin>

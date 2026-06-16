@@ -105,8 +105,7 @@
         <plugin>
           <artifactId>maven-compiler-plugin</artifactId>
           <configuration>
-            <!--
-              NOTE: Option names and respective values split into separate <arg>s don't work on
+            <!-- NOTE: Option names and respective values split into separate <arg>s don't work on
               IDEA 2025.1; single, equal-separated <arg> needed (see
               <https://youtrack.jetbrains.com/issue/IDEA-371005/Maven-Invalid-compiler-parameters-generated-for-multiple-add-exports-in-pom.xml-compilerArgs>) -->
             <compilerArgs>
@@ -114,7 +113,7 @@
               <arg>--add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED</arg>
               <arg>--add-exports=jdk.javadoc/jdk.javadoc.internal.tool=ALL-UNNAMED</arg>
               <!-- NOTE: `system` option is required because of `source`+`target` options, as
-                `release` option is NOT applicable due to exports (see here above) of JDK internals -->
+                `release` option is NOT applicable due to exports of JDK internals (see here above) -->
               <arg>--system=${target.jdk.home}</arg>
             </compilerArgs>
           </configuration>
@@ -203,12 +202,11 @@
             </dependencyLinks>
 
             <offlineLinks>
-              <!--
-                NOTE: While building, the project's Javadoc files are, obviously, not published yet;
-                in order to generate correct cross-reference links between project modules, offline
-                links remap the corresponding online links (`dependencyLinks/link/url`, matched by
-                `offlineLinks/link/url`) to the local path where Javadoc files are generated
-                (`offlineLinks/link/location`). -->
+              <!-- NOTE: While building, the project's Javadoc files are, obviously, not published
+                yet; in order to generate correct cross-reference links between project modules,
+                offline links remap the corresponding online links (`dependencyLinks/link/url`,
+                matched by `offlineLinks/link/url`) to the local path where Javadoc files are
+                generated (`offlineLinks/link/location`) -->
               <link>
                 <url>https://javadoc.io/doc/org.pdfclown/jada-core/${project.version}</url>
                 <location>${rootdir}/jada-core/target/reports/apidocs</location>
@@ -229,8 +227,7 @@
             <configuration>
               <ignoredUsedUndeclaredDependencies
                   combine.children="append">
-                <!--
-                  NOTE: Omitting transitive test dependencies. -->
+                <!-- NOTE: Omitting transitive test dependencies -->
                 <item>org.pdfclown:pdfclown-common-build</item>
                 <item>org.testcontainers</item>
               </ignoredUsedUndeclaredDependencies>

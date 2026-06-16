@@ -122,11 +122,11 @@ flexible and convenient ways</description>
               <configuration>
                 <additionalOptions
                     combine.children="append">
-                  <!--
-                    NOTE: JadaUML package dependency analyzer currently is unable to tell classpath
-                    and source path references apart (in this case, it detects imports from MAIN
-                    `org.pdfclown.jada.core` (on classpath), but links TEST `org.pdfclown.jada.core`
-                    (on source path) instead), so we have to suppress wrongly-linked dependencies. -->
+                  <!-- NOTE: JadaUML package dependency analyzer currently is unable to tell
+                    classpath and source path references apart (in this case, it detects imports
+                    from MAIN `org.pdfclown.jada.core` (on classpath), but links TEST
+                    `org.pdfclown.jada.core` (on source path) instead), so we have to suppress
+                    wrongly-linked dependencies -->
                   <option>--uml-package-deps-exclude +org.pdfclown.jada.core</option>
                 </additionalOptions>
               </configuration>
