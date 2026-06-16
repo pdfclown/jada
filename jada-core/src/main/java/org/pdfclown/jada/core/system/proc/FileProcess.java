@@ -428,7 +428,7 @@ public abstract class FileProcess<T extends FileProcessor<?>> implements SystemO
     var resultBuilder = new RunResult.Builder();
 
     processors.values().stream()
-        .sorted(Comparator.comparing(FileProcessor::getPriority))
+        .sorted(Comparator.comparingInt(FileProcessor::getPriority))
         .forEachOrdered($ -> run($, resultBuilder));
 
     return resultBuilder.build();
