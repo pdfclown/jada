@@ -64,7 +64,6 @@ import jdk.javadoc.internal.tool.DocEnvImpl;
 import org.jspecify.annotations.Nullable;
 import org.pdfclown.common.util.annot.LazyNonNull;
 import org.pdfclown.common.util.annot.PolyNull;
-import org.pdfclown.common.util.reflect.Reflects;
 import org.pdfclown.jada.core.JadaEnvironment.JadaDocFilter.DocFragmentRole;
 
 /**
@@ -396,8 +395,7 @@ public class JadaEnvironment extends DocEnvImpl implements JadaObject {
 
     @Override
     public @Nullable String getCharacters(EntityTree tree) {
-      return Reflects.call(base, "getCharacters", new Class<?>[] { EntityTree.class },
-          new Object[] { tree });
+      return base.getCharacters(tree);
     }
 
     @Override
@@ -589,8 +587,7 @@ public class JadaEnvironment extends DocEnvImpl implements JadaObject {
 
     @Override
     public @Nullable TypeMirror getType(DocTreePath path) {
-      return Reflects.call(base, "getType", new Class<?>[] { DocTreePath.class },
-          new Object[] { path });
+      return base.getType(path);
     }
 
     @Override

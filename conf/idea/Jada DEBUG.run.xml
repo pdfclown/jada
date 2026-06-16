@@ -9,7 +9,7 @@
     <selectedOptions>
       <option name="environmentVariables" visible="false" />
     </selectedOptions>
-    <option name="VM_PARAMETERS" value="--add-exports jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED --add-exports jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED --add-exports=jdk.javadoc/jdk.javadoc.internal.tool=ALL-UNNAMED" />
+    <option name="VM_PARAMETERS" value="--add-exports jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED --add-exports jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED --add-exports jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED --add-exports=jdk.javadoc/jdk.javadoc.internal.tool=ALL-UNNAMED" />
     <method v="2">
       <option name="Make" enabled="true" />
     </method>
