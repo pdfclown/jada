@@ -12,7 +12,7 @@
  */
 package org.pdfclown.jada.core;
 
-import static org.pdfclown.common.util.Objects.loaderOf;
+import static org.pdfclown.common.util.Objects.loader;
 import static org.pdfclown.common.util.io.Files.FILE_EXTENSION__GROOVY;
 
 import groovy.lang.GroovyShell;
@@ -34,7 +34,7 @@ class JadaScriptManager {
   JadaScriptManager(Jada jada) {
     this.jada = jada;
 
-    groovy = new GroovyShell(loaderOf(jada));
+    groovy = new GroovyShell(loader(jada));
   }
 
   public GroovyShell getGroovy() {

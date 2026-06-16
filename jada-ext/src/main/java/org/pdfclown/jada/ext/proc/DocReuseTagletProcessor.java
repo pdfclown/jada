@@ -31,7 +31,7 @@ import static org.pdfclown.common.util.Objects.anyThat;
 import static org.pdfclown.common.util.Objects.found;
 import static org.pdfclown.common.util.Objects.sfqnd;
 import static org.pdfclown.common.util.Objects.textLiteral;
-import static org.pdfclown.common.util.Objects.typeOf;
+import static org.pdfclown.common.util.Objects.type;
 import static org.pdfclown.common.util.Strings.EMPTY;
 import static org.pdfclown.common.util.Strings.S;
 import static org.pdfclown.common.util.Strings.STR_LENGTH;
@@ -169,7 +169,7 @@ public class DocReuseTagletProcessor extends JavaProcessor {
       return node instanceof TypeDeclaration || node instanceof CompilationUnit
           ? node
           : node.getParentNode().orElseThrow(() -> unexpected(node,
-              "{} not handled as source container type", typeOf(node)));
+              "{} not handled as source container type", type(node)));
     }
 
     /**
@@ -688,7 +688,7 @@ public class DocReuseTagletProcessor extends JavaProcessor {
                   // [Name resolution 1.2] Sibling member.
                   containerNode = (TypeDeclaration<?>) $.getParentNode().orElseThrow();
                 } else if (callable)
-                  throw unexpected(typeOf($), """
+                  throw unexpected(type($), """
                       {}: structure UNEXPECTED as context of callable member reference \
                       "{}(*)\"""", file, elementKeyPart);
 

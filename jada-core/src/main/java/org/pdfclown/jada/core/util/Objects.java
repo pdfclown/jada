@@ -12,6 +12,9 @@
  */
 package org.pdfclown.jada.core.util;
 
+import static org.pdfclown.common.util.Objects.subTypes;
+import static org.pdfclown.common.util.Objects.xcast;
+
 import io.github.classgraph.ClassGraph;
 import io.github.classgraph.ScanResult;
 import java.lang.reflect.Modifier;
@@ -45,12 +48,9 @@ public final class Objects {
    */
   public static <T> Stream<Class<? extends T>> realSubTypes(Class<T> type) {
     //noinspection Convert2MethodRef
-    return org.pdfclown.common.util.Objects.subTypes(type, types())
+    return subTypes(type, types())
         .filter($ -> !Modifier.isAbstract($.getModifiers()))
-        .map($ -> org.pdfclown.common.util.Objects.xcast($) /*
-                                                             * WARN: DO NOT convert to
-                                                             * `Objects::xcast`
-                                                             */);
+        .map($ -> xcast($) /* WARN: DO NOT convert to `Objects::xcast` (malfunction hazard!) */);
   }
 
   /**

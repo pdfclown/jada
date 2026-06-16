@@ -14,7 +14,7 @@ package org.pdfclown.jada.core;
 
 import static org.pdfclown.common.util.Exceptions.unsupported;
 import static org.pdfclown.common.util.Exceptions.wrongArgOpt;
-import static org.pdfclown.common.util.Objects.typeOf;
+import static org.pdfclown.common.util.Objects.type;
 
 import com.sun.source.doctree.DocCommentTree;
 import com.sun.source.doctree.DocTree;
@@ -698,7 +698,7 @@ public class JadaEnvironment extends DocEnvImpl implements JadaObject {
     else if (entity instanceof FileObject fileObject)
       return getFilePath(fileObject);
     else
-      throw wrongArgOpt("entity", typeOf(entity), null, Set.of(Element.class, TreePath.class,
+      throw wrongArgOpt("entity", type(entity), null, Set.of(Element.class, TreePath.class,
           FileObject.class));
   }
 

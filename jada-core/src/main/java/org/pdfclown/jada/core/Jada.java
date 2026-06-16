@@ -433,7 +433,7 @@ public class Jada implements Doclet, JadaComponent {
         .append(selection != null && selection.contains(component) ? ANGLE_BRACKET_CLOSE : HYPHEN)
         .append(SPACE)
         .append(SQUARE_BRACKET_OPEN)
-        .append(Reflects.<String>call(component, "getName", null, null))
+        .append(Reflects.<String>get(component, "getName"))
         .append(SQUARE_BRACKET_CLOSE).append(SPACE)
         .append(fqn(component));
 

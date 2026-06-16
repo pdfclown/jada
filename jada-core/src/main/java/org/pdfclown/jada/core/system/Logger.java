@@ -123,7 +123,7 @@ public class Logger implements Reporter {
       assert sourceType != null /* PolyNull */;
 
       String sourceSqn = sqn(sourceType);
-      sourceSimpleName = requireNonNullElse(Reflects.call(source, "getName", null, null),
+      sourceSimpleName = requireNonNullElse(Reflects.tryCall(source, "getName", null, null),
           sourceSqn);
 
       var fqn = sourceType.getName();
