@@ -27,11 +27,11 @@ import static org.pdfclown.jada.uml.internal.util.io.Files.FILE_EXTENSION__PLANT
 import java.io.IOException;
 import java.io.Serializable;
 import java.nio.file.Path;
+import org.apache.commons.lang3.function.Failable;
 import org.junit.jupiter.api.Test;
 import org.pdfclown.common.util.Ref;
 import org.pdfclown.common.util.io.ResourceNames;
 import org.pdfclown.jada.uml.__test.BaseIT;
-import org.testcontainers.shaded.org.apache.commons.lang3.function.Failable;
 
 // SourceName: nl.talsmasoftware.umldoclet.features.ExternalLinksTest
 /**

@@ -33,7 +33,7 @@
     <!--
       VERSIONS
     -->
-    <testcontainers.junit.version>1.21.4</testcontainers.junit.version>
+    <testcontainers.version>2.0.5</testcontainers.version>
   </properties>
 
   <dependencies>
@@ -71,20 +71,8 @@
 
     <dependency>
       <groupId>org.testcontainers</groupId>
-      <artifactId>junit-jupiter</artifactId>
-      <version>${testcontainers.junit.version}</version>
-    </dependency>
-    <!--
-      NOTE: org.apache.commons:commons-compress is temporarily referenced here to override the
-      transitive dependency of org.testcontainers:junit-jupiter, whose version (1.24.0) is affected
-      by severe vulnerabilities <https://github.com/testcontainers/testcontainers-java/issues/8338>.
-
-      TODO: remove when org.testcontainers:junit-jupiter has been fixed with secure
-      org.apache.commons:commons-compress -->
-    <dependency>
-      <groupId>org.apache.commons</groupId>
-      <artifactId>commons-compress</artifactId>
-      <version>1.28.0</version>
+      <artifactId>testcontainers-junit-jupiter</artifactId>
+      <version>${testcontainers.version}</version>
     </dependency>
   </dependencies>
 
