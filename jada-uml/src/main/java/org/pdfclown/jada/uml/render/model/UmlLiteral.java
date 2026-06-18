@@ -30,8 +30,8 @@ import org.pdfclown.common.util.io.IndentWriter;
  * @author Sjoerd Talsma (original implementation)
  * @author Stefano Chizzolini (adaptation and redesign for Jada)
  */
-public class UmlCharacters extends UmlNode {
-  private static class UmlLine extends UmlCharacters {
+public class UmlLiteral extends UmlNode {
+  private static class UmlLine extends UmlLiteral {
     private UmlLine(String line) {
       super(line);
     }
@@ -48,13 +48,13 @@ public class UmlCharacters extends UmlNode {
    * "https://forum.plantuml.net/1672/specify-incomplete-specification-ellipsis-attributes-methods">how
    * to specify an incomplete definition of class diagram members</a>).
    */
-  public static final UmlCharacters ELLIPSIS = new UmlLine(Strings.ELLIPSIS__CHICAGO);
-  public static final UmlCharacters EMPTY = new UmlCharacters(Strings.EMPTY);
-  public static final UmlCharacters NEWLINE = new UmlLine(Strings.EMPTY);
+  public static final UmlLiteral ELLIPSIS = new UmlLine(Strings.ELLIPSIS__CHICAGO);
+  public static final UmlLiteral EMPTY = new UmlLiteral(Strings.EMPTY);
+  public static final UmlLiteral NEWLINE = new UmlLine(Strings.EMPTY);
 
   private final String content;
 
-  private UmlCharacters(String content) {
+  private UmlLiteral(String content) {
     super(null);
 
     this.content = requireNonNull(content, "`content`");

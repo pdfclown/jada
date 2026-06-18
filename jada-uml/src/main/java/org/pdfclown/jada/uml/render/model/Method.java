@@ -113,15 +113,15 @@ public class Method extends TypeMember {
     getOrCreateParameters().replaceParameterizedType(from, to);
   }
 
-  private Parameters createAndAddNewParameters() {
-    Parameters parameters = new Parameters(this);
+  private ParameterList createAndAddNewParameters() {
+    ParameterList parameters = new ParameterList(this);
     this.addChild(parameters);
     return parameters;
   }
 
-  private Parameters getOrCreateParameters() {
+  private ParameterList getOrCreateParameters() {
     return getChildren().stream()
-        .filter(Parameters.class::isInstance).map(Parameters.class::cast)
+        .filter(ParameterList.class::isInstance).map(ParameterList.class::cast)
         .findFirst()
         .orElseGet(this::createAndAddNewParameters);
   }

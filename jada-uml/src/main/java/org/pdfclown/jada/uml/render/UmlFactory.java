@@ -63,11 +63,11 @@ import org.pdfclown.jada.uml.render.model.Field;
 import org.pdfclown.jada.uml.render.model.Method;
 import org.pdfclown.jada.uml.render.model.Namespace;
 import org.pdfclown.jada.uml.render.model.PackageDiagram;
-import org.pdfclown.jada.uml.render.model.Parameters;
+import org.pdfclown.jada.uml.render.model.ParameterList;
 import org.pdfclown.jada.uml.render.model.Reference;
 import org.pdfclown.jada.uml.render.model.Type;
 import org.pdfclown.jada.uml.render.model.TypeName;
-import org.pdfclown.jada.uml.render.model.UmlCharacters;
+import org.pdfclown.jada.uml.render.model.UmlLiteral;
 import org.pdfclown.jada.uml.render.model.UmlNode;
 
 // SourceName: nl.talsmasoftware.umldoclet.javadoc.UMLFactory
@@ -194,7 +194,7 @@ public class UmlFactory {
 
     List<TypeName> foundTypeVariables = new ArrayList<>();
     List<Reference> references = new ArrayList<>();
-    UmlCharacters sep = UmlCharacters.NEWLINE;
+    UmlLiteral sep = UmlLiteral.NEWLINE;
 
     // Add superclass
     TypeMirror superclassType = classElement.getSuperclass();
@@ -215,7 +215,7 @@ public class UmlFactory {
         // Only keep abstract methods of supertype.
         superType.removeChildren(not(IS_ABSTRACT_METHOD));
         classDiagram.addChild(superType);
-        sep = UmlCharacters.EMPTY;
+        sep = UmlLiteral.EMPTY;
         references.add(new Reference(
             Reference.from(type.getName().getQualifiedName(), null),
             PUML_REF__EXTENDS,
@@ -238,7 +238,7 @@ public class UmlFactory {
           Type implementedType = createAndPopulateType(null, (TypeElement) implementedInterface);
           implementedType.removeChildren(not(IS_ABSTRACT_METHOD));
           classDiagram.addChild(implementedType);
-          sep = UmlCharacters.EMPTY;
+          sep = UmlLiteral.EMPTY;
         }
         references.add(new Reference(
             Reference.from(type.getName().getQualifiedName(), null),
@@ -264,7 +264,7 @@ public class UmlFactory {
           Type enclosingType = createAndPopulateType(null, (TypeElement) enclosingElement);
           enclosingType.removeChildren(not(IS_ABSTRACT_METHOD));
           classDiagram.addChild(enclosingType);
-          sep = UmlCharacters.EMPTY;
+          sep = UmlLiteral.EMPTY;
         }
         references.add(new Reference(
             Reference.from(type.getName().getQualifiedName(), null),
@@ -290,7 +290,7 @@ public class UmlFactory {
         });
 
     if (!references.isEmpty()) {
-      classDiagram.addChild(UmlCharacters.NEWLINE);
+      classDiagram.addChild(UmlLiteral.NEWLINE);
       references.forEach(classDiagram::addChild);
     }
 
@@ -343,10 +343,10 @@ public class UmlFactory {
           $.getValue().forEach(foreignNamespace::addChild);
           return foreignNamespace;
         })
-        .flatMap($foreignNamespace -> Stream.of(UmlCharacters.NEWLINE, $foreignNamespace))
+        .flatMap($foreignNamespace -> Stream.of(UmlLiteral.NEWLINE, $foreignNamespace))
         .forEach(packageDiagram::addChild);
 
-    namespace.addChild(UmlCharacters.NEWLINE);
+    namespace.addChild(UmlLiteral.NEWLINE);
 
     if (!extension.getExtConfig().getMethodConfig().isPropertiesFlattened()) {
       namespace.getChildren().stream()
@@ -355,7 +355,7 @@ public class UmlFactory {
     }
 
     if (!references.isEmpty()) {
-      packageDiagram.addChild(UmlCharacters.NEWLINE);
+      packageDiagram.addChild(UmlLiteral.NEWLINE);
     }
     references.stream().map(Reference::canonical).forEach(packageDiagram::addChild);
 
@@ -421,7 +421,7 @@ public class UmlFactory {
               referenceSeparator));
           return type;
         })
-        .flatMap($type -> Stream.of(UmlCharacters.NEWLINE, $type))
+        .flatMap($type -> Stream.of(UmlLiteral.NEWLINE, $type))
         .forEach(pkg::addChild);
 
     return pkg;
@@ -450,8 +450,8 @@ public class UmlFactory {
     return populateType(createType(containingPackage, type), type);
   }
 
-  private Parameters createParameters(List<? extends VariableElement> params) {
-    Parameters result = new Parameters(null);
+  private ParameterList createParameters(List<? extends VariableElement> params) {
+    ParameterList result = new ParameterList(null);
     Boolean varargs = null;
     for (VariableElement param : params) {
       if (varargs == null) {
@@ -663,7 +663,7 @@ public class UmlFactory {
           .limit(staticMaxCount + 1)
           .map($field -> staticCounter.getAndIncrement() < staticMaxCount
               ? createField(type, $field)
-              : UmlCharacters.ELLIPSIS)
+              : UmlLiteral.ELLIPSIS)
           .forEach(type::addChild);
     }
 
