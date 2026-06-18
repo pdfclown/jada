@@ -52,7 +52,7 @@ Nonetheless, if users are keen on verbosity, `--uml-properties-flatten` CLI opti
   - internally:
     - **types and members naming** has been harmonized to maximize consistency and minimize ambiguities.
     - **types** have been reorganized to adhere to Jada design style.
-    - **tests** have been reorganized and split between unit tests (`*Test`) and integration tests (`*IT`), leveraging the [pdfclown-common-build](https://github.com/pdfclown/pdfclown-common) testing harness to simplify Javadoc environment configuration and output directories layout.
+    - **tests** have been reorganized and split between unit tests (`*Test`) and integration tests (`*IT`), leveraging the [pdfclown-common-build](https://github.com/pdfclown/pdfclown-common/tree/main/pdfclown-common-build) testing harness to simplify Javadoc environment configuration and output directories layout.
 
 ## Source code
 
