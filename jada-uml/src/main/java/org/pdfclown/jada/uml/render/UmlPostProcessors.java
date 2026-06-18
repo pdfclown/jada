@@ -24,7 +24,7 @@ import java.util.function.Consumer;
 import org.jspecify.annotations.Nullable;
 import org.pdfclown.jada.uml.render.model.Field;
 import org.pdfclown.jada.uml.render.model.Method;
-import org.pdfclown.jada.uml.render.model.Parameters;
+import org.pdfclown.jada.uml.render.model.ParameterList;
 import org.pdfclown.jada.uml.render.model.Type;
 import org.pdfclown.jada.uml.render.model.TypeMember;
 import org.pdfclown.jada.uml.render.model.TypeName;
@@ -115,7 +115,7 @@ class UmlPostProcessors {
      */
     private static int parameterCount(Method method) {
       return method.getChildren().stream()
-          .filter(Parameters.class::isInstance)
+          .filter(ParameterList.class::isInstance)
           .map(UmlNode::getChildren).mapToInt(Collection::size)
           .sum();
     }

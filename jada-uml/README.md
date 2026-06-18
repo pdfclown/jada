@@ -52,7 +52,7 @@ Nonetheless, if users are keen on verbosity, `--uml-properties-flatten` CLI opti
   - internally:
     - **types and members naming** has been harmonized to maximize consistency and minimize ambiguities.
     - **types** have been reorganized to adhere to Jada design style.
-    - **tests** have been reorganized and split between unit tests (`*Test`) and integration tests (`*IT`), leveraging the [pdfclown-common-build](https://github.com/pdfclown/pdfclown-common) testing harness to simplify Javadoc environment configuration and output directories layout.
+    - **tests** have been reorganized and split between unit tests (`*Test`) and integration tests (`*IT`), leveraging the [pdfclown-common-build](https://github.com/pdfclown/pdfclown-common/tree/main/pdfclown-common-build) testing harness to simplify Javadoc environment configuration and output directories layout.
 
 ## Source code
 
@@ -67,7 +67,7 @@ elements in case of renaming.
 <td><b>Upstream package</b></td>
 <td><b>Upstream commit*</b></td>
 </tr>
-<tr><td><code>org.pdfclown.jada.uml</code></td><td><code><a href="https://github.com/talsma-ict/umldoclet/tree/ca9cac79ede687d9b12b688771fe0ad9263da867/src/main/java/nl/talsmasoftware/umldoclet">nl.talsmasoftware.umldoclet</a></code></td><td><a href="https://github.com/talsma-ict/umldoclet/commit/ca9cac79ede687d9b12b688771fe0ad9263da867">ca9cac7</a> (2026-03-13_14:33+0100)</td>
+<tr><td><code>org.pdfclown.jada.uml</code></td><td><code><a href="https://github.com/talsma-ict/umldoclet/tree/6374a7cadfad1a3c4d6fc61e75cdc6caaed33d1d/src/main/java/nl/talsmasoftware/umldoclet">nl.talsmasoftware.umldoclet</a></code></td><td><a href="https://github.com/talsma-ict/umldoclet/commit/6374a7cadfad1a3c4d6fc61e75cdc6caaed33d1d">6374a7c</a> (2026-06-18_13:09+0200)</td>
 </tr>
 </table>
 [*] Latest commit reconciled

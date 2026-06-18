@@ -39,7 +39,7 @@ import org.pdfclown.jada.uml.UmlConfig.TypeMode;
  * @author Sjoerd Talsma (original implementation)
  * @author Stefano Chizzolini (adaptation and redesign for Jada)
  */
-public class Parameters extends UmlNode {
+public class ParameterList extends UmlNode {
   /**
    * Parameter.
    *
@@ -51,7 +51,7 @@ public class Parameters extends UmlNode {
     private @Nullable TypeName type;
 
     private Parameter(@Nullable String name, @Nullable TypeName type) {
-      super(Parameters.this);
+      super(ParameterList.this);
 
       this.name = name;
       this.type = type;
@@ -84,11 +84,11 @@ public class Parameters extends UmlNode {
 
   private boolean varargs = false;
 
-  public Parameters(@Nullable UmlNode parent) {
+  public ParameterList(@Nullable UmlNode parent) {
     super(parent);
   }
 
-  public Parameters add(String name, TypeName type) {
+  public ParameterList add(String name, TypeName type) {
     addChild(new Parameter(name, type));
     return this;
   }
@@ -105,7 +105,7 @@ public class Parameters extends UmlNode {
     return false;
   }
 
-  public Parameters varargs(boolean varargs) {
+  public ParameterList varargs(boolean varargs) {
     this.varargs = varargs;
     return this;
   }

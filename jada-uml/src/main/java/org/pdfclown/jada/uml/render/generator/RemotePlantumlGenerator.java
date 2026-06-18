@@ -30,7 +30,7 @@ import java.net.URL;
 import java.util.Objects;
 import java.util.regex.Pattern;
 import net.sourceforge.plantuml.FileFormat;
-import net.sourceforge.plantuml.code.ArobaseStringCompressor;
+import net.sourceforge.plantuml.code.ArobaseStringCompressor2;
 import net.sourceforge.plantuml.code.AsciiEncoder;
 import net.sourceforge.plantuml.code.CompressionZlib;
 import net.sourceforge.plantuml.code.Transcoder;
@@ -53,8 +53,8 @@ public class RemotePlantumlGenerator implements PlantumlGenerator {
 
   // SourceName: DEFAULT_PLANTUML_BASE_URL
   private static final String PLANTUML_BASE_URL__DEFAULT = "https://www.plantuml.com/plantuml/";
-  private static final Transcoder TRANSCODER =
-      TranscoderImpl.utf8(new AsciiEncoder(), new ArobaseStringCompressor(), new CompressionZlib());
+  private static final Transcoder TRANSCODER = TranscoderImpl.utf8(new AsciiEncoder(),
+      new ArobaseStringCompressor2(), new CompressionZlib());
 
   private final String baseUrl;
 

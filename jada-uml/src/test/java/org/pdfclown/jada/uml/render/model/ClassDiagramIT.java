@@ -30,6 +30,7 @@ import static org.pdfclown.jada.uml.__test.UmlTests.mockUmlConfig;
 import static org.pdfclown.jada.uml.util.Plantumls.PUML_REF__EXTENDED_BY;
 
 import java.io.IOException;
+import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -93,6 +94,8 @@ public class ClassDiagramIT extends BaseIT {
         when(images.getSubDirectory()).thenReturn(null);
       }
       when(config.getImageConfig()).thenReturn(images);
+      when(config.getPlantumlCustomDirectives()).thenReturn(
+          List.of("!pragma layout smetana" /* Avoids Graphviz dependency */));
 
       var jadaConfig = config.getConfig();
       {
