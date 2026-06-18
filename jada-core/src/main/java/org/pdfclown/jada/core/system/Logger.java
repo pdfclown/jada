@@ -26,7 +26,7 @@ import static org.pdfclown.common.util.Objects.asType;
 import static org.pdfclown.common.util.Objects.sqn;
 import static org.pdfclown.common.util.Objects.xflat;
 import static org.pdfclown.common.util.Strings.EMPTY;
-import static org.pdfclown.common.util.function.Functions.to;
+import static org.pdfclown.common.util.function.Functions.toOrNull;
 import static org.pdfclown.common.util.io.Files.basename;
 import static org.pdfclown.common.util.reflect.Reflects.stackFrame;
 
@@ -130,7 +130,7 @@ public class Logger implements Reporter {
           .filter($ -> fqn.startsWith($.getKey()))
           .map(Map.Entry::getValue)
           .findFirst().orElseGet(() -> {
-            Path location = to(sourceType.getProtectionDomain().getCodeSource().getLocation(),
+            Path location = toOrNull(sourceType.getProtectionDomain().getCodeSource().getLocation(),
                 Files::path);
             if (location == null)
               return null;

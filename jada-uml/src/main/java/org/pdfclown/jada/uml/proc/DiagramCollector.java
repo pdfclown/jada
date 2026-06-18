@@ -20,7 +20,7 @@ package org.pdfclown.jada.uml.proc;
 import static java.nio.file.Files.walkFileTree;
 import static java.util.Collections.unmodifiableCollection;
 import static java.util.Objects.requireNonNullElse;
-import static org.pdfclown.common.util.function.Functions.to;
+import static org.pdfclown.common.util.function.Functions.toOrNull;
 import static org.pdfclown.common.util.io.Files.isExtension;
 import static org.pdfclown.common.util.io.Files.normal;
 import static org.pdfclown.jada.core.util.lang.Javadocs.FILENAME__PACKAGE_DEPS;
@@ -63,7 +63,7 @@ final class DiagramCollector extends SimpleFileVisitor<Path> {
   DiagramCollector(UmlConfig config) {
     this.baseDir = config.getConfig().getOutputDirectory();
     this.imageFormat = config.getImageConfig().getFormats().stream().findFirst().orElseThrow();
-    this.imagesDir = to(config.getImageConfig().getSubDirectory(),
+    this.imagesDir = toOrNull(config.getImageConfig().getSubDirectory(),
         $ -> config.getConfig().getOutputDirectory().resolve($));
   }
 

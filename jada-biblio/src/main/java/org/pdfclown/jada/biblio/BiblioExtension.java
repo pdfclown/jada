@@ -22,7 +22,7 @@ import static org.pdfclown.common.util.Exceptions.runtime;
 import static org.pdfclown.common.util.Strings.EMPTY;
 import static org.pdfclown.common.util.Strings.lineEnd;
 import static org.pdfclown.common.util.Strings.lineStart;
-import static org.pdfclown.common.util.function.Functions.to;
+import static org.pdfclown.common.util.function.Functions.toOrNull;
 import static org.pdfclown.common.util.io.Files.isExtension;
 import static org.pdfclown.common.util.stream.Collectors.toReversedList;
 import static org.pdfclown.common.util.system.Clis.parseListIncremental;
@@ -597,7 +597,7 @@ public class BiblioExtension extends JadaExtension {
     // Map entry ID sets by tag!
     final Map<@Nullable String, Set<String>> biblioTagEntryIds = biblioEntryIds.entrySet().stream()
         .collect(toMap(
-            $ -> to($.getKey(), $$ -> TAG_PREFIX__BIBLIO + $$),
+            $ -> toOrNull($.getKey(), $$ -> TAG_PREFIX__BIBLIO + $$),
             Map.Entry::getValue));
 
     final Pattern biblioTagPattern = inlineTagPattern(realSubTypes(BiblioTaglet.class)
