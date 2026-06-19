@@ -23,6 +23,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.fail;
+import static org.pdfclown.common.util.Chars.DOT;
 import static org.pdfclown.common.util.Strings.EMPTY;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -44,9 +45,9 @@ class UmlPostProcessorsTest extends BaseTest {
   private static final Namespace UNNAMED = new Namespace(null, EMPTY, null);
 
   private static TypeName typeName(String qualified) {
-    int lastDot = qualified.lastIndexOf('.');
+    int lastDot = qualified.lastIndexOf(DOT);
     String simpleName = lastDot >= 0 ? qualified.substring(lastDot + 1) : qualified;
-    String packagename = lastDot > 0 ? qualified.substring(0, lastDot) : null;
+    String packagename = lastDot > 0 ? qualified.substring(0, lastDot) : EMPTY;
     return new TypeName(packagename, simpleName, qualified);
   }
 

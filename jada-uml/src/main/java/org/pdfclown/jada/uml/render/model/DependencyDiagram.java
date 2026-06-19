@@ -20,6 +20,7 @@ package org.pdfclown.jada.uml.render.model;
 import static java.util.Objects.requireNonNull;
 import static java.util.stream.Collectors.joining;
 import static org.pdfclown.common.util.Chars.PIPE;
+import static org.pdfclown.common.util.Chars.SLASH;
 import static org.pdfclown.common.util.Conditions.requireType;
 import static org.pdfclown.common.util.Exceptions.wrongState;
 import static org.pdfclown.common.util.Strings.S;
@@ -132,11 +133,11 @@ public class DependencyDiagram extends Diagram {
   protected Path getPlantUmlFile() {
     if (pumlFile == null) {
       var b = new StringBuilder(getConfig().getConfig().getOutputDirectory().toString());
-      if (!b.isEmpty() && b.charAt(b.length() - 1) != '/') {
-        b.append('/');
+      if (!b.isEmpty() && b.charAt(b.length() - 1) != SLASH) {
+        b.append(SLASH);
       }
       if (moduleName != null) {
-        b.append(moduleName).append('/');
+        b.append(moduleName).append(SLASH);
       }
       b.append(pumlFileName);
       pumlFile = Path.of(b.toString());

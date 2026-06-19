@@ -13,6 +13,7 @@
 package org.pdfclown.jada.core.util.lang;
 
 import static java.util.Objects.requireNonNull;
+import static org.pdfclown.common.util.Chars.DOT;
 import static org.pdfclown.common.util.Strings.EMPTY;
 
 import com.sun.source.doctree.DocTree;
@@ -66,12 +67,12 @@ public final class LangModels {
       }
       if (localName != null) {
         if (!b.isEmpty()) {
-          b.append('.');
+          b.append(DOT);
         }
         b.append(localName);
       }
       if (memberName != null) {
-        b.append('.').append(memberName);
+        b.append(DOT).append(memberName);
       }
       if (signature != null) {
         b.append(signature);
@@ -164,7 +165,7 @@ public final class LangModels {
           b.insert(0, "(*)");
           b.insert(0, $.getSimpleName());
         }
-        b.insert(0, '.');
+        b.insert(0, DOT);
         yield null;
       }
       default -> {

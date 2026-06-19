@@ -19,6 +19,7 @@ package org.pdfclown.jada.uml.render.model;
 
 import static java.util.Objects.requireNonNull;
 import static org.apache.commons.lang3.StringUtils.isEmpty;
+import static org.pdfclown.common.util.Chars.DOT;
 import static org.pdfclown.common.util.Exceptions.runtime;
 import static org.pdfclown.common.util.Objects.isSameType;
 import static org.pdfclown.common.util.Objects.textLiteral;
@@ -129,13 +130,13 @@ public class TypeName {
 
   private final TypeName[] generics;
   // SourceName: packagename
-  private final @Nullable String packageName;
+  private final String packageName;
   // SourceName: qualified
   private final String qualifiedName;
   // SourceName: simple
   private final String simpleName;
 
-  public TypeName(@Nullable String packageName, String simpleName, String qualifiedName,
+  public TypeName(String packageName, String simpleName, String qualifiedName,
       TypeName... generics) {
     this.packageName = packageName;
     this.simpleName = simpleName;
@@ -162,7 +163,7 @@ public class TypeName {
   /**
    * Package name.
    */
-  public @Nullable String getPackageName() {
+  public String getPackageName() {
     return packageName;
   }
 
@@ -178,7 +179,7 @@ public class TypeName {
    * {@link #getQualifiedName() qualifiedName}.
    */
   public String getQualifiedName(@Nullable String separator) {
-    int plen = packageName != null ? packageName.length() : 0;
+    int plen = packageName.length();
     return qualifiedName.length() > plen && plen > 0 && !isEmpty(separator)
         ? packageName + separator + qualifiedName.substring(plen + 1)
         : qualifiedName;
@@ -208,7 +209,7 @@ public class TypeName {
     }
     if (!TypeMode.NONE.equals(mode)) {
       try {
-        if (namespace != null && this.qualifiedName.startsWith(namespace.getName() + ".")) {
+        if (namespace != null && this.qualifiedName.startsWith(namespace.getName() + DOT)) {
           output.append(this.qualifiedName.substring(namespace.getName().length() + 1));
         } else if (isQualified(mode)) {
           output.append(this.qualifiedName);

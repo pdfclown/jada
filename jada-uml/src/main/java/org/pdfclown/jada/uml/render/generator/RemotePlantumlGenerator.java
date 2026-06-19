@@ -21,6 +21,7 @@ import static java.util.Objects.requireNonNull;
 import static org.pdfclown.common.util.Chars.SLASH;
 import static org.pdfclown.common.util.Exceptions.runtime;
 import static org.pdfclown.common.util.Exceptions.wrongArg;
+import static org.pdfclown.common.util.Strings.S;
 import static org.pdfclown.common.util.Strings.lcase;
 
 import java.io.IOException;
@@ -63,8 +64,8 @@ public class RemotePlantumlGenerator implements PlantumlGenerator {
     if (!PATTERN__HTTP_URL.matcher(baseUrl).find())
       throw wrongArg("baseUrl", baseUrl, "PlantUML server address UNSUPPORTED");
 
-    if (!baseUrl.endsWith("/")) {
-      baseUrl += "/";
+    if (!baseUrl.endsWith(S + SLASH)) {
+      baseUrl += S + SLASH;
     }
     this.baseUrl = baseUrl;
   }

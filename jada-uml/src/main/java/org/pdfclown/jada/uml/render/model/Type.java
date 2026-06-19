@@ -18,6 +18,7 @@
 package org.pdfclown.jada.uml.render.model;
 
 import static java.util.Objects.requireNonNull;
+import static org.pdfclown.common.util.Chars.DOT;
 import static org.pdfclown.common.util.Chars.SPACE;
 import static org.pdfclown.common.util.Chars.UNDERSCORE;
 import static org.pdfclown.common.util.Strings.lcase;
@@ -204,7 +205,7 @@ public class Type extends UmlNode {
   }
 
   boolean isPackageLocalNamed() {
-    return name.getQualifiedName().startsWith(namespace.getName() + ".");
+    return name.getQualifiedName().startsWith(namespace.getName() + DOT);
   }
 
   private Link link() {
