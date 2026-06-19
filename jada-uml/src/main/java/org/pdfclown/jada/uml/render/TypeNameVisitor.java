@@ -17,6 +17,8 @@
  */
 package org.pdfclown.jada.uml.render;
 
+import static org.pdfclown.common.util.Strings.EMPTY;
+
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.IdentityHashMap;
@@ -76,7 +78,7 @@ final class TypeNameVisitor extends SimpleTypeVisitor9<TypeName, Void> {
       packageName = visit(enclosingElement.asType()).getPackageName();
     } else {
       int dot = qualifiedName.lastIndexOf('.');
-      packageName = dot > 0 ? qualifiedName.substring(0, dot) : null;
+      packageName = dot > 0 ? qualifiedName.substring(0, dot) : EMPTY;
     }
     return new TypeName(packageName, simpleName, qualifiedName, generics);
   }
@@ -85,14 +87,14 @@ final class TypeNameVisitor extends SimpleTypeVisitor9<TypeName, Void> {
   public TypeName visitNoType(NoType noType, Void parameter) {
     // "void", "package", "module", "none"
     final String none = noType.getKind().name().toLowerCase();
-    return new TypeName(null, none, none);
+    return new TypeName(EMPTY, none, none);
   }
 
   @Override
   public TypeName visitPrimitive(PrimitiveType primitiveType, Void parameter) {
     // "byte", "char", "short", "int", "long", "float", "double", "boolean"
     final String primitive = primitiveType.getKind().name().toLowerCase();
-    return new TypeName(null, primitive, primitive);
+    return new TypeName(EMPTY, primitive, primitive);
   }
 
   @Override
@@ -128,7 +130,7 @@ final class TypeNameVisitor extends SimpleTypeVisitor9<TypeName, Void> {
     String qualifiedName = tp.toString();
     int lt = qualifiedName.lastIndexOf('<');
     int dot = (lt < 0 ? qualifiedName : qualifiedName.substring(0, lt)).lastIndexOf('.');
-    String packageName = dot < 0 ? null : qualifiedName.substring(0, dot);
+    String packageName = dot < 0 ? EMPTY : qualifiedName.substring(0, dot);
     return new TypeName(packageName, qualifiedName.substring(dot + 1), qualifiedName);
   }
 

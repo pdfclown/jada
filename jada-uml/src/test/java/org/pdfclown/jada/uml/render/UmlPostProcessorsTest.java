@@ -46,7 +46,7 @@ class UmlPostProcessorsTest extends BaseTest {
   private static TypeName typeName(String qualified) {
     int lastDot = qualified.lastIndexOf('.');
     String simpleName = lastDot >= 0 ? qualified.substring(lastDot + 1) : qualified;
-    String packagename = lastDot > 0 ? qualified.substring(0, lastDot) : null;
+    String packagename = lastDot > 0 ? qualified.substring(0, lastDot) : EMPTY;
     return new TypeName(packagename, simpleName, qualified);
   }
 

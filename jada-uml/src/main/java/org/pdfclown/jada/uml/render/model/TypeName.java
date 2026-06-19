@@ -123,7 +123,7 @@ public class TypeName {
 
   private final TypeName[] generics;
   // SourceName: packagename
-  private final @Nullable String packageName;
+  private final String packageName;
   // SourceName: qualified
   private final String qualifiedName;
   // SourceName: simple
@@ -131,7 +131,7 @@ public class TypeName {
 
   /**
    */
-  public TypeName(@Nullable String packageName, String simpleName, String qualifiedName,
+  public TypeName(String packageName, String simpleName, String qualifiedName,
       TypeName... generics) {
     this.packageName = packageName;
     this.simpleName = simpleName;
@@ -149,14 +149,14 @@ public class TypeName {
     return generics.clone();
   }
 
-  public @Nullable String getPackageName() {
+  public String getPackageName() {
     return packageName;
   }
 
   /**
    */
   public String getQualified(@Nullable String separator) {
-    int plen = packageName != null ? packageName.length() : 0;
+    int plen = packageName.length();
     return qualifiedName.length() > plen && plen > 0 && separator != null && !separator.isEmpty()
         ? packageName + separator + qualifiedName.substring(plen + 1)
         : qualifiedName;
