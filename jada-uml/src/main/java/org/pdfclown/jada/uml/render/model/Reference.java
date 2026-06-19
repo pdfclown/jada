@@ -22,6 +22,7 @@ import static java.util.Collections.emptySet;
 import static java.util.Objects.requireNonNull;
 import static java.util.stream.Collectors.toCollection;
 import static org.apache.commons.lang3.StringUtils.trimToEmpty;
+import static org.pdfclown.common.util.Chars.DOT;
 import static org.pdfclown.common.util.Exceptions.wrongArg;
 
 import java.io.IOException;
@@ -119,9 +120,9 @@ public class Reference extends UmlNode {
 
     private String toString(@Nullable Namespace namespace) {
       String name = qualifiedName;
-      if (namespace != null && name.startsWith(namespace.getName() + ".")) {
+      if (namespace != null && name.startsWith(namespace.getName() + DOT)) {
         name = name.substring(namespace.getName().length() + 1);
-        if (name.indexOf('.') > 0) {
+        if (name.indexOf(DOT) > 0) {
           name = qualifiedName;
         }
       }

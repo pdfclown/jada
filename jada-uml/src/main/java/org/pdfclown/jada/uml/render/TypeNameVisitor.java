@@ -17,6 +17,7 @@
  */
 package org.pdfclown.jada.uml.render;
 
+import static org.pdfclown.common.util.Chars.DOT;
 import static org.pdfclown.common.util.Strings.EMPTY;
 
 import java.util.Collections;
@@ -72,12 +73,11 @@ final class TypeNameVisitor extends SimpleTypeVisitor9<TypeName, Void> {
         .map($ -> _visit($, parameter))
         .toArray(TypeName[]::new);
     final String packageName;
-
     Element enclosingElement = el.getEnclosingElement();
     if (enclosingElement.getKind().isInterface() || enclosingElement.getKind().isClass()) {
       packageName = visit(enclosingElement.asType()).getPackageName();
     } else {
-      int dot = qualifiedName.lastIndexOf('.');
+      int dot = qualifiedName.lastIndexOf(DOT);
       packageName = dot > 0 ? qualifiedName.substring(0, dot) : EMPTY;
     }
     return new TypeName(packageName, simpleName, qualifiedName, generics);
@@ -129,7 +129,7 @@ final class TypeNameVisitor extends SimpleTypeVisitor9<TypeName, Void> {
   protected TypeName defaultAction(TypeMirror tp, Void parameter) {
     String qualifiedName = tp.toString();
     int lt = qualifiedName.lastIndexOf('<');
-    int dot = (lt < 0 ? qualifiedName : qualifiedName.substring(0, lt)).lastIndexOf('.');
+    int dot = (lt < 0 ? qualifiedName : qualifiedName.substring(0, lt)).lastIndexOf(DOT);
     String packageName = dot < 0 ? EMPTY : qualifiedName.substring(0, dot);
     return new TypeName(packageName, qualifiedName.substring(dot + 1), qualifiedName);
   }

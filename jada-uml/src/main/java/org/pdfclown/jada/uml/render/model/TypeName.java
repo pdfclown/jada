@@ -18,6 +18,7 @@
 package org.pdfclown.jada.uml.render.model;
 
 import static java.util.Objects.requireNonNull;
+import static org.pdfclown.common.util.Chars.DOT;
 import static org.pdfclown.common.util.Exceptions.runtime;
 import static org.pdfclown.common.util.Objects.textLiteral;
 
@@ -187,7 +188,7 @@ public class TypeName {
     }
     if (!TypeMode.NONE.equals(mode)) {
       try {
-        if (namespace != null && this.qualifiedName.startsWith(namespace.getName() + ".")) {
+        if (namespace != null && this.qualifiedName.startsWith(namespace.getName() + DOT)) {
           output.append(this.qualifiedName.substring(namespace.getName().length() + 1));
         } else if (isQualified(mode)) {
           output.append(this.qualifiedName);

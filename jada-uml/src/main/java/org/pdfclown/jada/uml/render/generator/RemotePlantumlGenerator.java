@@ -18,8 +18,10 @@
 package org.pdfclown.jada.uml.render.generator;
 
 import static java.util.Objects.requireNonNull;
+import static org.pdfclown.common.util.Chars.SLASH;
 import static org.pdfclown.common.util.Exceptions.runtime;
 import static org.pdfclown.common.util.Exceptions.wrongArg;
+import static org.pdfclown.common.util.Strings.S;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -62,8 +64,8 @@ public class RemotePlantumlGenerator implements PlantumlGenerator {
     if (!PATTERN__HTTP_URL.matcher(baseUrl).find())
       throw wrongArg("baseUrl", baseUrl, "PlantUML server address UNSUPPORTED");
 
-    if (!baseUrl.endsWith("/")) {
-      baseUrl += "/";
+    if (!baseUrl.endsWith(S + SLASH)) {
+      baseUrl += S + SLASH;
     }
     this.baseUrl = baseUrl;
   }
@@ -72,7 +74,7 @@ public class RemotePlantumlGenerator implements PlantumlGenerator {
   public void generatePlantumlDiagramFromSource(String plantumlSource, FileFormat format,
       OutputStream out) {
     final String encodedDiagram = encodeDiagram(plantumlSource);
-    final String diagramUrl = baseUrl + format.name().toLowerCase() + '/' + encodedDiagram;
+    final String diagramUrl = baseUrl + format.name().toLowerCase() + SLASH + encodedDiagram;
     try (InputStream in = new URL(diagramUrl).openConnection().getInputStream()) {
       final byte[] buf = new byte[4096];
       for (int read = in.read(buf); read >= 0; read = in.read(buf)) {

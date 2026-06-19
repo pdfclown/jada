@@ -18,6 +18,7 @@
 package org.pdfclown.jada.uml.render.model;
 
 import static java.util.Objects.requireNonNull;
+import static org.pdfclown.common.util.Chars.DOT;
 import static org.pdfclown.jada.core.util.lang.LangModels.MODULE__UNNAMED;
 import static org.pdfclown.jada.uml.util.Plantumls.normalNs;
 
@@ -70,7 +71,7 @@ public class Namespace extends UmlNode {
   }
 
   public boolean contains(@Nullable TypeName typeName) {
-    return typeName != null && typeName.getQualifiedName().startsWith(name + ".");
+    return typeName != null && typeName.getQualifiedName().startsWith(name + DOT);
   }
 
   @Override

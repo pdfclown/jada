@@ -18,8 +18,11 @@
 package org.pdfclown.jada.uml.internal.util.net;
 
 import static java.lang.Math.max;
+import static org.pdfclown.common.util.Chars.DOT;
+import static org.pdfclown.common.util.Chars.HYPHEN;
 import static org.pdfclown.common.util.Chars.PERCENT;
 import static org.pdfclown.common.util.Chars.SLASH;
+import static org.pdfclown.common.util.Chars.UNDERSCORE;
 import static org.pdfclown.common.util.Exceptions.runtime;
 import static org.pdfclown.common.util.Strings.S;
 
@@ -123,7 +126,8 @@ public final class Uris {
    * </p>
    */
   private static boolean isUnreserved(char ch) {
-    return Character.isLetterOrDigit(ch) || ch == '-' || ch == '.' || ch == '_' || ch == '~';
+    return Character.isLetterOrDigit(ch) || ch == HYPHEN || ch == DOT || ch == UNDERSCORE
+        || ch == '~';
   }
 
   private static String join(String left, String right, char separator) {

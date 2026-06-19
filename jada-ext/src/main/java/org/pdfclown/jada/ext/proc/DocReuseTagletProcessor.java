@@ -820,13 +820,13 @@ public class DocReuseTagletProcessor extends JavaProcessor {
         normalizeTag(c.commentContent.length(), $, file, c);
       }
       // Content changed (balanced tags)?
-      else if (c.out.length() > 0) {
+      else if (!c.out.isEmpty()) {
         // Trailing content.
         c.out.append(c.commentContent.substring(c.inputStart));
       }
 
       // Update the source code!
-      if (c.out.length() > 0) {
+      if (!c.out.isEmpty()) {
         //noinspection UnusedAssignment
         $.setComment(comment = new TraditionalJavadocComment(c.out.toString()));
         context.changeFile();

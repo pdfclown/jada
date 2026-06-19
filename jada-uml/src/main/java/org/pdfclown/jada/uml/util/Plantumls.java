@@ -48,7 +48,7 @@ public final class Plantumls {
      * Appends the string to this fragment, joining with a space character.
      */
     public Builder join(String s) {
-      if (base.length() > 0) {
+      if (!base.isEmpty()) {
         base.append(SPACE);
       }
       return concat(s);
