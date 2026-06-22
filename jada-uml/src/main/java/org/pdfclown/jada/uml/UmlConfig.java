@@ -19,9 +19,6 @@ package org.pdfclown.jada.uml;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.exists;
-import static java.util.Collections.emptyMap;
-import static java.util.Collections.emptySet;
-import static java.util.Collections.singletonMap;
 import static java.util.Collections.unmodifiableList;
 import static java.util.Collections.unmodifiableMap;
 import static java.util.Collections.unmodifiableSet;
@@ -60,6 +57,7 @@ import java.util.regex.Pattern;
 import javax.tools.Diagnostic.Kind;
 import org.jspecify.annotations.Nullable;
 import org.pdfclown.common.util.annot.LazyNonNull;
+import org.pdfclown.common.util.annot.Unmodifiable;
 import org.pdfclown.common.util.annot.UnmodifiableView;
 import org.pdfclown.jada.core.JadaExtConfig;
 import org.pdfclown.jada.uml.internal.UmlMessage;
@@ -445,18 +443,18 @@ public class UmlConfig extends JadaExtConfig {
     }
 
     // SourceName: modules
-    private @UnmodifiableView Map<String, Set<String>> getModules() {
+    private @Unmodifiable Map<String, Set<String>> getModules() {
       if (modules == null) {
         synchronized (this) {
           var modules = readModules();
-          this.modules = !modules.isEmpty() ? modules : singletonMap(EMPTY, readPackages());
+          this.modules = !modules.isEmpty() ? modules : Map.of(EMPTY, readPackages());
         }
       }
       return modules;
     }
 
     // SourceName: tryReadModules
-    private @UnmodifiableView Map<String, Set<String>> readModules() {
+    private @Unmodifiable Map<String, Set<String>> readModules() {
       final URI elementListUri = nonNull(addPathComponent(baseUri, FILENAME__ELEMENT_LIST));
       final var modules = new LinkedHashMap<String, Set<String>>();
       try (var reader = new BufferedReader(openReaderTo(config.getConfig().getOutputDirectory(),
@@ -469,7 +467,7 @@ public class UmlConfig extends JadaExtConfig {
             config.getLog().print(Kind.OTHER, this, UmlMessage.ELEMENT_LIST_HTML_IGNORED,
                 elementListUri);
 
-            return emptyMap();
+            return Map.of();
           } else if (line.startsWith("module:")) {
             module = line.substring("module:".length()).trim();
           } else if (PACKAGENAME_VALIDATOR.test(line)) {
@@ -486,7 +484,7 @@ public class UmlConfig extends JadaExtConfig {
         config.getLog().print(Kind.WARNING, this, UmlMessage.CANNOT_READ_ELEMENT_LIST,
             elementListUri, ex);
       }
-      return modules.isEmpty() ? emptyMap() : unmodifiableMap(modules);
+      return modules.isEmpty() ? Map.of() : unmodifiableMap(modules);
     }
 
     // SourceName: tryReadPackages
@@ -508,7 +506,7 @@ public class UmlConfig extends JadaExtConfig {
         config.getLog().print(Kind.WARNING, this, UmlMessage.CANNOT_READ_PACKAGE_LIST,
             packageListUri, ex);
       }
-      return packages.isEmpty() ? emptySet() : unmodifiableSet(packages);
+      return packages.isEmpty() ? Set.of() : unmodifiableSet(packages);
     }
   }
 

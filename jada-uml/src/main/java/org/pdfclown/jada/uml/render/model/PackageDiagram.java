@@ -17,7 +17,6 @@
  */
 package org.pdfclown.jada.uml.render.model;
 
-import static java.util.Collections.emptyList;
 import static java.util.Objects.requireNonNull;
 import static org.pdfclown.common.util.Chars.DOT;
 import static org.pdfclown.jada.uml.internal.Internals.FILENAME__PACKAGE;
@@ -78,8 +77,7 @@ public class PackageDiagram extends Diagram {
   @Override
   protected IndentWriter writeCustomDirectives(@Nullable List<String> customDirectives,
       IndentWriter out) throws IOException {
-    final var directives = new ArrayList<>(customDirectives != null ? customDirectives
-        : emptyList());
+    final var directives = new ArrayList<>(customDirectives != null ? customDirectives : List.of());
     {
       directives.removeIf($ -> $.startsWith(SEPARATOR_DIRECTIVE));
       directives.add(SEPARATOR_DIRECTIVE + PUML_NS_SEPARATOR);

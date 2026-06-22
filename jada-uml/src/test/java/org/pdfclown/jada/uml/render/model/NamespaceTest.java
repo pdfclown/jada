@@ -17,7 +17,6 @@
  */
 package org.pdfclown.jada.uml.render.model;
 
-import static java.util.Collections.singleton;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
@@ -29,6 +28,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
+import java.util.Set;
 import java.util.UUID;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -75,7 +75,7 @@ class NamespaceTest extends BaseTest {
   void onEachBefore() {
     images = mock(ImageConfig.class);
     {
-      when(images.getFormats()).thenReturn(singleton(ImageConfig.Format.SVG));
+      when(images.getFormats()).thenReturn(Set.of(ImageConfig.Format.SVG));
     }
 
     config = mock(UmlConfig.class);

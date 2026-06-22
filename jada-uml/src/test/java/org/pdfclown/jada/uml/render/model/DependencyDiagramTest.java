@@ -17,7 +17,6 @@
  */
 package org.pdfclown.jada.uml.render.model;
 
-import static java.util.Collections.singleton;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsString;
@@ -132,7 +131,7 @@ class DependencyDiagramTest extends BaseTest {
 
     mockImages = mock(ImageConfig.class);
     {
-      when(mockImages.getFormats()).thenReturn(singleton(ImageConfig.Format.SVG));
+      when(mockImages.getFormats()).thenReturn(Set.of(ImageConfig.Format.SVG));
     }
 
     mockConfig = mock(UmlConfig.class);

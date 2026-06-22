@@ -17,7 +17,6 @@
  */
 package org.pdfclown.jada.uml.render.model;
 
-import static java.util.Collections.singleton;
 import static org.apache.commons.io.file.PathUtils.touch;
 import static org.apache.logging.log4j.util.Strings.EMPTY;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -31,6 +30,7 @@ import static org.pdfclown.jada.uml.util.Plantumls.PUML_REF__EXTENDED_BY;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -90,7 +90,7 @@ public class ClassDiagramIT extends BaseIT {
     {
       images = mock(ImageConfig.class);
       {
-        when(images.getFormats()).thenReturn(singleton(ImageConfig.Format.SVG));
+        when(images.getFormats()).thenReturn(Set.of(ImageConfig.Format.SVG));
         when(images.getSubDirectory()).thenReturn(null);
       }
       when(config.getImageConfig()).thenReturn(images);

@@ -12,7 +12,6 @@
  */
 package org.pdfclown.jada.uml.render;
 
-import static java.util.Collections.emptySet;
 import static java.util.Objects.requireNonNull;
 import static org.apache.commons.lang3.StringUtils.uncapitalize;
 
@@ -20,6 +19,7 @@ import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Consumer;
 import org.jspecify.annotations.Nullable;
 import org.pdfclown.jada.uml.render.model.Field;
@@ -71,7 +71,7 @@ class UmlPostProcessors {
      */
     public static Collection<Property> detectFrom(@Nullable Type type) {
       if (type == null)
-        return emptySet();
+        return Set.of();
 
       final Map<String, Property> propertiesByName = new LinkedHashMap<>();
       type.getChildren().stream()

@@ -17,12 +17,14 @@
  */
 package org.pdfclown.jada.uml.render;
 
-import static java.util.Collections.singleton;
 import static java.util.Objects.requireNonNull;
+import static org.pdfclown.common.util.Chars.STAR;
+import static org.pdfclown.common.util.Strings.S;
 
 import java.util.ArrayDeque;
 import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Function;
 import javax.lang.model.type.ArrayType;
 import javax.lang.model.type.DeclaredType;
@@ -59,9 +61,9 @@ final class TypeNameWithCardinality {
     return $type -> {
       if ($type instanceof ArrayType arrayType) {
         TypeName componentName = TypeNameVisitor.INSTANCE.visit(arrayType.getComponentType());
-        return new TypeNameWithCardinality(componentName, "*");
+        return new TypeNameWithCardinality(componentName, S + STAR);
       } else if ($type instanceof DeclaredType) {
-        var superTypes = new ArrayDeque<>(singleton($type));
+        var superTypes = new ArrayDeque<>(Set.of($type));
         var checkedTypes = new HashSet<String>();
         while (!superTypes.isEmpty()) {
           TypeMirror superType = superTypes.poll();

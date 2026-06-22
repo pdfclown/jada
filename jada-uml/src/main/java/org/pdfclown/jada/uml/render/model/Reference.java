@@ -18,7 +18,6 @@
 package org.pdfclown.jada.uml.render.model;
 
 import static java.util.Arrays.asList;
-import static java.util.Collections.emptySet;
 import static java.util.Objects.requireNonNull;
 import static java.util.stream.Collectors.toCollection;
 import static org.apache.commons.lang3.StringUtils.trimToEmpty;
@@ -30,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.Objects;
+import java.util.Set;
 import org.apache.commons.lang3.StringUtils;
 import org.jspecify.annotations.Nullable;
 import org.pdfclown.common.util.io.IndentWriter;
@@ -154,7 +154,7 @@ public class Reference extends UmlNode {
   public final String type;
 
   public Reference(Side from, String type, Side to, @Nullable String @Nullable... notes) {
-    this(from, type, to, notes != null ? asList(notes) : emptySet());
+    this(from, type, to, notes != null ? asList(notes) : Set.of());
   }
 
   private Reference(Side from, String type, Side to, Collection<@Nullable String> notes) {

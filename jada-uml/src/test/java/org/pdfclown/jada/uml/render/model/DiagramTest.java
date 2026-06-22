@@ -18,7 +18,6 @@
 package org.pdfclown.jada.uml.render.model;
 
 import static java.util.Arrays.asList;
-import static java.util.Collections.singletonList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItem;
@@ -37,6 +36,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.nio.file.Path;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -78,7 +78,7 @@ class DiagramTest extends BaseTest {
   @Test
   void _customBackgroundcolor() throws IOException {
     when(config.getPlantumlCustomDirectives())
-        .thenReturn(singletonList("skinparam backgroundcolor green"));
+        .thenReturn(List.of("skinparam backgroundcolor green"));
     var output = new StringWriter();
     var testDiagram = new TestDiagram(config,
         Path.of("target/test-classes/custom-directive.puml"));
@@ -93,7 +93,7 @@ class DiagramTest extends BaseTest {
   @Test
   void _customDirective() throws IOException {
     when(config.getPlantumlCustomDirectives())
-        .thenReturn(singletonList("skinparam handwritten true"));
+        .thenReturn(List.of("skinparam handwritten true"));
     var output = new StringWriter();
     var testDiagram = new TestDiagram(config,
         Path.of("target/test-classes/custom-directive.puml"));

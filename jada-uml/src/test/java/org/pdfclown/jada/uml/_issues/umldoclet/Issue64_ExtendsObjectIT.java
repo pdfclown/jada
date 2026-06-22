@@ -17,6 +17,7 @@
  */
 package org.pdfclown.jada.uml._issues.umldoclet;
 
+import static java.util.Collections.emptyIterator;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.not;
@@ -27,7 +28,6 @@ import static org.pdfclown.jada.uml.util.Plantumls.PUML_REF__ENCLOSES;
 import static org.pdfclown.jada.uml.util.Plantumls.puml;
 
 import java.util.AbstractSet;
-import java.util.Collections;
 import java.util.Iterator;
 import org.junit.jupiter.api.Test;
 import org.pdfclown.common.util.annot.InitNonNull;
@@ -46,7 +46,7 @@ public class Issue64_ExtendsObjectIT extends BaseIT {
   public static class EmptySet<T> extends AbstractSet<T> {
     @Override
     public Iterator<T> iterator() {
-      return Collections.emptyIterator();
+      return emptyIterator();
     }
 
     @Override
