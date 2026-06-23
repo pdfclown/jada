@@ -21,7 +21,6 @@ import static java.util.Objects.requireNonNull;
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 import static org.pdfclown.common.util.Chars.DOT;
 import static org.pdfclown.common.util.Exceptions.runtime;
-import static org.pdfclown.common.util.Objects.isSameType;
 import static org.pdfclown.common.util.Objects.textLiteral;
 
 import java.io.IOException;
@@ -107,8 +106,8 @@ public class TypeName {
     }
 
     @Override
-    public boolean equals(Object o) {
-      return super.equals(o) && this.extends_ == ((Variable) o).extends_;
+    public boolean equals(@Nullable Object o) {
+      return super.equals(o) && ((Variable) o).extends_ == this.extends_;
     }
 
     @Override
@@ -150,10 +149,9 @@ public class TypeName {
    *           Principle, but is the lesser evil.
    */
   @Override
-  @SuppressWarnings("EqualsDoesntCheckParameterClass")
-  public boolean equals(Object o) {
-    return this == o || (isSameType(this, o)
-        && this.qualifiedName.equals(((TypeName) o).qualifiedName));
+  public boolean equals(@Nullable Object o) {
+    return o == this || (o != null && o.getClass() == this.getClass()
+        && ((TypeName) o).qualifiedName.equals(this.qualifiedName));
   }
 
   public TypeName[] getGenerics() {

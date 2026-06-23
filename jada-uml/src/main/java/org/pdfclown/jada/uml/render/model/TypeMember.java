@@ -20,7 +20,6 @@ package org.pdfclown.jada.uml.render.model;
 import static java.util.Objects.requireNonNull;
 import static java.util.Objects.requireNonNullElse;
 import static org.pdfclown.common.util.Exceptions.wrongArg;
-import static org.pdfclown.common.util.Objects.isSameType;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -62,16 +61,15 @@ public abstract class TypeMember extends UmlNode {
    *           Principle, but is the lesser evil.
    */
   @Override
-  @SuppressWarnings("EqualsDoesntCheckParameterClass")
-  public boolean equals(Object o) {
-    if (this == o)
+  public boolean equals(@Nullable Object o) {
+    if (o == this)
       return true;
-    else if (!isSameType(this, o))
+    else if (o == null || o.getClass() != this.getClass())
       return false;
 
     var that = (TypeMember) o;
-    return Objects.equals(this.getParent(), that.getParent())
-        && this.name.equals(that.name);
+    return Objects.equals(that.getParent(), this.getParent())
+        && that.name.equals(this.name);
   }
 
   public String getName() {

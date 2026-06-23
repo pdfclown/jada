@@ -111,9 +111,9 @@ public class JadaOptions {
      * @implNote Marked as final to enforce equivalence symmetry.
      */
     @Override
-    public final boolean equals(Object o) {
-      return this == o || (o instanceof Option that
-          && optionName(this.getNames()).equals(optionName(that.getNames())));
+    public final boolean equals(@Nullable Object o) {
+      return o == this || (o instanceof Option that
+          && optionName(that.getNames()).equals(optionName(this.getNames())));
     }
 
     @Override

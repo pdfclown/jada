@@ -87,15 +87,10 @@ public class Reference extends UmlNode {
     }
 
     @Override
-    public boolean equals(Object o) {
-      if (this == o)
-        return true;
-      else if (o == null || this.getClass() != o.getClass())
-        return false;
-
-      var that = (Side) o;
-      return this.qualifiedName.equals(that.qualifiedName)
-          && this.cardinality.equals(that.cardinality);
+    public boolean equals(@Nullable Object o) {
+      return o == this || (o instanceof Side that
+          && that.qualifiedName.equals(this.qualifiedName)
+          && that.cardinality.equals(this.cardinality));
     }
 
     public String getCardinality() {
@@ -220,15 +215,15 @@ public class Reference extends UmlNode {
    * @implNote Marked as final to enforce equivalence symmetry.
    */
   @Override
-  public final boolean equals(Object o) {
-    if (this == o)
+  public final boolean equals(@Nullable Object o) {
+    if (o == this)
       return true;
     else if (o instanceof Reference that) {
-      final Reference thisC = this.canonical();
       final Reference thatC = that.canonical();
-      return thisC.from.equals(thatC.from)
-          && thisC.type.equals(thatC.type)
-          && thisC.to.equals(thatC.to);
+      final Reference thisC = this.canonical();
+      return thatC.from.equals(thisC.from)
+          && thatC.type.equals(thisC.type)
+          && thatC.to.equals(thisC.to);
     } else
       return false;
   }

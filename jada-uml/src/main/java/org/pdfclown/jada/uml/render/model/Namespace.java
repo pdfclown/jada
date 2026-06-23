@@ -78,9 +78,9 @@ public class Namespace extends UmlNode {
    * @implNote Marked as final to enforce equivalence symmetry.
    */
   @Override
-  public final boolean equals(Object o) {
-    return this == o || (o instanceof Namespace that
-        && this.name.equals(that.name));
+  public final boolean equals(@Nullable Object o) {
+    return o == this || (o instanceof Namespace that
+        && that.name.equals(this.name));
   }
 
   public String getModuleName() {

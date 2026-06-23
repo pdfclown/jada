@@ -20,6 +20,7 @@ package org.pdfclown.jada.uml.render;
 import static java.util.Objects.requireNonNull;
 
 import java.util.Objects;
+import org.jspecify.annotations.Nullable;
 import org.pdfclown.common.util.annot.Immutable;
 
 // SourceName: nl.talsmasoftware.umldoclet.javadoc.dependencies.PackageDependency
@@ -69,10 +70,10 @@ public class PackageDependency {
    * @implNote Marked as final to enforce equivalence symmetry.
    */
   @Override
-  public final boolean equals(Object o) {
-    return this == o || (o instanceof PackageDependency that
-        && this.fromPackage.equals(that.fromPackage)
-        && this.toPackage.equals(that.toPackage));
+  public final boolean equals(@Nullable Object o) {
+    return o == this || (o instanceof PackageDependency that
+        && that.fromPackage.equals(this.fromPackage)
+        && that.toPackage.equals(this.toPackage));
   }
 
   /**

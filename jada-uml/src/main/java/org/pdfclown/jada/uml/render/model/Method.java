@@ -17,6 +17,10 @@
  */
 package org.pdfclown.jada.uml.render.model;
 
+import static org.pdfclown.common.util.Chars.COLON;
+import static org.pdfclown.common.util.Chars.SPACE;
+import static org.pdfclown.common.util.Strings.S;
+
 import java.io.IOException;
 import java.util.Objects;
 import org.jspecify.annotations.Nullable;
@@ -57,18 +61,18 @@ public class Method extends TypeMember {
    *          The type of the parameter.
    */
   public void addParameter(String name, TypeName type) {
-    getOrCreateParameters().add(name, type);
+    getParameters().add(name, type);
   }
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(@Nullable Object o) {
     return super.equals(o)
-        && this.getOrCreateParameters().equals(((Method) o).getOrCreateParameters());
+        && ((Method) o).getParameters().equals(this.getParameters());
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), getOrCreateParameters());
+    return Objects.hash(super.hashCode(), getParameters());
   }
 
   /**
@@ -95,14 +99,14 @@ public class Method extends TypeMember {
 
   @Override
   protected IndentWriter writeParametersTo(IndentWriter out) throws IOException {
-    return getOrCreateParameters().writeTo(out);
+    return getParameters().writeTo(out);
   }
 
   @Override
   protected IndentWriter writeTypeTo(IndentWriter out) throws IOException {
     TypeMode returnTypeDisplay = getConfig().getMethodConfig().getReturnTypeMode();
     if (getType() != null && !TypeMode.NONE.equals(returnTypeDisplay)) {
-      out.append(": ").append(getType().toUml(returnTypeDisplay, null));
+      out.append(S + COLON + SPACE).append(getType().toUml(returnTypeDisplay, null));
     }
     return out;
   }
@@ -110,19 +114,18 @@ public class Method extends TypeMember {
   @Override
   void replaceParameterizedType(@Nullable TypeName from, TypeName to) {
     super.replaceParameterizedType(from, to);
-    getOrCreateParameters().replaceParameterizedType(from, to);
+    getParameters().replaceParameterizedType(from, to);
   }
 
-  private ParameterList createAndAddNewParameters() {
-    ParameterList parameters = new ParameterList(this);
-    this.addChild(parameters);
-    return parameters;
-  }
-
-  private ParameterList getOrCreateParameters() {
+  // SourceName: getOrCreateParameters
+  private ParameterList getParameters() {
     return getChildren().stream()
         .filter(ParameterList.class::isInstance).map(ParameterList.class::cast)
         .findFirst()
-        .orElseGet(this::createAndAddNewParameters);
+        .orElseGet(() -> {
+          var ret = new ParameterList(this);
+          addChild(ret);
+          return ret;
+        });
   }
 }

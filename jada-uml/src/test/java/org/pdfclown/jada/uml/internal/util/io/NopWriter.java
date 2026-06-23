@@ -18,6 +18,7 @@
 package org.pdfclown.jada.uml.internal.util.io;
 
 import java.io.Writer;
+import org.jspecify.annotations.Nullable;
 
 // SourceName: nl.talsmasoftware.umldoclet.rendering.writers.NoopWriter
 /**
@@ -34,8 +35,8 @@ final class NopWriter extends Writer {
   }
 
   @Override
-  public boolean equals(Object other) {
-    return this == other || other instanceof NopWriter;
+  public boolean equals(@Nullable Object o) {
+    return o == this || o instanceof NopWriter;
   }
 
   @Override

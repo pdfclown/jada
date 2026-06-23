@@ -21,6 +21,7 @@ import static org.pdfclown.common.util.Objects.toStringWithProperties;
 import static org.pdfclown.common.util.Strings.lcase;
 
 import java.util.Objects;
+import org.jspecify.annotations.Nullable;
 
 // SourceName: nl.talsmasoftware.umldoclet.javadoc.TestObject
 /**
@@ -48,9 +49,9 @@ public class TestObject implements Comparable<TestObject> {
   }
 
   @Override
-  public boolean equals(Object other) {
-    return this == other
-        || (other instanceof TestObject that && this.compareTo(that) == 0);
+  public boolean equals(@Nullable Object o) {
+    return o == this || (o instanceof TestObject that
+        && that.compareTo(this) == 0);
   }
 
   @Override
