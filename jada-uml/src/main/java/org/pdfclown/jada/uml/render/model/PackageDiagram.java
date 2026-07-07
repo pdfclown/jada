@@ -29,7 +29,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import org.jspecify.annotations.Nullable;
-import org.pdfclown.common.util.annot.LazyNonNull;
+import org.pdfclown.common.util.annot.MonotonicNonNull;
 import org.pdfclown.common.util.io.IndentWriter;
 import org.pdfclown.jada.uml.UmlConfig;
 
@@ -48,7 +48,7 @@ public class PackageDiagram extends Diagram {
 
   private final @Nullable String moduleName;
   private final String packageName;
-  private @LazyNonNull @Nullable Path pumlFile;
+  private @MonotonicNonNull @Nullable Path pumlFile;
 
   public PackageDiagram(UmlConfig config, String packageName, @Nullable String moduleName) {
     super(config);

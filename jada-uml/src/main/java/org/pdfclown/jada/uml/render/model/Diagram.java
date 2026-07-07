@@ -37,7 +37,7 @@ import java.util.stream.Stream;
 import javax.tools.Diagnostic.Kind;
 import net.sourceforge.plantuml.FileFormat;
 import org.jspecify.annotations.Nullable;
-import org.pdfclown.common.util.annot.LazyNonNull;
+import org.pdfclown.common.util.annot.MonotonicNonNull;
 import org.pdfclown.common.util.io.IndentWriter;
 import org.pdfclown.jada.uml.UmlConfig;
 import org.pdfclown.jada.uml.internal.UmlMessage;
@@ -55,7 +55,7 @@ public abstract class Diagram extends UmlNode {
   private final UmlConfig config;
   private final PlantumlGenerator plantumlGenerator;
   private final FileFormat[] formats;
-  private @LazyNonNull @Nullable Path diagramBaseFile;
+  private @MonotonicNonNull @Nullable Path diagramBaseFile;
 
   protected Diagram(UmlConfig config) {
     super(null);

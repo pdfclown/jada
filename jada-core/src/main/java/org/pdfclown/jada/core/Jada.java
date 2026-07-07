@@ -83,7 +83,7 @@ import jdk.javadoc.doclet.Taglet;
 import org.greenrobot.eventbus.EventBus;
 import org.jspecify.annotations.Nullable;
 import org.pdfclown.common.util.ArgumentException;
-import org.pdfclown.common.util.annot.InitNonNull;
+import org.pdfclown.common.util.annot.Initializer;
 import org.pdfclown.common.util.io.PathResource;
 import org.pdfclown.common.util.io.Resource;
 import org.pdfclown.common.util.reflect.Reflects;
@@ -484,18 +484,18 @@ public class Jada implements Doclet, JadaComponent {
   int extWarningCount;
 
   @SuppressWarnings("NotNullFieldNotInitialized")
-  private @InitNonNull Doclet base;
+  private Doclet base;
   private final JadaCandidates candidates = new JadaCandidates();
   @SuppressWarnings("NotNullFieldNotInitialized")
-  private @InitNonNull JadaConfig config;
+  private JadaConfig config;
   @SuppressWarnings("NotNullFieldNotInitialized")
-  private @InitNonNull JadaEnvironment env;
+  private JadaEnvironment env;
   @SuppressWarnings("NotNullFieldNotInitialized")
-  private @InitNonNull EventBus eventBus;
+  private EventBus eventBus;
   @SuppressWarnings("this-escape")
   private final JadaScriptManager scriptManager = new JadaScriptManager(this);
   @SuppressWarnings("NotNullFieldNotInitialized")
-  private @InitNonNull Set<? extends Option> supportedOptions;
+  private Set<? extends Option> supportedOptions;
 
   public Jada() {
   }
@@ -573,6 +573,7 @@ public class Jada implements Doclet, JadaComponent {
     return getBaseLog().nwarnings;
   }
 
+  @Initializer
   @Override
   public void init(Locale locale, Reporter reporter) {
     Internals.registerComponentName(this);
@@ -707,6 +708,7 @@ public class Jada implements Doclet, JadaComponent {
     eventBus.post(event);
   }
 
+  @Initializer
   @Override
   public final boolean run(DocletEnvironment env) {
     this.env = new JadaEnvironment(env, this);

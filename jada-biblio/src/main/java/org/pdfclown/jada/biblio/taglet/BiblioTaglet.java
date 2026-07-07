@@ -29,7 +29,7 @@ import javax.lang.model.element.Element;
 import jdk.javadoc.doclet.Doclet;
 import jdk.javadoc.doclet.DocletEnvironment;
 import org.jspecify.annotations.Nullable;
-import org.pdfclown.common.util.annot.InitNonNull;
+import org.pdfclown.common.util.annot.Initializer;
 import org.pdfclown.jada.biblio.BiblioConfig.BiblioEntry;
 import org.pdfclown.jada.biblio.BiblioExtension;
 import org.pdfclown.jada.core.taglet.MainTaglet;
@@ -181,8 +181,9 @@ public abstract class BiblioTaglet extends MainTaglet {
   }
 
   @SuppressWarnings("NotNullFieldNotInitialized")
-  protected @InitNonNull BiblioExtension extension;
+  protected BiblioExtension extension;
 
+  @Initializer
   @Override
   public void init(DocletEnvironment env, Doclet doclet) {
     super.init(env, doclet);

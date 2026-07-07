@@ -39,7 +39,6 @@ import org.jspecify.annotations.Nullable;
 import org.pdfclown.common.build.tool.Debug;
 import org.pdfclown.common.build.util.system.Builds;
 import org.pdfclown.common.util.ArgumentException;
-import org.pdfclown.common.util.annot.InitNonNull;
 import org.pdfclown.common.util.system.Clis;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -83,6 +82,7 @@ public class JadaDebug extends Debug {
   /**
    * {@link JadaDebug} CLI arguments.
    */
+  @SuppressWarnings("NullAway.Init")
   public static class CliArgs extends Debug.CliArgs {
     static class ArgsConverter implements ITypeConverter<List<String>> {
       public static List<String> parse(String value) {
@@ -101,7 +101,6 @@ public class JadaDebug extends Debug {
     @Parameters(index = "0", description = "Root directory of Jada project,"
         + " where the code base to debug is present")
     @SuppressWarnings("NotNullFieldNotInitialized")
-    @InitNonNull
     public Path jadaProjectDir;
 
     /**
@@ -112,7 +111,6 @@ public class JadaDebug extends Debug {
         + " where its configuration is present (namely, 'options' and 'packages' or 'argfile'"
         + " files) and its output is expected to be generated", arity = "0...1")
     @SuppressWarnings("NotNullFieldNotInitialized")
-    @InitNonNull
     public Path javadocTargetDir;
 
     /**

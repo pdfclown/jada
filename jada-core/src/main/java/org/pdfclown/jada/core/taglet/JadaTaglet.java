@@ -20,7 +20,7 @@ import java.util.Set;
 import jdk.javadoc.doclet.Doclet;
 import jdk.javadoc.doclet.DocletEnvironment;
 import jdk.javadoc.doclet.Taglet;
-import org.pdfclown.common.util.annot.InitNonNull;
+import org.pdfclown.common.util.annot.Initializer;
 import org.pdfclown.jada.core.Jada;
 import org.pdfclown.jada.core.JadaEnvironment;
 import org.pdfclown.jada.core.JadaObject;
@@ -45,7 +45,7 @@ public abstract class JadaTaglet implements Taglet, JadaObject {
   }
 
   @SuppressWarnings("NotNullFieldNotInitialized")
-  private @InitNonNull Jada jada;
+  private Jada jada;
 
   @Override
   public Set<Location> getAllowedLocations() {
@@ -63,6 +63,7 @@ public abstract class JadaTaglet implements Taglet, JadaObject {
   /**
    * @implSpec Implementers must call the overridden method.
    */
+  @Initializer
   @Override
   public void init(DocletEnvironment env, Doclet doclet) {
     jada = nonNull((JadaEnvironment) xcast(env)).getJada();

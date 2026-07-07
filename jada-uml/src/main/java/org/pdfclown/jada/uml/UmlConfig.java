@@ -56,7 +56,7 @@ import java.util.function.Supplier;
 import java.util.regex.Pattern;
 import javax.tools.Diagnostic.Kind;
 import org.jspecify.annotations.Nullable;
-import org.pdfclown.common.util.annot.LazyNonNull;
+import org.pdfclown.common.util.annot.MonotonicNonNull;
 import org.pdfclown.common.util.annot.Unmodifiable;
 import org.pdfclown.common.util.annot.UnmodifiableView;
 import org.pdfclown.jada.core.JadaExtConfig;
@@ -400,7 +400,7 @@ public class UmlConfig extends JadaExtConfig {
     private final URI baseUri;
     private final UmlConfig config;
     private final URI docUri;
-    private @LazyNonNull @Nullable Map<String, Set<String>> modules;
+    private @MonotonicNonNull @Nullable Map<String, Set<String>> modules;
     private final Map<String, URI> packageUriCache = new HashMap<>();
 
     ExternalLink(UmlConfig config, String apidoc, String packageList) {

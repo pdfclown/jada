@@ -54,7 +54,7 @@ import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Types;
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.jspecify.annotations.Nullable;
-import org.pdfclown.common.util.annot.LazyNonNull;
+import org.pdfclown.common.util.annot.MonotonicNonNull;
 import org.pdfclown.jada.uml.UmlConfig.Visibility;
 import org.pdfclown.jada.uml.UmlExtension;
 import org.pdfclown.jada.uml.render.model.ClassDiagram;
@@ -173,7 +173,7 @@ public class UmlFactory {
   }
 
   private final UmlExtension extension;
-  private @LazyNonNull @Nullable Collection<ExecutableElement> methodsFromExcludedSuperclasses;
+  private @MonotonicNonNull @Nullable Collection<ExecutableElement> methodsFromExcludedSuperclasses;
   private final Function<TypeMirror, TypeNameWithCardinality> typeNameWithCardinality;
 
   public UmlFactory(UmlExtension extension) {

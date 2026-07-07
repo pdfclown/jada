@@ -34,7 +34,7 @@ import java.util.stream.Stream;
 import javax.tools.Diagnostic.Kind;
 import org.apache.commons.lang3.function.Failable;
 import org.jspecify.annotations.Nullable;
-import org.pdfclown.common.util.annot.InitNonNull;
+import org.pdfclown.common.util.annot.Initializer;
 import org.pdfclown.jada.core.internal.JadaMessage;
 import org.pdfclown.jada.core.system.Logger;
 import org.pdfclown.jada.core.system.SystemConfig;
@@ -361,7 +361,7 @@ public abstract class FileProcess<T extends FileProcessor<?>> implements SystemO
   protected Map<String, T> processors = new LinkedHashMap<>();
 
   @SuppressWarnings("NotNullFieldNotInitialized")
-  private @InitNonNull SystemConfig config;
+  private SystemConfig config;
   private final List<Path> directories = new ArrayList<>();
 
   /**
@@ -404,6 +404,7 @@ public abstract class FileProcess<T extends FileProcessor<?>> implements SystemO
     return processors;
   }
 
+  @Initializer
   public void init(SystemConfig config) {
     this.config = requireNonNull(config, "`config`");
   }

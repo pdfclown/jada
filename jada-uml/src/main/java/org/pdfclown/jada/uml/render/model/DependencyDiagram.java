@@ -39,7 +39,7 @@ import java.util.stream.Stream;
 import org.apache.commons.lang3.function.Failable;
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.jspecify.annotations.Nullable;
-import org.pdfclown.common.util.annot.LazyNonNull;
+import org.pdfclown.common.util.annot.MonotonicNonNull;
 import org.pdfclown.common.util.io.IndentWriter;
 import org.pdfclown.common.util.regex.Patterns;
 import org.pdfclown.jada.uml.UmlConfig;
@@ -56,9 +56,9 @@ public class DependencyDiagram extends Diagram {
   private static final String BACKGROUNDCOLOR_DIRECTIVE = "skinparam backgroundcolor";
   private static final String DEFAULT_BACKGROUNDCOLOR = "transparent";
 
-  private @LazyNonNull @Nullable Pattern excludedPackageDependenciesPattern;
+  private @MonotonicNonNull @Nullable Pattern excludedPackageDependenciesPattern;
   private final @Nullable String moduleName;
-  private @LazyNonNull @Nullable Path pumlFile;
+  private @MonotonicNonNull @Nullable Path pumlFile;
   private final String pumlFileName;
 
   public DependencyDiagram(UmlConfig config, @Nullable String moduleName, String pumlFileName) {

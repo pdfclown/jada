@@ -34,7 +34,7 @@ import org.apache.commons.lang3.function.Failable;
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.pdfclown.common.util.annot.InitNonNull;
+import org.pdfclown.common.util.annot.Initializer;
 import org.pdfclown.jada.core.Jada;
 import org.pdfclown.jada.core.JadaConfig;
 import org.pdfclown.jada.core.JadaConfig.Attachment;
@@ -55,7 +55,7 @@ import org.pdfclown.jada.core.util.html.Jsoups;
  */
 public class JadaResourceAttach implements JadaOperation<Void> {
   @SuppressWarnings("NotNullFieldNotInitialized")
-  protected @InitNonNull JadaConfig config;
+  protected JadaConfig config;
 
   @Override
   public JadaConfig getConfig() {
@@ -67,6 +67,7 @@ public class JadaResourceAttach implements JadaOperation<Void> {
     return config.getJada();
   }
 
+  @Initializer
   @Override
   public void init(SystemConfig config) {
     this.config = requireType(config, JadaConfig.class, "config");

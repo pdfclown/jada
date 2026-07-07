@@ -26,7 +26,7 @@ import static org.pdfclown.common.util.Strings.lcase;
 import java.io.IOException;
 import java.util.Collection;
 import org.jspecify.annotations.Nullable;
-import org.pdfclown.common.util.annot.LazyNonNull;
+import org.pdfclown.common.util.annot.MonotonicNonNull;
 import org.pdfclown.common.util.io.IndentWriter;
 import org.pdfclown.jada.uml.UmlConfig.TypeMode;
 
@@ -64,7 +64,7 @@ public class Type extends UmlNode {
   private boolean deprecated;
   // SourceName: includePackagename
   private boolean packageNameInclusive;
-  private @LazyNonNull @Nullable Link link;
+  private @MonotonicNonNull @Nullable Link link;
 
   @SuppressWarnings("this-escape")
   public Type(Namespace namespace, Classification classification, TypeName name) {

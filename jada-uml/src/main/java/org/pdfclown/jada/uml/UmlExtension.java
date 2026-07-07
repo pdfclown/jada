@@ -60,7 +60,7 @@ import jdk.javadoc.doclet.Doclet.Option;
 import net.sourceforge.plantuml.cli.GlobalConfig;
 import net.sourceforge.plantuml.cli.GlobalConfigKey;
 import org.jspecify.annotations.Nullable;
-import org.pdfclown.common.util.annot.InitNonNull;
+import org.pdfclown.common.util.annot.Initializer;
 import org.pdfclown.common.util.io.Resource;
 import org.pdfclown.jada.core.Jada;
 import org.pdfclown.jada.core.JadaConfig.Attachment;
@@ -93,7 +93,7 @@ public class UmlExtension extends JadaExtension {
   public static final String NAME = "JadaUML";
 
   @SuppressWarnings("NotNullFieldNotInitialized")
-  private @InitNonNull UmlConfig extConfig;
+  private UmlConfig extConfig;
 
   public UmlExtension() {
   }
@@ -108,6 +108,7 @@ public class UmlExtension extends JadaExtension {
     return NAME;
   }
 
+  @Initializer
   @Override
   public void init(JadaOptions options, Jada jada) {
     super.init(options, jada);

@@ -57,7 +57,7 @@ import jdk.javadoc.doclet.Doclet;
 import jdk.javadoc.doclet.Reporter;
 import jdk.javadoc.doclet.Taglet;
 import org.jspecify.annotations.Nullable;
-import org.pdfclown.common.util.annot.LazyNonNull;
+import org.pdfclown.common.util.annot.MonotonicNonNull;
 import org.pdfclown.common.util.annot.UnmodifiableView;
 import org.pdfclown.common.util.io.Resource;
 import org.pdfclown.common.util.system.Clis.FileInclusionFilter;
@@ -598,7 +598,7 @@ public class JadaConfig extends SystemConfig implements JadaObject {
   private @Nullable LogWriterInterceptor logInterceptor;
   @SuppressWarnings("NotNullFieldNotInitialized")
   private Map<String, JadaOperation<?>> operations;
-  private @LazyNonNull @Nullable Path overviewOutputFile;
+  private @MonotonicNonNull @Nullable Path overviewOutputFile;
   @SuppressWarnings("NotNullFieldNotInitialized")
   private Map<String, List<String>> pageContents;
   @SuppressWarnings("NotNullFieldNotInitialized")

@@ -24,7 +24,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import org.jspecify.annotations.Nullable;
-import org.pdfclown.common.util.annot.LazyNonNull;
+import org.pdfclown.common.util.annot.MonotonicNonNull;
 import org.pdfclown.common.util.io.IndentWriter;
 import org.pdfclown.jada.uml.UmlConfig;
 
@@ -36,7 +36,7 @@ import org.pdfclown.jada.uml.UmlConfig;
  * @author Stefano Chizzolini (adaptation and redesign for Jada)
  */
 public class ClassDiagram extends Diagram {
-  private @LazyNonNull @Nullable Path pumlFile;
+  private @MonotonicNonNull @Nullable Path pumlFile;
 
   @SuppressWarnings("this-escape")
   public ClassDiagram(UmlConfig config, Type type) {

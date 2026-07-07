@@ -49,7 +49,7 @@ import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import javax.tools.Diagnostic.Kind;
 import org.jspecify.annotations.Nullable;
-import org.pdfclown.common.util.annot.LazyNonNull;
+import org.pdfclown.common.util.annot.MonotonicNonNull;
 import org.pdfclown.common.util.io.ResourceNames;
 import org.pdfclown.jada.core.JadaConfig;
 import org.pdfclown.jada.core.internal.JadaMessage;
@@ -231,7 +231,7 @@ public class FileOptimizer extends JadaFileProcessor<String> {
   private final Map<String, FileTypeOptimizer> fileTypeOptimizers = Map.of(
       FILE_EXTENSION__CSS, new CssOptimizer(),
       FILE_EXTENSION__JAVASCRIPT, new JavascriptOptimizer());
-  private @LazyNonNull @Nullable Predicate<String> includedFilesFilter;
+  private @MonotonicNonNull @Nullable Predicate<String> includedFilesFilter;
 
   public FileOptimizer() {
     super(new TextSerializer());

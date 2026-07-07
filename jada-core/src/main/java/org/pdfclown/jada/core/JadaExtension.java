@@ -17,7 +17,7 @@ import static org.pdfclown.common.util.Exceptions.unexpected;
 import javax.lang.model.SourceVersion;
 import javax.tools.Diagnostic.Kind;
 import org.greenrobot.eventbus.Subscribe;
-import org.pdfclown.common.util.annot.InitNonNull;
+import org.pdfclown.common.util.annot.Initializer;
 import org.pdfclown.jada.core.event.MainProcessEvent;
 import org.pdfclown.jada.core.event.PostProcessEvent;
 
@@ -29,7 +29,7 @@ import org.pdfclown.jada.core.event.PostProcessEvent;
 public abstract class JadaExtension implements JadaComponent {
   private int errorCount;
   @SuppressWarnings("NotNullFieldNotInitialized")
-  private @InitNonNull Jada jada;
+  private Jada jada;
   private int warningCount;
 
   protected JadaExtension() {
@@ -77,6 +77,7 @@ public abstract class JadaExtension implements JadaComponent {
    *          Main doclet, to access Javadoc generation context.
    * @implSpec Implementers must call the overridden method.
    */
+  @Initializer
   public void init(JadaOptions options, Jada jada) {
     this.jada = jada;
   }

@@ -20,12 +20,13 @@ package org.pdfclown.jada.uml._issues.umldoclet;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.not;
+import static org.pdfclown.common.util.Objects.nonNull;
 import static org.pdfclown.jada.uml.__test.Utils.filename;
 import static org.pdfclown.jada.uml.internal.util.io.Files.FILE_EXTENSION__PLANTUML;
 
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
-import org.pdfclown.common.util.annot.InitNonNull;
+import org.pdfclown.common.util.annot.Initializer;
 import org.pdfclown.jada.core.test.assertion.Assertions.JavadocAssertResult;
 import org.pdfclown.jada.uml.__test.BaseIT;
 
@@ -36,7 +37,7 @@ import org.pdfclown.jada.uml.__test.BaseIT;
  */
 public class Issue79_GenericsAsMarkupIT extends BaseIT {
   @SuppressWarnings("NotNullFieldNotInitialized")
-  private @InitNonNull String classPuml;
+  private String classPuml;
 
   Issue79_GenericsAsMarkupIT() {
     super(Issue79_GenericsAsMarkupIT.class);
@@ -56,10 +57,11 @@ public class Issue79_GenericsAsMarkupIT extends BaseIT {
     return Optional.empty();
   }
 
+  @Initializer
   @Override
   protected void onSingleRunTerm(JavadocAssertResult result) {
-    assert sourceType != null;
-    classPuml = outputContent(getEnv().outputName(filename(sourceType, FILE_EXTENSION__PLANTUML)));
+    classPuml = outputContent(getEnv().outputName(filename(nonNull(sourceType),
+        FILE_EXTENSION__PLANTUML)));
   }
 
   // SourceName: testNoMarkup

@@ -20,7 +20,7 @@ import static org.pdfclown.jada.core.internal.JadaMessage.P__OVERVIEW;
 import java.nio.file.Path;
 import javax.tools.Diagnostic.Kind;
 import org.jspecify.annotations.Nullable;
-import org.pdfclown.common.util.annot.InitNonNull;
+import org.pdfclown.common.util.annot.Initializer;
 import org.pdfclown.jada.core.internal.JadaMessage;
 import org.pdfclown.jada.core.system.SystemConfig;
 import org.pdfclown.jada.core.system.SystemObject;
@@ -36,7 +36,7 @@ public abstract class FileProcessor<T> implements SystemObject {
   protected FileSerializer<T> serializer;
 
   @SuppressWarnings("NotNullFieldNotInitialized")
-  private @InitNonNull SystemConfig config;
+  private SystemConfig config;
 
   protected FileProcessor(FileSerializer<T> serializer) {
     this.serializer = serializer;
@@ -90,6 +90,7 @@ public abstract class FileProcessor<T> implements SystemObject {
   /**
    * Initializes this processor.
    */
+  @Initializer
   public void init(SystemConfig config) {
     this.config = requireNonNull(config, "`config`");
   }

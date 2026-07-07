@@ -25,7 +25,7 @@ import java.util.Set;
 import java.util.regex.Pattern;
 import javax.tools.Diagnostic.Kind;
 import org.jspecify.annotations.Nullable;
-import org.pdfclown.common.util.annot.InitNonNull;
+import org.pdfclown.common.util.annot.Initializer;
 import org.pdfclown.jada.core.event.PostProcessEvent;
 import org.pdfclown.jada.core.internal.JadaMessage;
 import org.pdfclown.jada.core.system.proc.FileProcess;
@@ -45,7 +45,7 @@ public class PostTagletProcessor extends JadaHtmlProcessor {
       inlineTagPattern(Set.of(), Set.of(JavadocFormat.HTML));
 
   @SuppressWarnings("NotNullFieldNotInitialized")
-  private @InitNonNull Map<String, PostTaglet> taglets;
+  private Map<String, PostTaglet> taglets;
 
   /**
    * @return {@code 0}
@@ -58,6 +58,7 @@ public class PostTagletProcessor extends JadaHtmlProcessor {
     return 0;
   }
 
+  @Initializer
   @Override
   public void onPostProcess(PostProcessEvent event) {
     super.onPostProcess(event);

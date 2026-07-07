@@ -72,7 +72,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.tools.Diagnostic.Kind;
 import org.jspecify.annotations.Nullable;
-import org.pdfclown.common.util.annot.InitNonNull;
+import org.pdfclown.common.util.annot.Initializer;
 import org.pdfclown.jada.core.system.SystemConfig;
 import org.pdfclown.jada.core.system.proc.FileProcess;
 import org.pdfclown.jada.core.system.proc.src.JavaProcessor;
@@ -418,7 +418,7 @@ public class DocReuseTagletProcessor extends JavaProcessor {
 
   private final Map<String, Fragment> fragments = new HashMap<>();
   @SuppressWarnings("NotNullFieldNotInitialized")
-  private @InitNonNull Path thresholdFile;
+  private Path thresholdFile;
   private long thresholdFileTime;
   private final Set<Path> unsolvedFragmentFiles = new LinkedHashSet<>();
   private final Set<String> unsolvedFragmentKeys = new TreeSet<>();
@@ -453,6 +453,7 @@ public class DocReuseTagletProcessor extends JavaProcessor {
     return -1_000;
   }
 
+  @Initializer
   @Override
   public void init(SystemConfig config) {
     super.init(config);

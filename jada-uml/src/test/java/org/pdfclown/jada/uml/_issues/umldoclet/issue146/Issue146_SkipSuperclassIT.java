@@ -32,7 +32,7 @@ import static org.pdfclown.jada.uml.util.Plantumls.pumlNsSqn;
 
 import java.util.AbstractList;
 import org.junit.jupiter.api.Test;
-import org.pdfclown.common.util.annot.InitNonNull;
+import org.pdfclown.common.util.annot.Initializer;
 import org.pdfclown.jada.core.test.assertion.Assertions.JavadocAssertResult;
 import org.pdfclown.jada.uml.__test.BaseIT;
 
@@ -43,9 +43,9 @@ import org.pdfclown.jada.uml.__test.BaseIT;
  */
 public class Issue146_SkipSuperclassIT extends BaseIT {
   @SuppressWarnings("NotNullFieldNotInitialized")
-  private @InitNonNull String classPuml;
+  private String classPuml;
   @SuppressWarnings("NotNullFieldNotInitialized")
-  private @InitNonNull String packagePuml;
+  private String packagePuml;
 
   Issue146_SkipSuperclassIT() {
     super(PublicTestClass.class);
@@ -53,6 +53,7 @@ public class Issue146_SkipSuperclassIT extends BaseIT {
     singleRun();
   }
 
+  @Initializer
   @Override
   protected void onSingleRunTerm(JavadocAssertResult result) {
     assert sourceType != null;

@@ -28,7 +28,7 @@ import static org.pdfclown.jada.uml.UmlConfig.OPTION__IMAGE_DIR;
 
 import java.nio.file.Path;
 import org.junit.jupiter.api.Test;
-import org.pdfclown.common.util.annot.InitNonNull;
+import org.pdfclown.common.util.annot.Initializer;
 import org.pdfclown.jada.core.test.assertion.Assertions.JavadocAssertArgs;
 import org.pdfclown.jada.core.test.assertion.Assertions.JavadocAssertResult;
 import org.pdfclown.jada.uml.__test.BaseIT;
@@ -49,7 +49,7 @@ public class Issue25_ImageDirIT extends BaseIT {
   private static final String IMAGE_DIR_NAME = "images";
 
   @SuppressWarnings("NotNullFieldNotInitialized")
-  private @InitNonNull Path imageDir;
+  private Path imageDir;
 
   Issue25_ImageDirIT() {
     super(Issue25_ImageDirIT.class);
@@ -62,6 +62,7 @@ public class Issue25_ImageDirIT extends BaseIT {
     args.arg(OPTION__IMAGE_DIR, IMAGE_DIR_NAME);
   }
 
+  @Initializer
   @Override
   protected void onSingleRunTerm(JavadocAssertResult result) {
     imageDir = result.outputDir.resolve(IMAGE_DIR_NAME);

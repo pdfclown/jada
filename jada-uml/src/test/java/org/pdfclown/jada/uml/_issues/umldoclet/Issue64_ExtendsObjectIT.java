@@ -30,7 +30,7 @@ import static org.pdfclown.jada.uml.util.Plantumls.puml;
 import java.util.AbstractSet;
 import java.util.Iterator;
 import org.junit.jupiter.api.Test;
-import org.pdfclown.common.util.annot.InitNonNull;
+import org.pdfclown.common.util.annot.Initializer;
 import org.pdfclown.jada.core.test.assertion.Assertions.JavadocAssertResult;
 import org.pdfclown.jada.uml.__test.BaseIT;
 
@@ -56,7 +56,7 @@ public class Issue64_ExtendsObjectIT extends BaseIT {
   }
 
   @SuppressWarnings("NotNullFieldNotInitialized")
-  private @InitNonNull String emptySetPuml;
+  private String emptySetPuml;
 
   Issue64_ExtendsObjectIT() {
     super(Issue64_ExtendsObjectIT.class.getPackageName());
@@ -64,6 +64,7 @@ public class Issue64_ExtendsObjectIT extends BaseIT {
     singleRun();
   }
 
+  @Initializer
   @Override
   protected void onSingleRunTerm(JavadocAssertResult result) {
     emptySetPuml = outputContent(getEnv().outputName(filename(EmptySet.class,

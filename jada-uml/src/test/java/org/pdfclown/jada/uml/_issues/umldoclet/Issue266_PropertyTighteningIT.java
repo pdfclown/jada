@@ -29,7 +29,7 @@ import static org.pdfclown.jada.uml.internal.util.io.Files.FILE_EXTENSION__PLANT
 import java.util.LinkedHashSet;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
-import org.pdfclown.common.util.annot.InitNonNull;
+import org.pdfclown.common.util.annot.Initializer;
 import org.pdfclown.common.util.annot.UnmodifiableView;
 import org.pdfclown.jada.core.test.assertion.Assertions.JavadocAssertResult;
 import org.pdfclown.jada.uml.__test.BaseIT;
@@ -47,9 +47,9 @@ public class Issue266_PropertyTighteningIT extends BaseIT {
   }
 
   @SuppressWarnings("NotNullFieldNotInitialized")
-  private @InitNonNull String classPuml;
+  private String classPuml;
   @SuppressWarnings("NotNullFieldNotInitialized")
-  private @InitNonNull String packagePuml;
+  private String packagePuml;
 
   Issue266_PropertyTighteningIT() {
     super(Issue266_PropertyTighteningIT.class);
@@ -57,6 +57,7 @@ public class Issue266_PropertyTighteningIT extends BaseIT {
     singleRun();
   }
 
+  @Initializer
   @Override
   protected void onSingleRunTerm(JavadocAssertResult result) {
     classPuml = outputContent(getEnv().outputName(filename(TesterUtil.class,

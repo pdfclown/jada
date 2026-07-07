@@ -62,7 +62,7 @@ import javax.tools.SimpleJavaFileObject;
 import jdk.javadoc.doclet.DocletEnvironment;
 import jdk.javadoc.internal.tool.DocEnvImpl;
 import org.jspecify.annotations.Nullable;
-import org.pdfclown.common.util.annot.LazyNonNull;
+import org.pdfclown.common.util.annot.MonotonicNonNull;
 import org.pdfclown.common.util.annot.PolyNull;
 import org.pdfclown.jada.core.JadaEnvironment.JadaDocFilter.DocFragmentRole;
 
@@ -179,13 +179,13 @@ public class JadaEnvironment extends DocEnvImpl implements JadaObject {
        * constraints, but now we have to shadow its fields because they are strongly typed to
        * internal classes (ouch!).
        */
-      private @LazyNonNull @Nullable List<? extends DocTree> blockTags;
+      private @MonotonicNonNull @Nullable List<? extends DocTree> blockTags;
       @SuppressWarnings("HidingField")
-      private @LazyNonNull @Nullable List<? extends DocTree> body;
+      private @MonotonicNonNull @Nullable List<? extends DocTree> body;
       @SuppressWarnings("HidingField")
-      private @LazyNonNull @Nullable List<? extends DocTree> firstSentence;
+      private @MonotonicNonNull @Nullable List<? extends DocTree> firstSentence;
       @SuppressWarnings("HidingField")
-      private @LazyNonNull @Nullable List<DocTree> fullBody;
+      private @MonotonicNonNull @Nullable List<DocTree> fullBody;
 
       public JadaDocComment(DocCommentTree base, Object location,
           JadaDocTransformer transformer) {
@@ -376,7 +376,7 @@ public class JadaEnvironment extends DocEnvImpl implements JadaObject {
   public static class JadaDocTrees extends DocTrees {
     @SuppressWarnings("NotNullFieldNotInitialized")
     private DocTrees base;
-    private @LazyNonNull @Nullable JadaDocTransformer transformer;
+    private @MonotonicNonNull @Nullable JadaDocTransformer transformer;
 
     /**
      * <span class="warning">(For internal use only)</span>

@@ -25,7 +25,7 @@ import static org.pdfclown.jada.uml.internal.util.io.Files.FILE_EXTENSION__PLANT
 
 import java.util.function.Supplier;
 import org.junit.jupiter.api.Test;
-import org.pdfclown.common.util.annot.InitNonNull;
+import org.pdfclown.common.util.annot.Initializer;
 import org.pdfclown.jada.core.test.assertion.Assertions.JavadocAssertResult;
 import org.pdfclown.jada.uml.__test.BaseIT;
 
@@ -39,9 +39,9 @@ public class Issue74_DuplicateGenericsIT extends BaseIT {
   }
 
   @SuppressWarnings("NotNullFieldNotInitialized")
-  private @InitNonNull String classPuml;
+  private String classPuml;
   @SuppressWarnings({ "FieldCanBeLocal", "NotNullFieldNotInitialized", "unused" })
-  private @InitNonNull String packagePuml;
+  private String packagePuml;
 
   Issue74_DuplicateGenericsIT() {
     super(Issue74_DuplicateGenericsIT.class);
@@ -49,6 +49,7 @@ public class Issue74_DuplicateGenericsIT extends BaseIT {
     singleRun();
   }
 
+  @Initializer
   @Override
   protected void onSingleRunTerm(JavadocAssertResult result) {
     classPuml = outputContent(getEnv().outputName(filename(MySupplier.class,

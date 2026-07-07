@@ -62,7 +62,7 @@ import javax.tools.FileObject;
 import javax.tools.JavaFileObject;
 import org.apache.commons.lang3.function.Failable;
 import org.jspecify.annotations.Nullable;
-import org.pdfclown.common.util.annot.InitNonNull;
+import org.pdfclown.common.util.annot.Initializer;
 import org.pdfclown.common.util.xml.Xmls;
 import org.pdfclown.jada.biblio.BiblioConfig.BiblioEntry;
 import org.pdfclown.jada.biblio.internal.BiblioMessage;
@@ -242,7 +242,7 @@ public class BiblioExtension extends JadaExtension {
   }
 
   @SuppressWarnings("NotNullFieldNotInitialized")
-  private @InitNonNull BiblioConfig extConfig;
+  private BiblioConfig extConfig;
 
   @Override
   public BiblioConfig getExtConfig() {
@@ -254,6 +254,7 @@ public class BiblioExtension extends JadaExtension {
     return NAME;
   }
 
+  @Initializer
   @Override
   public void init(JadaOptions options, Jada jada) {
     super.init(options, jada);

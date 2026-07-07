@@ -26,7 +26,7 @@ import static org.pdfclown.jada.uml.internal.Internals.FILENAME__PACKAGE;
 import static org.pdfclown.jada.uml.internal.util.io.Files.FILE_EXTENSION__PLANTUML;
 
 import org.junit.jupiter.api.Test;
-import org.pdfclown.common.util.annot.InitNonNull;
+import org.pdfclown.common.util.annot.Initializer;
 import org.pdfclown.jada.core.test.assertion.Assertions.JavadocAssertResult;
 import org.pdfclown.jada.uml.__test.BaseIT;
 
@@ -37,9 +37,9 @@ import org.pdfclown.jada.uml.__test.BaseIT;
  */
 public class Issue72_DefaultConstructorIT extends BaseIT {
   @SuppressWarnings("NotNullFieldNotInitialized")
-  private @InitNonNull String classPuml;
+  private String classPuml;
   @SuppressWarnings("NotNullFieldNotInitialized")
-  private @InitNonNull String packagePuml;
+  private String packagePuml;
 
   Issue72_DefaultConstructorIT() {
     super(Issue72_DefaultConstructorIT.class);
@@ -47,6 +47,7 @@ public class Issue72_DefaultConstructorIT extends BaseIT {
     singleRun();
   }
 
+  @Initializer
   @Override
   protected void onSingleRunTerm(JavadocAssertResult result) {
     assert sourceType != null;
