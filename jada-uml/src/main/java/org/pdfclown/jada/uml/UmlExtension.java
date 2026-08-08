@@ -25,6 +25,7 @@ import static org.pdfclown.common.util.Chars.DOT;
 import static org.pdfclown.common.util.Chars.HYPHEN;
 import static org.pdfclown.common.util.Chars.LF;
 import static org.pdfclown.common.util.Chars.SPACE;
+import static org.pdfclown.common.util.Conditions.requireNonNullElseThrow;
 import static org.pdfclown.common.util.Exceptions.missing;
 import static org.pdfclown.common.util.Strings.EMPTY;
 import static org.pdfclown.common.util.Strings.EOL;
@@ -206,8 +207,8 @@ public class UmlExtension extends JadaExtension {
 
   private void attachScript(String resourceName) {
     getConfig().addScriptAttachment(Attachment.resource(
-        Resource.of(getClass().getResource(resourceName))
-            .orElseThrow(() -> missing(resourceName, "resource MISSING")),
+        requireNonNullElseThrow(Resource.of(getClass().getResource(resourceName)),
+            () -> missing(resourceName, "resource")),
         NAME));
   }
 
