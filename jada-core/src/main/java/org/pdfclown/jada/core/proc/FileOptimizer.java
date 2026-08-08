@@ -269,7 +269,7 @@ public class FileOptimizer extends JadaFileProcessor<String> {
   public boolean isProcessable(Path file, FileProcess.Context context) {
     return !getConfig().isDebug()
         && fileTypeOptimizers.containsKey(lcase(extension(file)))
-        && isFileIncluded(context.getBaseDir(file).relativize(file));
+        && isFileIncluded(file, context);
   }
 
   @Override
@@ -292,7 +292,7 @@ public class FileOptimizer extends JadaFileProcessor<String> {
    * @param file
    *          Relative file.
    */
-  private boolean isFileIncluded(Path file) {
+  private boolean isFileIncluded(Path file, FileProcess.Context context) {
     // Already optimized?
     if (basename(file).endsWith(FILE_QUALIFIER__MINIFIED))
       return false;
@@ -301,7 +301,7 @@ public class FileOptimizer extends JadaFileProcessor<String> {
       includedFilesFilter = getConfig().getFileOptimizationFilter().toPredicate();
     }
 
-    var resourceName = nonNull(ResourceNames.fromPath(file, null));
+    var resourceName = nonNull(ResourceNames.fromPath(file, context.getBaseDir(file)));
     return includedFilesFilter.test(resourceName);
   }
 }
