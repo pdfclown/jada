@@ -12,6 +12,7 @@
  */
 package org.pdfclown.jada.core.proc;
 
+import static java.util.Objects.requireNonNull;
 import static org.pdfclown.common.util.Conditions.requireType;
 
 import org.pdfclown.jada.core.Jada;
@@ -56,7 +57,7 @@ public class JadaFileProcess extends FileProcess<JadaFileProcessor<?>>
 
   @Override
   public void init(SystemConfig config) {
-    super.init(requireType(config, JadaConfig.class, "config"));
+    super.init(requireNonNull(requireType(config, JadaConfig.class, "config")));
 
     getDirectories().add(getConfig().getOutputDirectory());
   }

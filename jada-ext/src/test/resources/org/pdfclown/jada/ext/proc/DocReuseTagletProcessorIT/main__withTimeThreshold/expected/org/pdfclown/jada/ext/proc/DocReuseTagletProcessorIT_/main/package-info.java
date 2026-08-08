@@ -45,4 +45,7 @@
  * </li>
  * </ul>
  */
+@NullMarked
 package org.pdfclown.jada.ext.proc.DocReuseTagletProcessorIT_.main;
+
+import org.jspecify.annotations.NullMarked;

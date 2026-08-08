@@ -25,6 +25,6 @@ import org.pdfclown.jada.uml.render.PackageDependencyCycleIT;
  * @author Stefano Chizzolini (adaptation and redesign for Jada)
  * @implNote Class intentionally causing a cyclic package dependency.
  */
-@SuppressWarnings("NewClassNamingConvention")
+@SuppressWarnings({ "NewClassNamingConvention", "RequireExplicitNullMarking" })
 public class CyclicDependencyClass extends PackageDependencyCycleIT {
 }

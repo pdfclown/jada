@@ -176,7 +176,7 @@ public abstract class Diagram extends UmlNode {
    */
   private Path getDiagramFile(FileFormat format) {
     Path base = getDiagramBaseFile();
-    return base.getParent().resolve(base.getFileName() + format.getFileSuffix());
+    return requireNonNull(base.getParent()).resolve(base.getFileName() + format.getFileSuffix());
   }
 
   private void renderDiagramFile(String plantumlSource, FileFormat format) throws IOException {

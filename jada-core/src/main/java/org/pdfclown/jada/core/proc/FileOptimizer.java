@@ -13,6 +13,7 @@
 package org.pdfclown.jada.core.proc;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.util.Objects.requireNonNull;
 import static org.apache.commons.lang3.exception.ExceptionUtils.getStackTrace;
 import static org.pdfclown.common.util.Chars.SPACE;
 import static org.pdfclown.common.util.Chars.STAR;
@@ -275,7 +276,7 @@ public class FileOptimizer extends JadaFileProcessor<String> {
   @Override
   protected @Nullable String processContent(String content, Path file, Context context) {
     var problems = new StringBuilder();
-    var ret = fileTypeOptimizers.get(lcase(extension(file)))
+    var ret = requireNonNull(fileTypeOptimizers.get(lcase(extension(file))))
         .optimize(content, file, context, problems);
     if (ret != null) {
       if (!problems.isEmpty()) {

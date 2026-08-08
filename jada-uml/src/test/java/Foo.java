@@ -25,6 +25,6 @@
  * @author Sjoerd Talsma (original implementation)
  * @author Stefano Chizzolini (adaptation and redesign for Jada)
  */
-@SuppressWarnings("DefaultPackage")
+@SuppressWarnings({ "DefaultPackage", "RequireExplicitNullMarking" })
 public class Foo {
 }

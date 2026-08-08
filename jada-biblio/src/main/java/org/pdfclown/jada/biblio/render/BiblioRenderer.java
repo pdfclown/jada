@@ -201,7 +201,8 @@ public class BiblioRenderer {
               throw runtime("Unexpected separator node (should be '{}'): '{}'",
                   separatorNodes.get(separatorNodesIndex), nextNode);
 
-            Path relBiblioOutputFile = indexFile.getParent().relativize(biblioOutputFile);
+            Path relBiblioOutputFile = requireNonNull(indexFile.getParent())
+                .relativize(biblioOutputFile);
 
             // Append bibliography link!
             for (Node e : separatorNodes) {

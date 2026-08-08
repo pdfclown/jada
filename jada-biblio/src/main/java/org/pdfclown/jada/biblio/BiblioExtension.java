@@ -479,7 +479,7 @@ public class BiblioExtension extends JadaExtension {
       Set<String> staticBiblioEntryIds = extConfig.getStaticBiblioEntryIds();
       {
         // Validate static bibliographic entry IDs!
-        var allBiblioEntryIds = biblioEntryIds.get(null);
+        var allBiblioEntryIds = requireNonNull(biblioEntryIds.get(null));
         staticBiblioEntryIds.forEach($ -> {
           if (!allBiblioEntryIds.contains($)) {
             getLog().print(Kind.WARNING, this, BiblioMessage.BIBLIO_STATIC_ENTRY_MISSING, $);
@@ -548,10 +548,14 @@ public class BiblioExtension extends JadaExtension {
         throw runtime(BiblioMessage.BIBLIO_ENTRY_DUPLICATE.toString(getConfig(), partEntryId));
 
       if (biblio != null) {
+        requireNonNull(biblioRoot);
+
         Node newNode = biblio.importNode(partEntryElement, true);
 
         // Entry to merge?
         if (biblioEntryIndices.containsKey(partEntryId)) {
+          requireNonNull(biblioEntryNodes);
+
           Node oldNode = biblioEntryNodes.item(biblioEntryIndices.get(partEntryId));
           biblioRoot.insertBefore(newNode, oldNode);
           biblioRoot.removeChild(oldNode);
@@ -653,8 +657,7 @@ public class BiblioExtension extends JadaExtension {
                                                 * Matches the referenced full entry ID against
                                                 * actual bibliographic entries
                                                 */
-                      && biblioTagEntryIds
-                          .get(inlineTagName(biblioTagMatcher))
+                      && requireNonNull(biblioTagEntryIds.get(inlineTagName(biblioTagMatcher)))
                           .contains(refId) /*
                                             * Matches the referenced identifier against its
                                             * bibliographic type (spec, doc, ref)

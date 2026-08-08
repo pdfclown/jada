@@ -14,6 +14,7 @@ package org.pdfclown.jada.core.system;
 
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Message resource.
@@ -47,7 +48,7 @@ public interface Message {
   /**
    * Resolves this message.
    */
-  default String toString(SystemConfig config, Object... args) {
+  default String toString(SystemConfig config, @Nullable Object... args) {
     return config.getMessageManager().getText(this, args);
   }
 }

@@ -117,6 +117,7 @@ public class JadaEnvironment extends DocEnvImpl implements JadaObject {
     /**
      * <span class="warning">(For internal use only)</span>
      */
+    @SuppressWarnings("NullAway")
     protected JadaDocFilter() {
     }
 
@@ -283,6 +284,7 @@ public class JadaEnvironment extends DocEnvImpl implements JadaObject {
     /**
      * <span class="warning">(For internal use only)</span>
      */
+    @SuppressWarnings("NullAway")
     protected JadaDocTransformer() {
     }
 
@@ -381,6 +383,7 @@ public class JadaEnvironment extends DocEnvImpl implements JadaObject {
     /**
      * <span class="warning">(For internal use only)</span>
      */
+    @SuppressWarnings("NullAway")
     protected JadaDocTrees() {
     }
 
@@ -649,6 +652,7 @@ public class JadaEnvironment extends DocEnvImpl implements JadaObject {
   /**
    * <span class="warning">(For internal use only)</span>
    */
+  @SuppressWarnings("NullAway")
   protected JadaEnvironment() {
     super(null, null);
   }

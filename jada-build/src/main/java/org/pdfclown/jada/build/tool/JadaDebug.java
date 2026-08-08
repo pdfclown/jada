@@ -320,8 +320,8 @@ public class JadaDebug extends Debug {
    * </p>
    */
   private Path prepareOptionsFile() {
-    assert jadaProjectDir != null;
-    assert javadocTargetDir != null;
+    requireNonNull(jadaProjectDir, "jadaProjectDir");
+    requireNonNull(javadocTargetDir, "javadocTargetDir");
 
     final Path ret = javadocTargetDir.resolve(FILENAME__OPTIONS + "-debug");
     final Path originalOptionsFile = javadocTargetDir.resolve(FILENAME__OPTIONS);
@@ -414,7 +414,7 @@ public class JadaDebug extends Debug {
    *           if no file was found.
    */
   private Path prepareSourcesFile() {
-    assert javadocTargetDir != null;
+    requireNonNull(javadocTargetDir, "javadocTargetDir");
 
     var ret = javadocTargetDir.resolve(FILENAME__ARGFILE);
     if (exists(ret))

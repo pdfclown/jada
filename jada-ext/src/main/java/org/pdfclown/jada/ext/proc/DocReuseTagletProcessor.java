@@ -14,6 +14,7 @@ package org.pdfclown.jada.ext.proc;
 
 import static java.lang.Math.min;
 import static java.nio.file.Files.exists;
+import static java.util.Objects.requireNonNull;
 import static org.apache.commons.io.file.PathUtils.touch;
 import static org.pdfclown.common.util.Chars.COLON;
 import static org.pdfclown.common.util.Chars.DOT;
@@ -226,7 +227,7 @@ public class DocReuseTagletProcessor extends JavaProcessor {
       }
 
       // [Link resolution 4] Package-level type (simple name; package scope).
-      Path path = file.getParent().resolve(linkPart + FILE_EXTENSION__JAVA);
+      Path path = requireNonNull(file.getParent()).resolve(linkPart + FILE_EXTENSION__JAVA);
       if (exists(path))
         return compilationUnit.getPackageDeclaration()
             .map($$ -> $$.getNameAsString() + DOT).orElse(EMPTY) + link;
@@ -543,13 +544,13 @@ public class DocReuseTagletProcessor extends JavaProcessor {
               tagMatcher.start());
           switch (tagName) {
             case DocTaglet.NAME -> {
-              assert c.lastFragmentKey != null;
+              requireNonNull(c.lastFragmentKey);
 
               // Store the fragment for later use by @jada.reuseDoc tags!
               storeFragment(c.lastFragmentKey, tagFragmentContent, $, file, c);
             }
             case ReuseDocTaglet.NAME -> {
-              assert c.fragment != null;
+              requireNonNull(c.fragment);
 
               // Tag fragment needs update?
               if (!c.fragment.isSameContent(tagFragmentContent, $)) {
@@ -562,9 +563,8 @@ public class DocReuseTagletProcessor extends JavaProcessor {
                     .append(tagMatcher.group());
                 c.inputStart = tagMatcher.end();
 
-                assert c.lastFragmentKey != null;
-
-                logFragmentEvent(Kind.NOTE, tagName, c.lastFragmentKey, "UPDATED", $);
+                logFragmentEvent(Kind.NOTE, tagName, requireNonNull(c.lastFragmentKey), "UPDATED",
+                    $);
               }
             }
             default -> throw unexpectedTag(tagName);
@@ -737,7 +737,8 @@ public class DocReuseTagletProcessor extends JavaProcessor {
               }
 
               // [Name resolution 3] Package-level type (simple name; package scope).
-              Path path = file.getParent().resolve(elementKeyPart + FILE_EXTENSION__JAVA);
+              Path path = requireNonNull(file.getParent())
+                  .resolve(elementKeyPart + FILE_EXTENSION__JAVA);
               if (exists(path)) {
                 fragmentKey = content.getPackageDeclaration()
                     .map($$ -> $$.getNameAsString() + DOT).orElse(EMPTY) + tagValue;
@@ -842,8 +843,8 @@ public class DocReuseTagletProcessor extends JavaProcessor {
    * </p>
    */
   private void normalizeTag(int lastFragmentEnd, Node node, Path file, Context c) {
-    assert c.lastFragmentKey != null;
-    assert c.lastTagName != null;
+    requireNonNull(c.lastFragmentKey);
+    requireNonNull(c.lastTagName);
 
     // Append content UP TO the fragment begin tag (inclusive)!
     c.out.append(c.commentContent, c.inputStart, c.lastFragmentBegin);
@@ -868,7 +869,7 @@ public class DocReuseTagletProcessor extends JavaProcessor {
         logFragmentEvent(Kind.NOTE, c.lastTagName, c.lastFragmentKey, "NORMALIZED", node);
       }
       case ReuseDocTaglet.NAME -> {
-        assert c.fragment != null;
+        requireNonNull(c.fragment);
 
         /*
          * NOTE: @jada.reuseDoc normalization implies that its content expands between the existing
@@ -905,7 +906,7 @@ public class DocReuseTagletProcessor extends JavaProcessor {
          * NOTE: When the incremental directory is not found, its parent is the package directory
          * and its filename is resolved to Java file.
          */
-        if (!exists(path = path.getParent().resolve(path.getFileName().toString()
+        if (!exists(path = requireNonNull(path.getParent()).resolve(path.getFileName().toString()
             + FILE_EXTENSION__JAVA)))
           throw runtime("{}: compilation unit of {} NOT FOUND", file, textLiteral(fragmentKey));
 

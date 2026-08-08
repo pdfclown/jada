@@ -21,8 +21,8 @@ import static org.pdfclown.common.util.Chars.ROUND_BRACKET_OPEN;
 import static org.pdfclown.common.util.Chars.SPACE;
 import static org.pdfclown.common.util.Chars.SQUARE_BRACKET_CLOSE;
 import static org.pdfclown.common.util.Chars.SQUARE_BRACKET_OPEN;
-import static org.pdfclown.common.util.Objects.anyThat;
 import static org.pdfclown.common.util.Objects.asType;
+import static org.pdfclown.common.util.Objects.equalsAny;
 import static org.pdfclown.common.util.Objects.sqn;
 import static org.pdfclown.common.util.Objects.xflat;
 import static org.pdfclown.common.util.Strings.EMPTY;
@@ -119,8 +119,7 @@ public class Logger implements Reporter {
     final String sourceSimpleName;
     final String componentName;
     if (source != null) {
-      var sourceType = asType(xflat(source));
-      assert sourceType != null /* PolyNull */;
+      var sourceType = requireNonNull(asType(xflat(source)) /* PolyNull */);
 
       String sourceSqn = sqn(sourceType);
       sourceSimpleName = requireNonNullElse(Reflects.tryGet(source, "getName"), sourceSqn);
@@ -135,9 +134,8 @@ public class Logger implements Reporter {
             if (location == null)
               return null;
             else if (isDirectory(location)) {
-              while (anyThat(location.getFileName().toString(), java.util.Objects::equals, "target",
-                  "classes")) {
-                location = location.getParent();
+              while (equalsAny(location.getFileName().toString(), "target", "classes")) {
+                location = requireNonNull(location.getParent(), "location.parent");
               }
               return location.getFileName().toString();
             } else {
@@ -194,6 +192,7 @@ public class Logger implements Reporter {
   /**
    * <span class="warning">(For internal use only)</span>
    */
+  @SuppressWarnings("NullAway")
   protected Logger() {
   }
 
@@ -411,7 +410,7 @@ public class Logger implements Reporter {
    *          </ul>
    */
   public final void print(Kind kind, FileObject file, int start, int pos, int end,
-      @Nullable Object source, Message message, Object... args) {
+      @Nullable Object source, Message message, @Nullable Object... args) {
     print(kind, file, start, pos, end, source, format(message, args));
   }
 
@@ -595,7 +594,7 @@ public class Logger implements Reporter {
    *          {@code message}!).</li>
    *          </ul>
    */
-  protected String format(Object message, Object... args) {
+  protected String format(Object message, @Nullable Object... args) {
     return message instanceof Message m
         ? m.toString(config, args)
         : config.getMessageManager().format((String) message, args);

@@ -187,7 +187,8 @@ public abstract class BiblioTaglet extends MainTaglet {
   public void init(DocletEnvironment env, Doclet doclet) {
     super.init(env, doclet);
 
-    extension = getConfig().getExtension(BiblioExtension.class);
+    extension = requireNonNull(getConfig().getExtension(BiblioExtension.class),
+        "extensions[BiblioExtension]");
   }
 
   @Override

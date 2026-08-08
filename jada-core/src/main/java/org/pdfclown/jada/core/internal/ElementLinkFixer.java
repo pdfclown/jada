@@ -12,6 +12,7 @@
  */
 package org.pdfclown.jada.core.internal;
 
+import static java.util.Objects.requireNonNull;
 import static org.pdfclown.common.util.Strings.EMPTY;
 
 import java.nio.file.Path;
@@ -58,6 +59,7 @@ public class ElementLinkFixer extends JadaHtmlProcessor {
   /**
    * <span class="warning">(For internal use only)</span>
    */
+  @SuppressWarnings("NullAway")
   protected ElementLinkFixer() {
   }
 
@@ -71,7 +73,8 @@ public class ElementLinkFixer extends JadaHtmlProcessor {
    */
   @Override
   public boolean isProcessable(Path file, FileProcess.Context context) {
-    return super.isProcessable(file, context) && file.getParent().equals(rootPath);
+    return super.isProcessable(file, context)
+        && requireNonNull(file.getParent(), "file.parent").equals(rootPath);
   }
 
   /**

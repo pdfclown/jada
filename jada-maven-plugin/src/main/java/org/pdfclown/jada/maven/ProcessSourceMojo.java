@@ -80,7 +80,7 @@ public class ProcessSourceMojo extends AbstractMojo {
   }
 
   @Parameter(defaultValue = "${project}", required = true, readonly = true)
-  @SuppressWarnings({ "NotNullFieldNotInitialized", "unused" })
+  @SuppressWarnings({ "NotNullFieldNotInitialized", "NullAway" /* false positive */, "unused" })
   private MavenProject project;
 
   /**
@@ -90,14 +90,15 @@ public class ProcessSourceMojo extends AbstractMojo {
    * </p>
    */
   @Parameter(property = "jada.procs")
-  @SuppressWarnings({ "NotNullFieldNotInitialized", "MismatchedQueryAndUpdateOfCollection",
-      "unused" })
+  @SuppressWarnings({ "MismatchedQueryAndUpdateOfCollection", "NotNullFieldNotInitialized",
+      "NullAway" /* false positive */, "unused" })
   private List<String> processors;
 
   /**
    * Whether to skip source processing.
    */
   @Parameter(property = "jada.procs.skip")
+  @SuppressWarnings("unused")
   private boolean skip;
 
   /**
@@ -115,8 +116,8 @@ public class ProcessSourceMojo extends AbstractMojo {
    * </p>
    */
   @Parameter(property = "jada.procs.info", alias = "info")
-  @SuppressWarnings({ "NotNullFieldNotInitialized", "MismatchedQueryAndUpdateOfCollection",
-      "unused" })
+  @SuppressWarnings({ "MismatchedQueryAndUpdateOfCollection", "NotNullFieldNotInitialized",
+      "NullAway" /* false positive */, "unused" })
   private Set<String> rawInfo;
 
   /*

@@ -138,8 +138,8 @@ public class PageProcessor extends JadaHtmlProcessor {
     if (getConfig().getPageContents().values().stream()
         .anyMatch($ -> !$.isEmpty())) {
       addTweak(($doc, $file, $changedRef) -> {
-        String relativeRoot = $file.getParent().relativize(getConfig().getOutputDirectory())
-            .toString();
+        String relativeRoot = requireNonNull($file.getParent(), "file.parent")
+            .relativize(getConfig().getOutputDirectory()).toString();
         getConfig().getPageContents().entrySet().stream()
             .filter($ -> !$.getValue().isEmpty())
             .forEachOrdered($ -> {
@@ -172,7 +172,8 @@ public class PageProcessor extends JadaHtmlProcessor {
      * This tweak removes the offending leading slash.
      */
     addTweak(($doc, $file, $changedRef) -> {
-      if (!$file.getParent().equals(getConfig().getOutputDirectory()))
+      if (!requireNonNull($file.getParent(), "file.parent")
+          .equals(getConfig().getOutputDirectory()))
         return;
 
       var oldHtml = $doc.html();
@@ -193,8 +194,8 @@ public class PageProcessor extends JadaHtmlProcessor {
       $doc.select("td[class=colFirst]").stream()
           .filter($ -> $.text().contains("static final char"))
           .forEach($ -> {
-            //noinspection DataFlowIssue : non-nullable
-            for (var valueElement : $.parent().lastElementChild().children()) {
+            for (var valueElement : requireNonNull(requireNonNull($.parent(), "parent")
+                .lastElementChild(), "lastElementChild").children()) {
               if (isInteger(valueElement.text())) {
                 int charCode = Integer.parseInt(valueElement.text());
                 valueElement.text("%s (%s)".formatted(basicLiteral((char) charCode), charCode));

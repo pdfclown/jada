@@ -18,4 +18,7 @@
        * </p>
        * {@jada.reuseDoc END}
  */
+@NullMarked
 package org.pdfclown.jada.ext.proc.DocReuseTagletProcessorIT_.main.a;
+
+import org.jspecify.annotations.NullMarked;

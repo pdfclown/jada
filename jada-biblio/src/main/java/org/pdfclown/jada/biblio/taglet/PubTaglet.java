@@ -12,6 +12,7 @@
  */
 package org.pdfclown.jada.biblio.taglet;
 
+import static java.util.Objects.requireNonNull;
 import static org.apache.commons.lang3.StringUtils.join;
 import static org.pdfclown.common.util.Chars.SPACE;
 import static org.pdfclown.common.util.Strings.EMPTY;
@@ -57,7 +58,7 @@ public abstract class PubTaglet extends BiblioTaglet {
   @Override
   protected String renderBody(BiblioRef ref, BiblioEntry entry, Element element, Path path) {
     return "<a href=\"%s#%s\">%s</a>%s".formatted(
-        path.getParent().relativize(extension.getExtConfig().getBiblioOutputFile()),
+        requireNonNull(path.getParent()).relativize(extension.getExtConfig().getBiblioOutputFile()),
         ref.getFullId(), ref.getFullId(), ref.getSections().length > 0
             ? SPACE + (ref.getSections().length > 1 ? "§§" : "§") + SPACE
                 + join(ref.getSections(), ", ")

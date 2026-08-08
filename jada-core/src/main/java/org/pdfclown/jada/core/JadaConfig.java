@@ -14,6 +14,7 @@ package org.pdfclown.jada.core;
 
 import static java.util.Collections.unmodifiableList;
 import static java.util.Collections.unmodifiableMap;
+import static java.util.Objects.requireNonNull;
 import static org.pdfclown.common.util.Chars.DOT;
 import static org.pdfclown.common.util.Exceptions.runtime;
 import static org.pdfclown.common.util.Exceptions.unexpected;
@@ -429,7 +430,8 @@ public class JadaConfig extends SystemConfig implements JadaObject {
                  *
                  * NOTE: Documentation paths are assumed to be rooted at the output directory.
                  */
-                + Pattern.quote(overviewOutputFile.getParent().toString())
+                + Pattern.quote(requireNonNull(overviewOutputFile.getParent(),
+                    "overviewOutputFile.parent").toString())
                 /*
                  * Documentation sub-path.
                  *
@@ -610,6 +612,7 @@ public class JadaConfig extends SystemConfig implements JadaObject {
   /**
    * <span class="warning">(For internal use only)</span>
    */
+  @SuppressWarnings("NullAway")
   protected JadaConfig() {
   }
 
@@ -747,7 +750,7 @@ public class JadaConfig extends SystemConfig implements JadaObject {
   }
 
   @SuppressWarnings("unchecked")
-  public <T extends JadaExtension> T getExtension(Class<T> type) {
+  public <T extends JadaExtension> @Nullable T getExtension(Class<T> type) {
     return (T) extensions.get(fqn(type));
   }
 
@@ -816,7 +819,7 @@ public class JadaConfig extends SystemConfig implements JadaObject {
   }
 
   @SuppressWarnings("unchecked")
-  public <T extends JadaOperation<?>> T getOperation(Class<T> type) {
+  public <T extends JadaOperation<?>> @Nullable T getOperation(Class<T> type) {
     return (T) operations.get(fqn(type));
   }
 
@@ -912,9 +915,8 @@ public class JadaConfig extends SystemConfig implements JadaObject {
         pageName = fqName.localName;
       }
     }
-    assert pageName != null;
-    assert packageName != null;
-    return getOutputPage(pageName, packageName, moduleName);
+    return getOutputPage(requireNonNull(pageName, "pageName"),
+        requireNonNull(packageName, "packageName"), moduleName);
   }
 
   /**
@@ -1023,7 +1025,7 @@ public class JadaConfig extends SystemConfig implements JadaObject {
   }
 
   @SuppressWarnings("unchecked")
-  public <T extends Taglet> T getTaglet(Class<T> type) {
+  public <T extends Taglet> @Nullable T getTaglet(Class<T> type) {
     return (T) taglets.get(fqn(type));
   }
 

@@ -12,6 +12,7 @@
  */
 package org.pdfclown.jada.core.proc;
 
+import static java.util.Objects.requireNonNull;
 import static org.pdfclown.common.util.Conditions.requireType;
 import static org.pdfclown.common.util.Exceptions.runtime;
 import static org.pdfclown.common.util.Strings.EMPTY;
@@ -70,7 +71,7 @@ public class JadaResourceAttach implements JadaOperation<Void> {
   @Initializer
   @Override
   public void init(SystemConfig config) {
-    this.config = requireType(config, JadaConfig.class, "config");
+    this.config = requireNonNull(requireType(config, JadaConfig.class, "config"));
   }
 
   @Override

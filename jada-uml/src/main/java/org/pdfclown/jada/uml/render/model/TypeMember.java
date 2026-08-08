@@ -61,6 +61,7 @@ public abstract class TypeMember extends UmlNode {
    *           Principle, but is the lesser evil.
    */
   @Override
+  @SuppressWarnings("EqualsGetClass")
   public boolean equals(@Nullable Object o) {
     if (o == this)
       return true;

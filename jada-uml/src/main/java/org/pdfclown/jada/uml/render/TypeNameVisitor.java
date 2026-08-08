@@ -17,6 +17,7 @@
  */
 package org.pdfclown.jada.uml.render;
 
+import static java.util.Objects.requireNonNull;
 import static org.pdfclown.common.util.Chars.DOT;
 import static org.pdfclown.common.util.Strings.EMPTY;
 import static org.pdfclown.common.util.Strings.lcase;
@@ -74,7 +75,7 @@ final class TypeNameVisitor extends SimpleTypeVisitor9<TypeName, Void> {
         .map($ -> _visit($, parameter))
         .toArray(TypeName[]::new);
     final String packageName;
-    Element enclosingElement = el.getEnclosingElement();
+    Element enclosingElement = requireNonNull(el.getEnclosingElement());
     if (enclosingElement.getKind().isInterface() || enclosingElement.getKind().isClass()) {
       packageName = visit(enclosingElement.asType()).getPackageName();
     } else {

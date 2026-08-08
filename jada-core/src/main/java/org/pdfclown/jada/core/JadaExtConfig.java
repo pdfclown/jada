@@ -35,6 +35,7 @@ public class JadaExtConfig implements JadaObject {
   /**
    * <span class="warning">(For internal use only)</span>
    */
+  @SuppressWarnings("NullAway")
   protected JadaExtConfig() {
   }
 

@@ -3,18 +3,15 @@
 
   SPDX-License-Identifier: LGPL-3.0-only
 
-  This file (package-info.java) is part of jada-ext module in Jada project
+  This file (package-info.java) is part of jada-core module in Jada project
   <https://github.com/pdfclown/jada>
 
   DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER. If you reuse (entirely or partially)
   this file, you MUST add your own copyright notice in a separate comment block above this file
   header, listing the main changes you applied to the original source.
  */
-/**
- * <h4>[Name resolution 3] Package-level inner type</h4>
- * {@jada.reuseDoc ClassA.InnerClassA.SubInnerClassA#size(*)}
- */
+
 @NullMarked
-package org.pdfclown.jada.ext.proc.DocReuseTagletProcessorIT_.main.a;
+package org.pdfclown.jada._testext2;
 
 import org.jspecify.annotations.NullMarked;

@@ -80,7 +80,7 @@ public class JadaScriptContext implements JadaObject {
   /**
    * Retrieves the value associated to a name.
    */
-  public Object get(String name) {
+  public @Nullable Object get(String name) {
     return manager.getSharedData().get(name);
   }
 

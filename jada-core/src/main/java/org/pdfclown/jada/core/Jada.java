@@ -12,6 +12,7 @@
  */
 package org.pdfclown.jada.core;
 
+import static java.util.Objects.requireNonNull;
 import static java.util.Objects.requireNonNullElse;
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.collectingAndThen;
@@ -814,7 +815,7 @@ public class Jada implements Doclet, JadaComponent {
         .registerOperation(new JadaResourceAttach())
         .registerOperation(new JadaFileProcess());
 
-    config.getOperation(JadaFileProcess.class)
+    requireNonNull(config.getOperation(JadaFileProcess.class), "operations[JadaFileProcess]")
         .addProcessor(new PostTagletProcessor())
         .addProcessor(new PageProcessor())
         .addProcessor(new FileOptimizer());

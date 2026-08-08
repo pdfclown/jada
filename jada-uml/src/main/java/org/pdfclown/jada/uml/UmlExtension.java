@@ -18,6 +18,7 @@
 package org.pdfclown.jada.uml;
 
 import static java.lang.Integer.parseInt;
+import static java.util.Objects.requireNonNull;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.joining;
@@ -201,7 +202,7 @@ public class UmlExtension extends JadaExtension {
   public void onPostProcess(PostProcessEvent event) {
     generateDiagrams().forEach(Diagram::render);
 
-    getConfig().getOperation(JadaFileProcess.class)
+    requireNonNull(getConfig().getOperation(JadaFileProcess.class), "operations[JadaFileProcess]")
         .addProcessor(new PageProcessor(extConfig));
   }
 

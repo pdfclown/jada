@@ -17,6 +17,7 @@
  */
 package org.pdfclown.jada.uml.proc;
 
+import static java.util.Objects.requireNonNull;
 import static org.pdfclown.common.util.io.Files.FILE_EXTENSION__HTML;
 import static org.pdfclown.common.util.io.Files.FILE_EXTENSION__SVG;
 import static org.pdfclown.jada.core.util.lang.Javadocs.FILENAME__MODULE_SUMMARY;
@@ -86,7 +87,8 @@ final class PackageDependenciesFile extends DiagramFile {
     this.overviewSummary = baseDir.resolve(FILENAME__OVERVIEW_SUMMARY + FILE_EXTENSION__HTML);
     this.moduleSummary = diagramFile.getFileName().toString()
         .equals(FILENAME__PACKAGE_DEPS + FILE_EXTENSION__SVG)
-            ? diagramFile.getParent().resolve(FILENAME__MODULE_SUMMARY + FILE_EXTENSION__HTML)
+            ? requireNonNull(diagramFile.getParent())
+                .resolve(FILENAME__MODULE_SUMMARY + FILE_EXTENSION__HTML)
             : null;
   }
 

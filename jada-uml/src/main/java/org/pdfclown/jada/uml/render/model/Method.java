@@ -19,6 +19,7 @@ package org.pdfclown.jada.uml.render.model;
 
 import static org.pdfclown.common.util.Chars.COLON;
 import static org.pdfclown.common.util.Chars.SPACE;
+import static org.pdfclown.common.util.Objects.nonNull;
 import static org.pdfclown.common.util.Strings.S;
 
 import java.io.IOException;
@@ -66,8 +67,7 @@ public class Method extends TypeMember {
 
   @Override
   public boolean equals(@Nullable Object o) {
-    return super.equals(o)
-        && ((Method) o).getParameters().equals(this.getParameters());
+    return super.equals(o) && nonNull((Method) o).getParameters().equals(this.getParameters());
   }
 
   @Override

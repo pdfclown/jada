@@ -245,7 +245,7 @@ public class UmlFactory {
     }
 
     // Add containing class reference
-    ElementKind enclosingKind = classElement.getEnclosingElement().getKind();
+    ElementKind enclosingKind = requireNonNull(classElement.getEnclosingElement()).getKind();
     if (enclosingKind.isClass() || enclosingKind.isInterface()) {
       TypeName enclosingTypeName =
           TypeNameVisitor.INSTANCE.visit(classElement.getEnclosingElement().asType());
@@ -451,7 +451,8 @@ public class UmlFactory {
     Boolean varargs = null;
     for (VariableElement param : params) {
       if (varargs == null) {
-        result = result.varargs(varargs = isVarArgsMethod(param.getEnclosingElement()));
+        result = result.varargs(varargs = isVarArgsMethod(
+            requireNonNull(param.getEnclosingElement())));
       }
       result = result.add(param.getSimpleName().toString(),
           TypeNameVisitor.INSTANCE.visit(param.asType()));
@@ -521,7 +522,7 @@ public class UmlFactory {
     });
 
     // Add reference to containing class from inner classes.
-    ElementKind enclosingKind = typeElement.getEnclosingElement().getKind();
+    ElementKind enclosingKind = requireNonNull(typeElement.getEnclosingElement()).getKind();
     if (enclosingKind.isClass() || enclosingKind.isInterface()) {
       TypeName parentType =
           TypeNameVisitor.INSTANCE.visit(typeElement.getEnclosingElement().asType());
@@ -600,7 +601,7 @@ public class UmlFactory {
 
   private boolean isExcludedEnumMethod(ExecutableElement method) {
     if (extension.getExtConfig().getExcludedTypeReferences().contains(Enum.class.getName())
-        && ElementKind.ENUM.equals(method.getEnclosingElement().getKind())
+        && ElementKind.ENUM.equals(requireNonNull(method.getEnclosingElement()).getKind())
         && method.getModifiers().contains(Modifier.STATIC)) {
       if ("values".equals(method.getSimpleName().toString()) && method.getParameters().isEmpty())
         return true;
@@ -617,12 +618,12 @@ public class UmlFactory {
 
   private boolean isMethodFromExcludedSuperclass(ExecutableElement method) {
     boolean result = false;
-    Element containingClass = method.getEnclosingElement();
+    Element containingClass = requireNonNull(method.getEnclosingElement());
     if (containingClass.getKind().isClass() || containingClass.getKind().isInterface()) {
       result = getMethodsFromExcludedSuperclasses().stream().anyMatch(
           $ -> similarMethodSignatures($, method)
               && extension.getEnv().getTypeUtils().isAssignable(containingClass.asType(),
-                  $.getEnclosingElement().asType()));
+                  requireNonNull($.getEnclosingElement()).asType()));
     }
     result = result || isExcludedEnumMethod(method);
     return result;

@@ -11,10 +11,9 @@
   header, listing the main changes you applied to the original source.
  */
 /**
- * <h4>[Name resolution 3] Package-level inner type</h4>
- * {@jada.reuseDoc ClassA.InnerClassA.SubInnerClassA#size(*)}
+ * @author Stefano Chizzolini
  */
 @NullMarked
-package org.pdfclown.jada.ext.proc.DocReuseTagletProcessorIT_.main.a;
+package org.pdfclown.jada.ext.proc.DocReuseTagletProcessorIT_.alreadyProcessed;
 
 import org.jspecify.annotations.NullMarked;

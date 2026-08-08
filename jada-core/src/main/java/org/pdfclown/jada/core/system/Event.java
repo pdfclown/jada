@@ -26,6 +26,7 @@ public abstract class Event<S> {
   /**
    * <span class="warning">(For internal use only)</span>
    */
+  @SuppressWarnings("NullAway")
   protected Event() {
   }
 

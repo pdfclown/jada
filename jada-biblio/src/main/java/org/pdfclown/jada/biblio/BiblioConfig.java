@@ -45,6 +45,10 @@ public class BiblioConfig extends JadaExtConfig {
     @SuppressWarnings("NotNullFieldNotInitialized")
     private Element element;
 
+    /**
+     * <span class="warning">(For internal use only)</span>
+     */
+    @SuppressWarnings("NullAway")
     protected BiblioEntry() {
     }
 

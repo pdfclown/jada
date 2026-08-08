@@ -82,6 +82,7 @@ public abstract class SystemConfig implements SystemObject {
   /**
    * <span class="warning">(For internal use only)</span>
    */
+  @SuppressWarnings("NullAway")
   protected SystemConfig() {
   }
 

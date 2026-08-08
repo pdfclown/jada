@@ -12,6 +12,8 @@
  */
 package org.pdfclown.jada.core.taglet;
 
+import static java.util.Objects.requireNonNull;
+
 import com.sun.source.doctree.DocTree;
 import java.nio.file.Path;
 import java.util.List;
@@ -86,7 +88,8 @@ public abstract class MainTaglet extends JadaTaglet {
          */
         elementLinkFixerEnabled = true;
 
-        var fileProcess = config.getOperation(JadaFileProcess.class);
+        var fileProcess = requireNonNull(config.getOperation(JadaFileProcess.class),
+            "operations[JadaFileProcess]");
         if (fileProcess.getProcessor(ElementLinkFixer.class) == null) {
           getLog().print(Kind.WARNING, element, this, JadaMessage.ELEMENT_PATHS_UNAVAILABLE,
               element, ret);

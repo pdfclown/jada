@@ -22,6 +22,7 @@ package org.pdfclown.jada.uml.render._1;
  * @author Sjoerd Talsma (original implementation)
  * @author Stefano Chizzolini (adaptation and redesign for Jada)
  */
+@SuppressWarnings("RequireExplicitNullMarking")
 public class Test1Exception extends AssertionError {
   private static final long serialVersionUID = 1L;
 }
