@@ -14,6 +14,7 @@ package org.pdfclown.jada.biblio.taglet;
 
 import static java.util.Objects.requireNonNull;
 import static java.util.Objects.requireNonNullElse;
+import static org.apache.commons.lang3.ArrayUtils.EMPTY_STRING_ARRAY;
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 import static org.apache.commons.lang3.StringUtils.join;
 import static org.apache.commons.lang3.StringUtils.split;
@@ -110,16 +111,14 @@ public abstract class BiblioTaglet extends MainTaglet {
         SEPARATOR__VERSION, PATTERN_GROUP__REF_VERSION, REGEX__SEGMENT,
         PATTERN_GROUP__REF_SECTIONS));
 
-    private static final String[] STR_ARRAY__EMPTY = new String[0];
-
     static BiblioRef of(String value) {
       var m = PATTERN.matcher(value);
       if (!m.matches())
-        throw wrongArg(null, value, "Bibliographic reference INVALID");
+        throw wrongArg("value", value, "Bibliographic reference INVALID");
 
       return new BiblioRef(m.group(PATTERN_GROUP__REF_ID), m.group(PATTERN_GROUP__REF_PART),
           m.group(PATTERN_GROUP__REF_VERSION), requireNonNullElse(split(
-              m.group(PATTERN_GROUP__REF_SECTIONS), SEPARATOR__SECTION), STR_ARRAY__EMPTY));
+              m.group(PATTERN_GROUP__REF_SECTIONS), SEPARATOR__SECTION), EMPTY_STRING_ARRAY));
     }
 
     private final String fullId;
