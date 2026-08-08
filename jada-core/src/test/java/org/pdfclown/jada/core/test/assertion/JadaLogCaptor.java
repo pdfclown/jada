@@ -14,7 +14,7 @@ package org.pdfclown.jada.core.test.assertion;
 
 import static org.mockito.Mockito.mock;
 import static org.pdfclown.common.util.Conditions.requireState;
-import static org.pdfclown.common.util.function.Functions.let;
+import static org.pdfclown.common.util.function.Functions.ifPresent;
 
 import com.sun.source.util.DocTreePath;
 import java.util.ArrayList;
@@ -114,7 +114,7 @@ public class JadaLogCaptor extends LogCaptor {
     /*
      * NOTE: On test class initialization, the appender may not be ready yet.
      */
-    let(appender, $ -> $.setEnabled(true));
+    ifPresent(appender, $ -> $.setEnabled(true));
   }
 
   @Override
