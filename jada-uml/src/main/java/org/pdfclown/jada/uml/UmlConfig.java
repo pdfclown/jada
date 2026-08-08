@@ -190,7 +190,7 @@ public class UmlConfig extends JadaExtConfig {
 
     void setSubDirectory(String value) {
       if (Path.of(value).isAbsolute())
-        throw wrongArg(null, value, "MUST be relative");
+        throw wrongArg("value", value, "MUST be relative");
 
       subDirectory = value;
     }

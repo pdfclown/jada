@@ -239,7 +239,7 @@ public abstract class SystemConfig implements SystemObject {
   public SystemConfig setOutputDirectory(Path value) {
     outputDirectory = normal(value);
     if (!Files.isDirectory(outputDirectory))
-      throw wrongArg(null, value, "\"{}\" NOT FOUND", outputDirectory);
+      throw wrongArg("value", value, "\"{}\" NOT FOUND", outputDirectory);
 
     if (buildDirectory == null) {
       buildDirectory = outputDirectory.getParent();
