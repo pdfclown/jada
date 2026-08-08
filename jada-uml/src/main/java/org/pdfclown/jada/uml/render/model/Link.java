@@ -144,6 +144,6 @@ public class Link extends UmlNode {
   private Optional<String> relativeTarget() {
     return Optional.ofNullable(target)
         .filter($ -> SCHEME__FILE.equals($.getScheme())).map(Path::of)
-        .flatMap($targetFile -> baseDirectory().map($ -> relativize($, $targetFile).toString()));
+        .flatMap($targetFile -> baseDirectory().map($ -> relativize($targetFile, $).toString()));
   }
 }

@@ -95,7 +95,7 @@ final class PackageDiagramFile extends DiagramFile {
     this.extension = extension(diagramFile);
     this.pathToCompare = hasImagesDir
         ? basename(diagramFile).replace(DOT, File.separatorChar) + this.extension
-        : relativize(this.baseDir, this.diagramFile).toString();
+        : relativize(this.diagramFile, this.baseDir).toString();
   }
 
   @Override
@@ -105,7 +105,7 @@ final class PackageDiagramFile extends DiagramFile {
 
   @Override
   protected boolean matches(Path htmlFile) {
-    return pathToCompare.equals(relativize(baseDir, htmlFile).toString()
+    return pathToCompare.equals(relativize(htmlFile, baseDir).toString()
         .replaceFirst(REGEX__FILE_MATCH_REPLACE, FILENAME__PACKAGE + extension));
   }
 }

@@ -112,14 +112,14 @@ public class UmlConfig_ExternalLinkIT extends BaseIT {
               FILENAME__PACKAGE_SUMMARY + FILE_EXTENSION__HTML, Serializable.class)),
               "<html></html>");
 
-          $args.arg("-link", relativize($outputDir, externalDirRef.get()));
+          $args.arg("-link", relativize(externalDirRef.get(), $outputDir));
         })));
     Path packagePumlFile = getEnv().outputPath(getEnv().outputName(FILENAME__PACKAGE
         + FILE_EXTENSION__PLANTUML));
     String puml = readString(packagePumlFile);
 
     assertThat(puml, stringContainsInOrder(asList("interface", "Serializable",
-        "[[" + relativize(packagePumlFile, externalDirRef.get())
+        "[[" + relativize(externalDirRef.get(), packagePumlFile)
             + "/java/io/Serializable.html]]")));
   }
 }

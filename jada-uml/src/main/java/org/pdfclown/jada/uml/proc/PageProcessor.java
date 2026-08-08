@@ -142,7 +142,7 @@ public class PageProcessor extends JadaHtmlProcessor {
    */
   private @Nullable String insertDiagram(DiagramFile diagram, String docContent, Path docFile) {
     try {
-      String diagramRelativePath = relativize(docFile, diagram.diagramFile).toString();
+      String diagramRelativePath = relativize(diagram.diagramFile, docFile).toString();
       Inserter inserter = diagram.createInserter(diagramRelativePath);
       Document doc = Jsoups.parse(docContent);
       return toOrNull(inserter.process(doc, docFile, getConfig()), Document::outerHtml);

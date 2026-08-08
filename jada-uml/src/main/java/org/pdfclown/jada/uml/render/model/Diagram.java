@@ -159,7 +159,7 @@ public abstract class Diagram extends UmlNode {
   private Path getDiagramBaseFile() {
     if (diagramBaseFile == null) {
       Path targetDir = config.getConfig().getOutputDirectory();
-      Path relativeBaseFile = cognateFile(relativize(targetDir, getPlantUmlFile()), EMPTY);
+      Path relativeBaseFile = cognateFile(relativize(getPlantUmlFile(), targetDir), EMPTY);
       if (config.getImageConfig().getSubDirectory() != null) {
         var imageDir = targetDir.resolve(config.getImageConfig().getSubDirectory());
         diagramBaseFile = imageDir.resolve(relativeBaseFile.toString()
