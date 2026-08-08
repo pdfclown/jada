@@ -26,7 +26,7 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import org.pdfclown.common.util.annot.UnmodifiableView;
+import org.pdfclown.common.util.annot.ReadOnly;
 
 // SourceName: nl.talsmasoftware.umldoclet.rendering.writers.DelegatingWriter
 /**
@@ -39,7 +39,7 @@ public class DelegateWriter extends Writer {
   /**
    * The list of {@linkplain Writer delegate writers} to write to.
    */
-  protected final @UnmodifiableView List<Writer> delegates;
+  protected final @ReadOnly List<Writer> delegates;
 
   /**
    * New writer that writes to all the delegates when written to.

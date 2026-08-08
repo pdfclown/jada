@@ -58,7 +58,7 @@ import jdk.javadoc.doclet.Reporter;
 import jdk.javadoc.doclet.Taglet;
 import org.jspecify.annotations.Nullable;
 import org.pdfclown.common.util.annot.MonotonicNonNull;
-import org.pdfclown.common.util.annot.UnmodifiableView;
+import org.pdfclown.common.util.annot.ReadOnly;
 import org.pdfclown.common.util.io.Resource;
 import org.pdfclown.common.util.system.Clis.FileInclusionFilter;
 import org.pdfclown.jada.core.internal.JadaMessage;
@@ -757,7 +757,7 @@ public class JadaConfig extends SystemConfig implements JadaObject {
    * CLI option: {@value #OPTION__DOCLET_EXTENSIONS}
    * </p>
    */
-  public @UnmodifiableView Map<String, JadaExtension> getExtensions() {
+  public @ReadOnly Map<String, JadaExtension> getExtensions() {
     return unmodifiableMap(extensions);
   }
 
@@ -784,7 +784,7 @@ public class JadaConfig extends SystemConfig implements JadaObject {
    * Source directories, which the doclet will scan to generate the documentation.
    */
   @Override
-  public @UnmodifiableView List<Path> getInputDirectories() {
+  public @ReadOnly List<Path> getInputDirectories() {
     return unmodifiableList(super.getInputDirectories());
   }
 
@@ -1030,7 +1030,7 @@ public class JadaConfig extends SystemConfig implements JadaObject {
   /**
    * {@linkplain #registerTaglet(Taglet) Registered} taglets.
    */
-  public @UnmodifiableView Map<String, Taglet> getTaglets() {
+  public @ReadOnly Map<String, Taglet> getTaglets() {
     return unmodifiableMap(taglets);
   }
 

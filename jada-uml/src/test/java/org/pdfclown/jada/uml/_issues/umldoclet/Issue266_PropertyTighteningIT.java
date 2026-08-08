@@ -30,7 +30,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
 import org.pdfclown.common.util.annot.Initializer;
-import org.pdfclown.common.util.annot.UnmodifiableView;
+import org.pdfclown.common.util.annot.ReadOnly;
 import org.pdfclown.jada.core.test.assertion.Assertions.JavadocAssertResult;
 import org.pdfclown.jada.uml.__test.BaseIT;
 
@@ -41,7 +41,7 @@ import org.pdfclown.jada.uml.__test.BaseIT;
  */
 public class Issue266_PropertyTighteningIT extends BaseIT {
   public static class TesterUtil {
-    public static @UnmodifiableView Set<TesterUtil> setOf(TesterUtil... testers) {
+    public static @ReadOnly Set<TesterUtil> setOf(TesterUtil... testers) {
       return unmodifiableSet(new LinkedHashSet<>(asList(testers)));
     }
   }

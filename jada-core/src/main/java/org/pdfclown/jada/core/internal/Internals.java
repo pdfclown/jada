@@ -16,7 +16,7 @@ import static java.util.Collections.unmodifiableMap;
 
 import java.util.HashMap;
 import java.util.Map;
-import org.pdfclown.common.util.annot.UnmodifiableView;
+import org.pdfclown.common.util.annot.ReadOnly;
 import org.pdfclown.common.util.reflect.Reflects;
 
 /**
@@ -32,7 +32,7 @@ public final class Internals {
   /**
    * Jada component names by package name.
    */
-  public static @UnmodifiableView Map<String, String> getComponentNames() {
+  public static @ReadOnly Map<String, String> getComponentNames() {
     return unmodifiableMap(componentNames);
   }
 

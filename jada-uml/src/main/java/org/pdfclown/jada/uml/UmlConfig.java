@@ -57,8 +57,8 @@ import java.util.regex.Pattern;
 import javax.tools.Diagnostic.Kind;
 import org.jspecify.annotations.Nullable;
 import org.pdfclown.common.util.annot.MonotonicNonNull;
+import org.pdfclown.common.util.annot.ReadOnly;
 import org.pdfclown.common.util.annot.Unmodifiable;
-import org.pdfclown.common.util.annot.UnmodifiableView;
 import org.pdfclown.jada.core.JadaExtConfig;
 import org.pdfclown.jada.uml.internal.UmlMessage;
 
@@ -162,7 +162,7 @@ public class UmlConfig extends JadaExtConfig {
      * {@link Format#PNG PNG} images and can include links to Javadoc HTML pages).
      * </p>
      */
-    public @UnmodifiableView Set<Format> getFormats() {
+    public @ReadOnly Set<Format> getFormats() {
       return formats;
     }
 
@@ -488,7 +488,7 @@ public class UmlConfig extends JadaExtConfig {
     }
 
     // SourceName: tryReadPackages
-    private @UnmodifiableView Set<String> readPackages() {
+    private @ReadOnly Set<String> readPackages() {
       final URI packageListUri = nonNull(addPathComponent(baseUri, FILENAME__PACKAGE_LIST));
       final var packages = new LinkedHashSet<String>();
       try {
@@ -695,7 +695,7 @@ public class UmlConfig extends JadaExtConfig {
    * CLI option: {@value #OPTION__PLANTUML_CUSTOM_DIRECTIVE} (repeatable)
    * </p>
    */
-  public @UnmodifiableView List<String> getPlantumlCustomDirectives() {
+  public @ReadOnly List<String> getPlantumlCustomDirectives() {
     return plantumlCustomDirectives;
   }
 

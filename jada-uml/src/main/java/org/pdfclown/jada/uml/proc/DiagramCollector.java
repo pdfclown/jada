@@ -34,7 +34,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.Collection;
 import org.jspecify.annotations.Nullable;
-import org.pdfclown.common.util.annot.UnmodifiableView;
+import org.pdfclown.common.util.annot.ReadOnly;
 import org.pdfclown.common.util.io.Files;
 import org.pdfclown.jada.uml.UmlConfig;
 import org.pdfclown.jada.uml.UmlConfig.ImageConfig;
@@ -78,7 +78,7 @@ final class DiagramCollector extends SimpleFileVisitor<Path> {
   /**
    * Collects all generated diagram files by walking the path.
    */
-  @UnmodifiableView
+  @ReadOnly
   Collection<DiagramFile> collectDiagrams() throws IOException {
     try {
       walkFileTree(requireNonNullElse(imagesDir, baseDir), this);

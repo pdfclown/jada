@@ -33,7 +33,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import org.apache.commons.lang3.function.Failable;
 import org.jspecify.annotations.Nullable;
-import org.pdfclown.common.util.annot.UnmodifiableView;
+import org.pdfclown.common.util.annot.ReadOnly;
 import org.pdfclown.common.util.io.IndentWriter;
 import org.pdfclown.jada.uml.UmlConfig;
 
@@ -61,7 +61,7 @@ public abstract class UmlNode {
     child.setParent(this);
   }
 
-  public @UnmodifiableView List<UmlNode> getChildren() {
+  public @ReadOnly List<UmlNode> getChildren() {
     return unmodifiableList(children);
   }
 
@@ -74,7 +74,7 @@ public abstract class UmlNode {
    *          The type of children to obtain.
    * @return The filtered list of children of this uml node.
    */
-  public <T extends UmlNode> @UnmodifiableView List<T> getChildren(Class<T> type) {
+  public <T extends UmlNode> @ReadOnly List<T> getChildren(Class<T> type) {
     return getChildren().stream()
         .filter(type::isInstance)
         .map(type::cast)
