@@ -61,7 +61,7 @@ class UmlConfig_ExternalLinkTest extends BaseTest {
     IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
         () -> new ExternalLink(config, "https://www.google.com?\nq=query", EMPTY));
 
-    assertThat(ex.getMessage(), is("`uri` (\"https://www.google.com?\\nq=query\"): INVALID"));
+    assertThat(ex.getMessage(), is("`uri` (\"https://www.google.com?\\nq=query\") INVALID"));
   }
 
   // SourceName: testNonExistingUrls

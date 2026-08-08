@@ -169,7 +169,7 @@ public final class Javadocs {
       else if (matcher.group(PATTERN_GROUP__INLINE_TAG__MARKDOWN_LINK_PART0) != null) {
         ret = TAG_NAME__LINK;
       } else
-        throw unexpected((Object) null, "Unknown inline tag pattern");
+        throw unexpected(null, null, "inline tag pattern UNKNOWN");
     }
     return ret;
   }
@@ -339,7 +339,7 @@ public final class Javadocs {
         else if (matcher.group(PATTERN_GROUP__INLINE_TAG__MARKDOWN_LINK_PART0) != null) {
           ret = matcher.group(PATTERN_GROUP__INLINE_TAG__MARKDOWN_LINK_PART0);
         } else
-          throw unexpected((Object) null, "Unknown inline tag pattern");
+          throw unexpected(null, null, "inline tag pattern UNKNOWN");
 
         /*
          * Unescape square brackets for element reference of link and linkplain tags!

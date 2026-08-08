@@ -166,10 +166,9 @@ public class DocReuseTagletProcessor extends JavaProcessor {
      *         {@linkplain CompilationUnit compilation unit}), or its parent.
      */
     private static Node base(Node node) {
-      return node instanceof TypeDeclaration || node instanceof CompilationUnit
-          ? node
-          : node.getParentNode().orElseThrow(() -> unexpected(node,
-              "{} not handled as source container type", type(node)));
+      return node instanceof TypeDeclaration || node instanceof CompilationUnit ? node
+          : node.getParentNode().orElseThrow(() -> unexpected("node", type(node),
+              "NOT HANDLED as source container type"));
     }
 
     /**
@@ -689,9 +688,8 @@ public class DocReuseTagletProcessor extends JavaProcessor {
                   // [Name resolution 1.2] Sibling member.
                   containerNode = (TypeDeclaration<?>) $.getParentNode().orElseThrow();
                 } else if (callable)
-                  throw unexpected(type($), """
-                      {}: structure UNEXPECTED as context of callable member reference \
-                      "{}(*)\"""", file, elementKeyPart);
+                  throw unexpected("node", type($), "as context of callable member reference "
+                      + "\"{}(*)\" in {}", elementKeyPart, file);
 
                 if (containerNode != null) {
                   for (var member : containerNode.getMembers()) {

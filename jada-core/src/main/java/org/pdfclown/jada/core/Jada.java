@@ -35,6 +35,7 @@ import static org.pdfclown.common.util.Exceptions.wrongState;
 import static org.pdfclown.common.util.Objects.fqn;
 import static org.pdfclown.common.util.Objects.sqn;
 import static org.pdfclown.common.util.Objects.toStringWithValues;
+import static org.pdfclown.common.util.Objects.type;
 import static org.pdfclown.common.util.Strings.EMPTY;
 import static org.pdfclown.common.util.Strings.EOL;
 import static org.pdfclown.common.util.system.Clis.parseListIncremental;
@@ -889,7 +890,8 @@ public class Jada implements Doclet, JadaComponent {
     if (reporter instanceof Log log)
       return log;
     else
-      throw unexpected("Base log type doesn't extends any of the expected types ({})", Log.class);
+      throw unexpected("log.base", type(reporter),
+          "base log type doesn't extend any of the expected types ({})", Log.class);
   }
 
   private <T> String getCandidatesDescription(Class<T> type) {

@@ -649,7 +649,7 @@ public class JadaConfig extends SystemConfig implements JadaObject {
              * and notes to output stream").
              */
             WriterKind.STDERR;
-        default -> throw unexpected("Reporter type UNKNOWN: {}", reporterFqn);
+        default -> throw unexpected("reporterFqn", reporterFqn);
       };
 
       var log = (Log) reporter;
