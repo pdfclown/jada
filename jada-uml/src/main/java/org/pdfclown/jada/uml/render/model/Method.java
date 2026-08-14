@@ -67,7 +67,8 @@ public class Method extends TypeMember {
 
   @Override
   public boolean equals(@Nullable Object o) {
-    return super.equals(o) && nonNull((Method) o).getParameters().equals(this.getParameters());
+    return super.equals(o)
+        && this.getParameters().equals(nonNull((Method) o).getParameters());
   }
 
   @Override

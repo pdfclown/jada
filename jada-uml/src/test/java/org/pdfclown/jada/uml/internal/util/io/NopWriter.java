@@ -36,7 +36,7 @@ final class NopWriter extends Writer {
 
   @Override
   public boolean equals(@Nullable Object o) {
-    return o == this || o instanceof NopWriter;
+    return this == o || o instanceof NopWriter;
   }
 
   @Override

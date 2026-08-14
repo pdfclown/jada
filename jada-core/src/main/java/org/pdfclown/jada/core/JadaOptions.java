@@ -112,8 +112,8 @@ public class JadaOptions {
      */
     @Override
     public final boolean equals(@Nullable Object o) {
-      return o == this || (o instanceof Option that
-          && optionName(that.getNames()).equals(optionName(this.getNames())));
+      return this == o || (o instanceof Option that
+          && optionName(this.getNames()).equals(optionName(that.getNames())));
     }
 
     @Override

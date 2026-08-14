@@ -108,7 +108,8 @@ public class TypeName {
 
     @Override
     public boolean equals(@Nullable Object o) {
-      return super.equals(o) && nonNull((Variable) o).extends_ == this.extends_;
+      return super.equals(o)
+          && this.extends_ == nonNull((Variable) o).extends_;
     }
 
     @Override
@@ -152,8 +153,8 @@ public class TypeName {
   @Override
   @SuppressWarnings("EqualsGetClass")
   public boolean equals(@Nullable Object o) {
-    return o == this || (o != null && o.getClass() == this.getClass()
-        && ((TypeName) o).qualifiedName.equals(this.qualifiedName));
+    return this == o || (o != null && this.getClass() == o.getClass()
+        && this.qualifiedName.equals(((TypeName) o).qualifiedName));
   }
 
   public TypeName[] getGenerics() {

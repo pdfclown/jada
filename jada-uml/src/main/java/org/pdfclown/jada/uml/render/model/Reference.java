@@ -88,9 +88,9 @@ public class Reference extends UmlNode {
 
     @Override
     public boolean equals(@Nullable Object o) {
-      return o == this || (o instanceof Side that
-          && that.qualifiedName.equals(this.qualifiedName)
-          && that.cardinality.equals(this.cardinality));
+      return this == o || (o instanceof Side that
+          && this.qualifiedName.equals(that.qualifiedName)
+          && this.cardinality.equals(that.cardinality));
     }
 
     public String getCardinality() {
@@ -216,14 +216,14 @@ public class Reference extends UmlNode {
    */
   @Override
   public final boolean equals(@Nullable Object o) {
-    if (o == this)
+    if (this == o)
       return true;
     else if (o instanceof Reference that) {
-      final Reference thatC = that.canonical();
       final Reference thisC = this.canonical();
-      return thatC.from.equals(thisC.from)
-          && thatC.type.equals(thisC.type)
-          && thatC.to.equals(thisC.to);
+      final Reference thatC = that.canonical();
+      return thisC.from.equals(thatC.from)
+          && thisC.type.equals(thatC.type)
+          && thisC.to.equals(thatC.to);
     } else
       return false;
   }

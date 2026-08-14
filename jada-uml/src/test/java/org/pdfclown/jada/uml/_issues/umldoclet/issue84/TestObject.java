@@ -50,8 +50,8 @@ public class TestObject implements Comparable<TestObject> {
 
   @Override
   public boolean equals(@Nullable Object o) {
-    return o == this || (o instanceof TestObject that
-        && that.compareTo(this) == 0);
+    return this == o || (o instanceof TestObject that
+        && this.compareTo(that) == 0);
   }
 
   @Override

@@ -103,8 +103,8 @@ public class Type extends UmlNode {
    */
   @Override
   public final boolean equals(@Nullable Object o) {
-    return o == this || (o instanceof Type that
-        && that.name.equals(this.name));
+    return this == o || (o instanceof Type that
+        && this.name.equals(that.name));
   }
 
   public Classification getClassfication() {

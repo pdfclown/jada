@@ -71,9 +71,9 @@ public class PackageDependency {
    */
   @Override
   public final boolean equals(@Nullable Object o) {
-    return o == this || (o instanceof PackageDependency that
-        && that.fromPackage.equals(this.fromPackage)
-        && that.toPackage.equals(this.toPackage));
+    return this == o || (o instanceof PackageDependency that
+        && this.fromPackage.equals(that.fromPackage)
+        && this.toPackage.equals(that.toPackage));
   }
 
   /**

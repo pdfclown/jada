@@ -63,14 +63,14 @@ public abstract class TypeMember extends UmlNode {
   @Override
   @SuppressWarnings("EqualsGetClass")
   public boolean equals(@Nullable Object o) {
-    if (o == this)
+    if (this == o)
       return true;
-    else if (o == null || o.getClass() != this.getClass())
+    else if (o == null || this.getClass() != o.getClass())
       return false;
 
     var that = (TypeMember) o;
-    return Objects.equals(that.getParent(), this.getParent())
-        && that.name.equals(this.name);
+    return Objects.equals(this.getParent(), that.getParent())
+        && this.name.equals(that.name);
   }
 
   public String getName() {
