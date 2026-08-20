@@ -14,7 +14,6 @@ package org.pdfclown.jada.core.system;
 
 import static java.nio.file.Files.isDirectory;
 import static java.util.Objects.requireNonNull;
-import static java.util.Objects.requireNonNullElse;
 import static org.pdfclown.common.util.Chars.COLON;
 import static org.pdfclown.common.util.Chars.ROUND_BRACKET_CLOSE;
 import static org.pdfclown.common.util.Chars.ROUND_BRACKET_OPEN;
@@ -27,6 +26,7 @@ import static org.pdfclown.common.util.Objects.sqn;
 import static org.pdfclown.common.util.Objects.xflat;
 import static org.pdfclown.common.util.Strings.EMPTY;
 import static org.pdfclown.common.util.function.Functions.toOrNull;
+import static org.pdfclown.common.util.function.Functions.tryToElseGet;
 import static org.pdfclown.common.util.io.Files.basename;
 import static org.pdfclown.common.util.reflect.Reflects.stackFrame;
 
@@ -40,10 +40,10 @@ import javax.lang.model.element.Element;
 import javax.tools.Diagnostic.Kind;
 import javax.tools.FileObject;
 import jdk.javadoc.doclet.Reporter;
+import org.joor.Reflect;
 import org.jspecify.annotations.Nullable;
 import org.pdfclown.common.util.Objects;
 import org.pdfclown.common.util.io.Files;
-import org.pdfclown.common.util.reflect.Reflects;
 import org.pdfclown.jada.core.JadaComponent;
 import org.pdfclown.jada.core.internal.Internals;
 
@@ -119,10 +119,10 @@ public class Logger implements Reporter {
     final String sourceSimpleName;
     final String componentName;
     if (source != null) {
-      var sourceType = requireNonNull(asType(xflat(source)) /* PolyNull */);
+      var sourceType = requireNonNull(asType(xflat(source)) /* @PolyNull */);
 
-      String sourceSqn = sqn(sourceType);
-      sourceSimpleName = requireNonNullElse(Reflects.tryGet(source, "getName"), sourceSqn);
+      sourceSimpleName = tryToElseGet(Reflect.on(source), $ -> $.call("getName").get(),
+          () -> sqn(sourceType));
 
       var fqn = sourceType.getName();
       componentName = Internals.getComponentNames().entrySet().stream()

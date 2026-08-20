@@ -83,12 +83,12 @@ import jdk.javadoc.doclet.Reporter;
 import jdk.javadoc.doclet.StandardDoclet;
 import jdk.javadoc.doclet.Taglet;
 import org.greenrobot.eventbus.EventBus;
+import org.joor.Reflect;
 import org.jspecify.annotations.Nullable;
 import org.pdfclown.common.util.ArgumentException;
 import org.pdfclown.common.util.annot.Initializer;
 import org.pdfclown.common.util.io.PathResource;
 import org.pdfclown.common.util.io.Resource;
-import org.pdfclown.common.util.reflect.Reflects;
 import org.pdfclown.common.util.system.Clis.FileInclusionFilter;
 import org.pdfclown.common.util.system.Clis.ListIncrementalAdapter;
 import org.pdfclown.jada.core.JadaConfig.Attachment;
@@ -435,7 +435,7 @@ public class Jada implements Doclet, JadaComponent {
         .append(selection != null && selection.contains(component) ? ANGLE_BRACKET_CLOSE : HYPHEN)
         .append(SPACE)
         .append(SQUARE_BRACKET_OPEN)
-        .append(Reflects.<String>get(component, "getName"))
+        .append(Reflect.on(component).call("getName").<String>get())
         .append(SQUARE_BRACKET_CLOSE).append(SPACE)
         .append(fqn(component));
 

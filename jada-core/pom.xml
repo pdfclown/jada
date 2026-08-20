@@ -54,6 +54,10 @@ flexible and convenient ways</description>
       <artifactId>pdfclown-common-util</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.jooq</groupId>
+      <artifactId>joor</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
     </dependency>

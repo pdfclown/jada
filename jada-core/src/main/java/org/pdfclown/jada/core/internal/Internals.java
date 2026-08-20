@@ -16,8 +16,8 @@ import static java.util.Collections.unmodifiableMap;
 
 import java.util.HashMap;
 import java.util.Map;
+import org.joor.Reflect;
 import org.pdfclown.common.util.annot.ReadOnly;
-import org.pdfclown.common.util.reflect.Reflects;
 
 /**
  * Internal utilities.
@@ -40,7 +40,8 @@ public final class Internals {
    * Registers a component for name resolution.
    */
   public static void registerComponentName(Object component) {
-    componentNames.put(component.getClass().getPackageName(), Reflects.get(component, "getName"));
+    componentNames.put(component.getClass().getPackageName(),
+        Reflect.on(component).call("getName").get());
   }
 
   private Internals() {
