@@ -33,7 +33,7 @@
     <!--
       VERSIONS
     -->
-    <plantuml.version>1.2026.6</plantuml.version>
+    <plantuml.version>1.2026.7</plantuml.version>
   </properties>
 
   <dependencies>
