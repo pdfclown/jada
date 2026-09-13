@@ -616,7 +616,7 @@ public class DocReuseTagletProcessor extends JavaProcessor {
                  */
                 String elementKey;
                 /*
-                 * Fragment identifier local to a Javadoc comment.
+                 * Fragment local identifier.
                  *
                  * Corresponds to the trailing part of `tagValue`, prefixed by colon (for example,
                  * if `tagValue` is "MyClass:myId", `localKey` is ":myId").
