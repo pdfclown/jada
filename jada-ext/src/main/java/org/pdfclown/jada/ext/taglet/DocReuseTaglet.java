@@ -39,7 +39,7 @@ import org.pdfclown.jada.ext.proc.DocReuseTagletProcessor;
  * <h4>Usage</h4>
  * <p>
  * The fragment definition MUST terminate with a <code>{</code>{@code @jada.doc END}<code>}</code>
- * tag within the same Javadoc comment ({@code END} is a pseudo-key directive) — for example:
+ * tag within the same Javadoc comment ({@code END} is a predefined directive) — for example:
  * </p>
  * <pre class="lang-java" data-line="6-8"><code>
  * package org.example.mypkg;
@@ -116,8 +116,8 @@ import org.pdfclown.jada.ext.proc.DocReuseTagletProcessor;
  * <li>hash-prefixed reference for class members (fields, methods, constructors — for example:
  * {@code #myField}, {@code #myMethod(*)}, {@code #MyClass(*)}). NOTE: Contrary to standard, the
  * {@code #} is always mandatory; method references are discussed here below.</li>
- * <li>dot-separated relative reference for local inner types, imported types, and local
- * package-level types</li>
+ * <li>dot-separated relative reference for inner types, imported types, and local package-level
+ * types</li>
  * <li>dot-separated fully-qualified reference for any module-level type</li>
  * </ul>
  * <p>
@@ -184,11 +184,11 @@ import org.pdfclown.jada.ext.proc.DocReuseTagletProcessor;
  *     . . .
  *   }
  * }</code></pre></li>
- * <li><b>fragment names</b>: generally, fragments don't need explicit names (their implicit name
- * corresponds to the syntactic element their containing Javadoc comment is associated to — for
- * example, a method, a type, ...); nonetheless, <i>in case of multiple fragments within the same
- * Javadoc comment, the additional ones MUST be disambiguated with a name</i> — for example:
- * <pre class="lang-java" data-line="10-12"><code>
+ * <li><b>fragment local identifiers</b>: generally, fragments don't need explicit local identifiers
+ * (their implicit local identifier corresponds to the syntactic element their containing Javadoc
+ * comment is associated to — for example, a method, a type, ...); nonetheless, <i>in case of
+ * multiple fragments within the same Javadoc comment, the additional ones MUST be disambiguated
+ * with a local identifier</i> — for example: <pre class="lang-java" data-line="10-12"><code>
  * package org.example.mypkg;
  * . . .
  * public class MyClass {
@@ -207,7 +207,7 @@ import org.pdfclown.jada.ext.proc.DocReuseTagletProcessor;
  *   }
  * }</code></pre>
  * <p>
- * will be referenced like this (note the {@code :} to denote the fragment name):
+ * will be referenced like this (note the {@code :} to denote the fragment local identifier):
  * </p>
  * <pre class="lang-java" data-line="10"><code>
  * package org.example.anotherpkg;
@@ -226,14 +226,10 @@ import org.pdfclown.jada.ext.proc.DocReuseTagletProcessor;
  *     . . .
  *   }
  * }</code></pre></li>
- * <p>
- * <span class="important">IMPORTANT: DO NOT use all-uppercase names as fragment names</span> (for
- * further information, see next point "reserved names").
- * </p>
- * <li><b>reserved names</b>: <i>within these tags, all-uppercase names are reserved</i> (they MUST
- * NOT be used to name fragments). In case of collision (for example, the unlikely case of a class
- * named {@code END}), the API element MUST be qualified to avoid ambiguities (for example,
- * {@code MyOuterType.END}): <pre class="lang-java" data-line="24,28"><code>
+ * <li><b>reserved local identifiers</b>: <i>all-uppercase identifiers are reserved</i> (they MUST
+ * NOT be used as fragment local identifiers). In case of collision (for example, the unlikely case
+ * of a class named {@code END}), the API element MUST be qualified to avoid ambiguities (for
+ * example, {@code MyOuterType.END}): <pre class="lang-java" data-line="24,28"><code>
  * package org.example.mypkg;
  * . . .
  * public class MyOuterType {

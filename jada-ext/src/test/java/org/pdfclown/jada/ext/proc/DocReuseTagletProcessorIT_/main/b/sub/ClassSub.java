@@ -3,31 +3,29 @@
 
   SPDX-License-Identifier: LGPL-3.0-only
 
-  This file (Main.java) is part of jada-ext module in Jada project
+  This file (ClassB.java) is part of jada-ext module in Jada project
   <https://github.com/pdfclown/jada>
 
   DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER. If you reuse (entirely or partially)
   this file, you MUST add your own copyright notice in a separate comment block above this file
   header, listing the main changes you applied to the original source.
  */
-package org.pdfclown.jada.ext.proc.DocReuseTagletProcessorIT_.main;
+package org.pdfclown.jada.ext.proc.DocReuseTagletProcessorIT_.main.b.sub;
+
+import org.pdfclown.jada.ext.proc.DocReuseTagletProcessorIT_.main.b.ClassB;
 
 /**
- * Main class.
- * <h4>[Type fragment]</h4> {@jada.doc }
- * <p>
- * This is from Main
- * </p>
- * {@jada.doc END}
- */
-public class Main {
-  /**
-   * {@jada.reuseDoc org.pdfclown.jada.ext.proc.DocReuseTagletProcessorIT_.main.b.sub.ClassSub.InnerSub#methodSub(*)}
+*/
+public class ClassSub extends ClassB {
+  public static class InnerSub {
+    /**
+     * <h4>[Callable member fragment]</h4> {@jada.doc}
      * <p>
      * This is from methodSub()
      * </p>
-     * {@jada.reuseDoc END}
-   */
-  public static void main(String[] args) {
+     * {@jada.doc END}
+     */
+    public void methodSub() {
+    }
   }
 }
