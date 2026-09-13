@@ -21,4 +21,9 @@ package org.pdfclown.jada.ext.proc.DocReuseTagletProcessorIT_.main;
  * {@jada.doc END}
  */
 public class Main {
+  /**
+   * {@jada.reuseDoc org.pdfclown.jada.ext.proc.DocReuseTagletProcessorIT_.main.b.sub.ClassSub.InnerSub#methodSub(*)}
+   */
+  public static void main(String[] args) {
+  }
 }

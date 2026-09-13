@@ -15,6 +15,7 @@ package org.pdfclown.jada.ext.proc;
 import static java.lang.Math.min;
 import static java.nio.file.Files.exists;
 import static org.apache.commons.io.file.PathUtils.touch;
+import static org.apache.commons.lang3.StringUtils.indexOfAny;
 import static org.pdfclown.common.util.Chars.COLON;
 import static org.pdfclown.common.util.Chars.DOT;
 import static org.pdfclown.common.util.Chars.HASH;
@@ -910,22 +911,49 @@ public class DocReuseTagletProcessor extends JavaProcessor {
     c.inputStart = lastFragmentEnd;
   }
 
+  /**
+   * @implNote Algorithm:
+   *           <ol>
+   *           <li>strip {@code fragmentKey} of its (hash-separated) member name and
+   *           (colon-separated) local identifier</li>
+   *           <li>reach the package level: incrementally walk each dot-separated part until the
+   *           corresponding path (resolved against {@code baseDir}) doesn't exist (that is, the
+   *           sub-fragment doesn't match a package directory anymore, as it reached the name of the
+   *           compilation unit)</li>
+   *           <li>check whether the package-level name corresponds to an existing compilation
+   *           unit</li>
+   *           </ol>
+   *           <p>
+   *           For example, if {@code fragmentKey} is
+   *           {@code "org.pdfclown.core.content.obj.InlineImageContent.Base#openWrite(*):params"}
+   *           (inner class):
+   *           <ol>
+   *           <li>strip: {@code "org.pdfclown.core.content.obj.InlineImageContent.Base"}</li>
+   *           <li>reach the package level:
+   *           {@code "org.pdfclown.core.content.obj.InlineImageContent"}</li>
+   *           <li>check the compilation unit:
+   *           {@code "org.pdfclown.core.content.obj.InlineImageContent.java"}</li>
+   *           </ol>
+   */
   private Path resolveFragmentFile(String fragmentKey, Path baseDir, Path file) {
-    var elementKey = fragmentKey.substring(0, indexOfElse(fragmentKey, COLON, 0, STR_LENGTH));
+    // 1. Strip member name  and local identifier from `fragmentKey`!
+    int suffixIndex = indexOfAny(fragmentKey, HASH, COLON);
+    var elementKey = found(suffixIndex) ? fragmentKey.substring(0, suffixIndex) : fragmentKey;
+
     var path = baseDir;
     var elementKeyPartSeparatorIndex = -1;
     while (true) {
       var startIndex = elementKeyPartSeparatorIndex + 1;
       var elementKeyPart = elementKey.substring(startIndex,
           elementKeyPartSeparatorIndex = indexOfElse(elementKey, DOT, startIndex, STR_LENGTH));
-      // Package level reached?
+      /*
+       * 2. Package level reached?
+       *
+       * NOTE: When the incremental directory is not found, its parent is the package directory and
+       * its filename is resolved to Java file as compilation unit.
+       */
       if (!exists(path = path.resolve(elementKeyPart))) {
-        /*
-         * Compilation unit MISSING?
-         *
-         * NOTE: When the incremental directory is not found, its parent is the package directory
-         * and its filename is resolved to Java file.
-         */
+        // 3. Check whether the compilation unit exists!
         if (!exists(path = path.getParent().resolve(path.getFileName().toString()
             + FILE_EXTENSION__JAVA)))
           throw runtime("{}: compilation unit of {} NOT FOUND", file, textLiteral(fragmentKey));
