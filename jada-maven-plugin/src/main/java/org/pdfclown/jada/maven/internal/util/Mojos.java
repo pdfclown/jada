@@ -12,9 +12,10 @@
  */
 package org.pdfclown.jada.maven.internal.util;
 
+import static org.pdfclown.common.util.system.Systems.parseBooleanProperty;
+
 import java.util.Collection;
 import java.util.function.Consumer;
-import org.pdfclown.common.util.system.Systems;
 
 /**
  * Mojo utilities.
@@ -46,7 +47,7 @@ public final class Mojos {
    */
   public static <E extends Enum<E>, C extends Collection<E>> C parseParameterEnumValues(
       Class<E> enumType, Collection<String> source, C target, Consumer<C> defaultValueHandler) {
-    if (source.size() == 1 && Systems.parsePropertyBoolean(source.iterator().next())) {
+    if (source.size() == 1 && parseBooleanProperty(source.iterator().next())) {
       defaultValueHandler.accept(target);
     } else {
       for (var e : source) {
