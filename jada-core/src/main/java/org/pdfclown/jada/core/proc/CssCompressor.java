@@ -11,27 +11,32 @@
   header, listing the main changes you applied to the original source.
  */
 /*
-  SPDX-FileCopyrightText: 2011-2015 PrimeFaces Extensions
-
-  SPDX-License-Identifier: Apache-2.0
-
   Source: https://github.com/primefaces-extensions/resources-optimizer-maven-plugin/blob/b7d3c10106ade68e54d001a146939485f1f0bc59/src/main/java/org/primefaces/extensions/optimizerplugin/optimizer/CssCompressor.java
  */
 /*
-  SPDX-FileCopyrightText: 2013 Yahoo! Inc.  All rights reserved.
+  SPDX-FileCopyrightText: 2011-2015 PrimeFaces Extensions
 
-  SPDX-License-Identifier: LicenseRef-YUI-BSD
-
-  YUI Compressor
-  http://developer.yahoo.com/yui/compressor/
-  Author: Julien Lecomte -  http://www.julienlecomte.net/
-  Author: Isaac Schlueter - http://foohack.com/
-  Author: Stoyan Stefanov - http://phpied.com/
-  Contributor: Dan Beam - http://danbeam.org/
-
+  SPDX-License-Identifier: Apache-2.0
+ */
+/*
   Source: https://github.com/yui/yuicompressor/blob/cf0497e53fffe4ddbd50e71518c40e0c07d120de/src/com/yahoo/platform/yui/compressor/CssCompressor.java
 
   Changes: Forked from YUI Compressor after that project stopped being supported by Yahoo! Inc.
+ */
+/*
+ * Copyright (c) 2013 Yahoo! Inc.  All rights reserved.
+ *
+ * SPDX-License-Identifier: LicenseRef-YUI-BSD
+ *
+ * The copyrights embodied in the content of this file are licensed
+ * by Yahoo! Inc. under the BSD (revised) open source license.
+ *
+ * YUI Compressor
+ * http://developer.yahoo.com/yui/compressor/
+ * Author: Julien Lecomte -  http://www.julienlecomte.net/
+ * Author: Isaac Schlueter - http://foohack.com/
+ * Author: Stoyan Stefanov - http://phpied.com/
+ * Contributor: Dan Beam - http://danbeam.org/
  */
 package org.pdfclown.jada.core.proc;
 
