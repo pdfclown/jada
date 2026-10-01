@@ -10,6 +10,7 @@
   this file, you MUST add your own copyright notice in a separate comment block above this file
   header, listing the main changes you applied to the original source.
  */
+
 /**
  * <h4>[Name resolution 3] Package-level inner type</h4>
  * {@jada.reuseDoc ClassA.InnerClassA.SubInnerClassA#size(*)}

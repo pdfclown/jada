@@ -10,6 +10,7 @@
   this file, you MUST add your own copyright notice in a separate comment block above this file
   header, listing the main changes you applied to the original source.
  */
+
 /**
  * This package and its subpackages provide a comprehensive test case for
  * {@link org.pdfclown.jada.ext.proc.DocReuseTagletProcessor}.
