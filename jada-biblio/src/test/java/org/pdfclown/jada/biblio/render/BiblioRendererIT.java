@@ -20,7 +20,9 @@ import static org.pdfclown.jada.core.test.JadaTests.mockJadaConfig;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import javax.xml.parsers.ParserConfigurationException;
 import org.junit.jupiter.api.Test;
+import org.pdfclown.common.util.security.SecurityFeatureException;
 import org.pdfclown.jada.biblio.BiblioConfig;
 import org.pdfclown.jada.biblio.__test.BaseIT;
 import org.pdfclown.jada.biblio.util.Biblios;
@@ -32,16 +34,19 @@ import org.xml.sax.SAXException;
  */
 class BiblioRendererIT extends BaseIT {
   @Test
-  void render__java11() throws IOException, SAXException {
+  void render__java11() throws SAXException, ParserConfigurationException, SecurityFeatureException,
+      IOException {
     render();
   }
 
   @Test
-  void render__java17() throws IOException, SAXException {
+  void render__java17() throws SAXException, ParserConfigurationException, SecurityFeatureException,
+      IOException {
     render();
   }
 
-  private void render() throws IOException, SAXException {
+  private void render() throws SAXException, ParserConfigurationException, SecurityFeatureException,
+      IOException {
     final var sourceDir = getEnv().resourcePath(getTestName());
     final var targetDir = resetDirectory(getEnv().outputPath(getTestName()));
 

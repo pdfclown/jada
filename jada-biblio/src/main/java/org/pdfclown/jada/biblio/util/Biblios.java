@@ -20,7 +20,9 @@ import static org.pdfclown.jada.biblio.internal.Internals.FILE_PREFIX__BIBLIO_1_
 
 import java.io.IOException;
 import java.nio.file.Path;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.stream.StreamSource;
+import org.pdfclown.common.util.security.SecurityFeatureException;
 import org.pdfclown.common.util.xml.Xmls.DocumentFactoryProfile;
 import org.pdfclown.jada.biblio.BiblioExtension;
 import org.w3c.dom.Document;
@@ -38,7 +40,8 @@ public final class Biblios {
   /**
    * Loads a bibliography.
    */
-  public static Document biblio(Path file) throws SAXException, IOException {
+  public static Document biblio(Path file) throws SAXException, ParserConfigurationException,
+      SecurityFeatureException, IOException {
     var factory = DocumentFactoryProfile.COMPACT.apply(documentFactory());
     factory.setSchema(schemaFactory().newSchema(new StreamSource(
         BiblioExtension.class.getResourceAsStream(FILENAME__BIBLIO_SCHEMA))));

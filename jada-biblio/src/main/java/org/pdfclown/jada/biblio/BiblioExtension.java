@@ -60,9 +60,11 @@ import java.util.regex.Pattern;
 import javax.tools.Diagnostic.Kind;
 import javax.tools.FileObject;
 import javax.tools.JavaFileObject;
+import javax.xml.parsers.ParserConfigurationException;
 import org.apache.commons.lang3.function.Failable;
 import org.jspecify.annotations.Nullable;
 import org.pdfclown.common.util.annot.Initializer;
+import org.pdfclown.common.util.security.SecurityFeatureException;
 import org.pdfclown.common.util.xml.Xmls;
 import org.pdfclown.jada.biblio.BiblioConfig.BiblioEntry;
 import org.pdfclown.jada.biblio.internal.BiblioMessage;
@@ -408,7 +410,8 @@ public class BiblioExtension extends JadaExtension {
         Document biblioPart;
         try {
           biblioPart = Biblios.biblio(biblioSourceFile);
-        } catch (IOException | SAXException ex) {
+        } catch (IOException | ParserConfigurationException | SAXException
+            | SecurityFeatureException ex) {
           throw runtime("Bibliography data load from {} FAILED", biblioSourceFile, ex);
         }
 

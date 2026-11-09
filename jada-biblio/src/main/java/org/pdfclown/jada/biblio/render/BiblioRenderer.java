@@ -37,6 +37,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
 import org.jsoup.select.Elements;
+import org.pdfclown.common.util.security.SecurityFeatureException;
 import org.pdfclown.jada.biblio.BiblioConfig;
 import org.pdfclown.jada.core.JadaConfig;
 import org.pdfclown.jada.core.util.html.Jsoups;
@@ -125,7 +126,7 @@ public class BiblioRenderer {
               FORMAT__BIBLIO_XSL.formatted("html")));
           try {
             fragmentTransformer(style).transform(source, target);
-          } catch (TransformerException ex) {
+          } catch (SecurityFeatureException | TransformerException ex) {
             throw runtime(ex);
           }
         }
