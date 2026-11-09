@@ -692,7 +692,7 @@ public class Jada implements Doclet, JadaComponent {
               $args -> {
                 var dirValue = $args.get(0);
                 Resource dir = parseResource(dirValue);
-                if (dir == null)
+                if (!dir.exists())
                   throw wrongArg("args[0]", dirValue, "Resource directory NOT FOUND");
                 else if (!(dir instanceof PathResource))
                   throw wrongArg("args[0]", dirValue, "Resource directory INVALID");

@@ -17,7 +17,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.jspecify.annotations.Nullable;
 
@@ -83,7 +82,7 @@ public class JadaExtConfig implements JadaObject {
       resourceDirectories = getJada().getConfig().getResourceDirectories().stream()
           .map($ -> $.resolve("ext" + File.separator + extension.getName()))
           .filter(Files::isDirectory)
-          .collect(Collectors.toUnmodifiableList());
+          .toList();
     }
     return resourceDirectories;
   }

@@ -21,6 +21,7 @@ import static org.pdfclown.common.util.Exceptions.unexpected;
 import static org.pdfclown.common.util.Exceptions.wrongArg;
 import static org.pdfclown.common.util.Exceptions.wrongArgOpt;
 import static org.pdfclown.common.util.Objects.fqn;
+import static org.pdfclown.common.util.Objects.textLiteral;
 import static org.pdfclown.common.util.Strings.EMPTY;
 import static org.pdfclown.common.util.io.Files.filename;
 import static org.pdfclown.common.util.io.Files.normal;
@@ -109,7 +110,9 @@ public class JadaConfig extends SystemConfig implements JadaObject {
      *          (if empty, uses the source filename)
      */
     public Attachment(Resource source, Path targetDir, String targetFilename) {
-      if (targetDir.isAbsolute())
+      if (!source.exists())
+        throw wrongArg("Resource {} MISSING", textLiteral(source.asString()));
+      else if (targetDir.isAbsolute())
         throw wrongArg("targetDir", targetDir, "MUST be relative");
 
       if (targetFilename.isEmpty()) {
