@@ -7,7 +7,7 @@
   <https://github.com/pdfclown/jada>
 
   DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER. If you reuse (entirely or partially)
-  this file, you MUST add your own copyright notice in a separate comment block above this file
+  this file, you MUST add your own copyright notice in a separate comment block below this file
   header, listing the main changes you applied to the original source.
  */
 package org.pdfclown.jada.core.system.proc;
@@ -298,6 +298,9 @@ public abstract class FileProcess<T extends FileProcessor<?>> implements SystemO
     public static class Builder {
       final Map<Path, FileStatus> files = new HashMap<>();
 
+      /**
+       * Builds this result.
+       */
       public RunResult build() {
         return new RunResult(files);
       }
@@ -319,6 +322,9 @@ public abstract class FileProcess<T extends FileProcessor<?>> implements SystemO
         files.put(file, changed ? FileStatus.CHANGED : FileStatus.UNCHANGED);
       }
 
+      /**
+       * Skips the given file.
+       */
       public void skip(Path file) {
         files.putIfAbsent(file, FileStatus.SKIPPED);
       }
@@ -392,6 +398,9 @@ public abstract class FileProcess<T extends FileProcessor<?>> implements SystemO
     return directories;
   }
 
+  /**
+   * Gets the processor of the given type.
+   */
   @SuppressWarnings("unchecked")
   public <R extends T> @Nullable R getProcessor(Class<R> type) {
     return (R) processors.get(fqn(type));
@@ -404,6 +413,9 @@ public abstract class FileProcess<T extends FileProcessor<?>> implements SystemO
     return processors;
   }
 
+  /**
+   * Initializes this object.
+   */
   @Initializer
   public void init(SystemConfig config) {
     this.config = requireNonNull(config, "`config`");

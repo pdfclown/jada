@@ -4,8 +4,10 @@
  *
  * https://github.com/iconfu/svg-inject
  *
- * Copyright (c) 2018 INCORS, the creators of iconfu.com
+ * Copyright (C) 2018 INCORS, the creators of iconfu.com
  * @license MIT License - https://github.com/iconfu/svg-inject/blob/master/LICENSE
+ *
+ * SPDX-License-Identifier: MIT
  */
 
 (function(window, document) {

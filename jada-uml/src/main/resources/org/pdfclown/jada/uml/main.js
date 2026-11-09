@@ -1,3 +1,14 @@
+/*!
+  SPDX-FileCopyrightText: 2025-2026 Stefano Chizzolini and contributors
+
+  SPDX-License-Identifier: LGPL-3.0-only
+
+  This file (main.js) is part of jada-uml module in Jada project <https://github.com/pdfclown/jada>
+
+  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER. If you reuse (entirely or partially)
+  this file, you MUST add your own copyright notice in a separate comment block below this file
+  header, listing the main changes you applied to the original source.
+ */
 SVGInject.setOptions({
   afterInject: function(img, svg) {
     if (!svg.classList.contains('uml-class')) {

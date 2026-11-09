@@ -1,19 +1,4 @@
 /*
-  SPDX-FileCopyrightText: 2025-2026 Stefano Chizzolini and contributors
-
-  SPDX-License-Identifier: LGPL-3.0-only
-
-  This file (Parameters.java) is part of jada-uml module in Jada project
-  <https://github.com/pdfclown/jada>
-
-  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER. If you reuse (entirely or partially)
-  this file, you MUST add your own copyright notice in a separate comment block above this file
-  header, listing the main changes you applied to the original source.
- */
-/*
-  Changes: Adaptation and redesign for Jada.
- */
-/*
  * Copyright 2016-2026 Talsma ICT
  *
  * SPDX-License-Identifier: Apache-2.0
@@ -29,6 +14,22 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ */
+/*
+  CHANGES TO THE ORIGINAL FILE
+
+  SPDX-FileCopyrightText: 2025-2026 Stefano Chizzolini and contributors
+
+  SPDX-License-Identifier: LGPL-3.0-only
+
+  This file (Parameters.java) is part of jada-uml module in Jada project
+  <https://github.com/pdfclown/jada>
+
+  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER. If you reuse (entirely or partially)
+  this file, you MUST add your own copyright notice in a separate comment block below this file
+  header, listing the main changes you applied to the original source.
+
+  Changes: Adaptation and redesign for Jada.
  */
 package org.pdfclown.jada.uml.render.model;
 
@@ -83,7 +84,7 @@ public class ParameterList extends UmlNode {
       }
       if (type != null && !TypeMode.NONE.equals(methodConfig.getParamTypeMode())) {
         String typeUml = type.toUml(methodConfig.getParamTypeMode(), null);
-        if (varargs && typeUml.endsWith("[]")) {
+        if (varArgs && typeUml.endsWith("[]")) {
           typeUml = typeUml.substring(0, typeUml.length() - 2) + ELLIPSIS;
         }
         out.append(sep).append(typeUml);
@@ -97,12 +98,16 @@ public class ParameterList extends UmlNode {
     }
   }
 
-  private boolean varargs = false;
+  // SourceName: varargs
+  private boolean varArgs;
 
   public ParameterList(@Nullable UmlNode parent) {
     super(parent);
   }
 
+  /**
+   * Adds a new parameter.
+   */
   public ParameterList add(String name, TypeName type) {
     addChild(new Parameter(name, type));
     return this;
@@ -120,8 +125,19 @@ public class ParameterList extends UmlNode {
     return false;
   }
 
-  public ParameterList varargs(boolean varargs) {
-    this.varargs = varargs;
+  /**
+   * Whether this parameter list allows a variable number of arguments.
+   */
+  public boolean isVarArgs() {
+    return varArgs;
+  }
+
+  // SourceName: varargs
+  /**
+   * Sets {@link #isVarArgs() varArgs}.
+   */
+  public ParameterList setVarArgs(boolean value) {
+    varArgs = value;
     return this;
   }
 

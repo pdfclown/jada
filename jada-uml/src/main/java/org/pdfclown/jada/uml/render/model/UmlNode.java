@@ -1,19 +1,4 @@
 /*
-  SPDX-FileCopyrightText: 2025-2026 Stefano Chizzolini and contributors
-
-  SPDX-License-Identifier: LGPL-3.0-only
-
-  This file (UmlNode.java) is part of jada-uml module in Jada project
-  <https://github.com/pdfclown/jada>
-
-  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER. If you reuse (entirely or partially)
-  this file, you MUST add your own copyright notice in a separate comment block above this file
-  header, listing the main changes you applied to the original source.
- */
-/*
-  Changes: Adaptation and redesign for Jada.
- */
-/*
  * Copyright 2016-2026 Talsma ICT
  *
  * SPDX-License-Identifier: Apache-2.0
@@ -29,6 +14,22 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ */
+/*
+  CHANGES TO THE ORIGINAL FILE
+
+  SPDX-FileCopyrightText: 2025-2026 Stefano Chizzolini and contributors
+
+  SPDX-License-Identifier: LGPL-3.0-only
+
+  This file (UmlNode.java) is part of jada-uml module in Jada project
+  <https://github.com/pdfclown/jada>
+
+  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER. If you reuse (entirely or partially)
+  this file, you MUST add your own copyright notice in a separate comment block below this file
+  header, listing the main changes you applied to the original source.
+
+  Changes: Adaptation and redesign for Jada.
  */
 package org.pdfclown.jada.uml.render.model;
 
@@ -71,11 +72,17 @@ public abstract class UmlNode {
     this.parent = parent;
   }
 
+  /**
+   * Adds a child node.
+   */
   public void addChild(UmlNode child) {
     children.add(child);
     child.setParent(this);
   }
 
+  /**
+   * Child nodes.
+   */
   public @ReadOnly List<UmlNode> getChildren() {
     return unmodifiableList(children);
   }
@@ -96,6 +103,9 @@ public abstract class UmlNode {
         .collect(Collectors.toUnmodifiableList());
   }
 
+  /**
+   * Parent node.
+   */
   public @Nullable UmlNode getParent() {
     return parent;
   }
@@ -107,6 +117,9 @@ public abstract class UmlNode {
     return getChildren().stream().allMatch(UmlNode::isEmpty);
   }
 
+  /**
+   * Removes child nodes matching the given condition.
+   */
   public boolean removeChildren(Predicate<? super UmlNode> condition) {
     return children.removeIf(condition);
   }
@@ -129,6 +142,9 @@ public abstract class UmlNode {
     }
   }
 
+  /**
+   * Finds the parent matching the given type.
+   */
   protected <U extends UmlNode> Optional<U> findParent(Class<U> nodeType) {
     final Set<UmlNode> traversed = newSetFromMap(new IdentityHashMap<>());
     for (UmlNode parent = getParent();
@@ -140,6 +156,9 @@ public abstract class UmlNode {
     return Optional.empty();
   }
 
+  /**
+   * Configuration.
+   */
   protected UmlConfig getConfig() {
     return findParent(Diagram.class)
         .map(Diagram::getConfig)

@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
+  SPDX-FileCopyrightText: 2025-2026 Stefano Chizzolini and contributors
+
+  SPDX-License-Identifier: LGPL-3.0-only
+-->
+<!--
   This stylesheet transforms bibliographic data (XML) into a bibliographic list (HTML).
 -->
 <x:stylesheet

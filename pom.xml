@@ -52,6 +52,7 @@ doclet combining an arbitrary doclet with multiple pre- and post-processors to t
     <!--
       OVERRIDDEN PROPERTIES
     -->
+    <copyrightHolder>Stefano Chizzolini and contributors</copyrightHolder>
     <projectUrlBasePath>github.com/pdfclown/jada</projectUrlBasePath>
 
     <!--

@@ -7,7 +7,7 @@
   <https://github.com/pdfclown/jada>
 
   DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER. If you reuse (entirely or partially)
-  this file, you MUST add your own copyright notice in a separate comment block above this file
+  this file, you MUST add your own copyright notice in a separate comment block below this file
   header, listing the main changes you applied to the original source.
  */
 package org.pdfclown.jada.core.taglet;
@@ -75,6 +75,9 @@ public abstract class JadaTaglet implements Taglet, JadaObject {
     return true;
   }
 
+  /**
+   * Terminates this taglet.
+   */
   public void term() {
   }
 }

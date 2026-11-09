@@ -2,13 +2,30 @@
  * svg-pan-zoom v3.6.1
  * https://github.com/ariutta/svg-pan-zoom
  *
- * Changes:
- *   [PATCH:SvgContainerFit]
- *     This patch forces the adjustment of the SVG container height.
- *     The original library considered the SVG container size as a condition external to its own
- *     logic, fitting and centering its contents accordingly; this broke in case of relative
- *     container width, as its height didn't scale, leaving empty space above and below the
- *     contents.
+ * SPDX-FileCopyrightText: 2009-2010 Andrea Leofreddi <a.leofreddi@vleo.net>. All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-2-Clause-Views
+ */
+/*!
+  CHANGES TO THE ORIGINAL FILE
+
+  SPDX-FileCopyrightText: 2025-2026 Stefano Chizzolini and contributors
+
+  SPDX-License-Identifier: LGPL-3.0-only
+
+  This file (svg-pan-zoom.js) is part of jada-uml module in Jada project
+  <https://github.com/pdfclown/jada>
+
+  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER. If you reuse (entirely or partially)
+  this file, you MUST add your own copyright notice in a separate comment block below this file
+  header, listing the main changes you applied to the original source.
+
+  Changes:
+  - [PATCH:SvgContainerFit]
+    This patch forces the adjustment of the SVG container height. The original implementation
+    considered the SVG container size as a condition external to its own logic, fitting and
+    centering its contents accordingly; this broke in case of relative container width, as its
+    height didn't scale, leaving empty space above and below the contents.
  */
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 var SvgUtils = require("./svg-utilities");

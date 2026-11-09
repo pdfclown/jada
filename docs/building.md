@@ -6,7 +6,7 @@ This document describes how to set up your development environment to build and 
 
 ## Prerequisites
 
-- [Prerequisites](https://github.com/pdfclown/pdfclown-common/blob/v0.8.0/docs/common/building.md#prerequisites) < pdfClown.org
+- [Prerequisites](https://github.com/pdfclown/pdfclown-common/blob/main/docs/common/building.md#prerequisites) < pdfClown.org
 - **JDK 17 location**
 
   In order to enable mandatory strict cross-compilation (see `system` javac option), the location of JDK 17 MUST be defined via `jdk17.home` property in Maven [`settings.xml`](https://maven.apache.org/settings.html) file, like this:
@@ -29,13 +29,13 @@ This document describes how to set up your development environment to build and 
 
 ## Setup
 
-1. [Setup](https://github.com/pdfclown/pdfclown-common/blob/v0.8.0/docs/common/building.md#setup) < pdfClown.org
+1. [Setup](https://github.com/pdfclown/pdfclown-common/blob/main/docs/common/building.md#setup) < pdfClown.org
 
 2. that's all! :tada: Now you are ready to build (see next section) — happy development!
 
 ## Building
 
-See [Building](https://github.com/pdfclown/pdfclown-common/blob/v0.8.0/docs/common/building.md#building-1) < pdfClown.org
+See [Building](https://github.com/pdfclown/pdfclown-common/blob/main/docs/common/building.md#building-1) < pdfClown.org
 
 ## Debugging
 

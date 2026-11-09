@@ -7,7 +7,7 @@
   <https://github.com/pdfclown/jada>
 
   DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER. If you reuse (entirely or partially)
-  this file, you MUST add your own copyright notice in a separate comment block above this file
+  this file, you MUST add your own copyright notice in a separate comment block below this file
   header, listing the main changes you applied to the original source.
  */
 package org.pdfclown.jada.core;
@@ -749,6 +749,9 @@ public class JadaConfig extends SystemConfig implements JadaObject {
     return currentOutputFile;
   }
 
+  /**
+   * Gets the extension of the given type.
+   */
   @SuppressWarnings("unchecked")
   public <T extends JadaExtension> @Nullable T getExtension(Class<T> type) {
     return (T) extensions.get(fqn(type));
@@ -818,11 +821,17 @@ public class JadaConfig extends SystemConfig implements JadaObject {
     return super.getLogLevel();
   }
 
+  /**
+   * Gets the operation of the given type.
+   */
   @SuppressWarnings("unchecked")
   public <T extends JadaOperation<?>> @Nullable T getOperation(Class<T> type) {
     return (T) operations.get(fqn(type));
   }
 
+  /**
+   * Operations.
+   */
   public Map<String, JadaOperation<?>> getOperations() {
     return operations;
   }

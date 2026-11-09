@@ -7,7 +7,7 @@
   <https://github.com/pdfclown/jada>
 
   DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER. If you reuse (entirely or partially)
-  this file, you MUST add your own copyright notice in a separate comment block above this file
+  this file, you MUST add your own copyright notice in a separate comment block below this file
   header, listing the main changes you applied to the original source.
  */
 package org.pdfclown.jada.core.proc;
@@ -194,9 +194,11 @@ public class FileOptimizer extends JadaFileProcessor<String> {
 
   private static final String FILE_QUALIFIER__MINIFIED = ".min";
 
+  // REUSE-IgnoreStart
   private static final Pattern PATTERN__COPYRIGHT_COMMENT = Pattern.compile(
       "(/\\*)(.*?(?:copyright|\\(c\\)|©|license).*?\\*/)",
       Pattern.DOTALL | Pattern.CASE_INSENSITIVE);
+  // REUSE-IgnoreEnd
 
   /**
    * Ensures each copyright comment in the content is marked for preservation, in order to survive

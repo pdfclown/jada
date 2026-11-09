@@ -127,35 +127,18 @@
         </configuration>
         <executions>
           <execution>
-            <!-- SourceName: shade-full-plantuml-jar -->
-            <id>shade-plantuml</id>
-            <!--<goals>-->
-            <!--<goal>shade</goal>-->
-            <!--</goals>-->
-            <configuration>
-              <shadedArtifactAttached>true</shadedArtifactAttached>
-              <shadedClassifierName>full</shadedClassifierName>
-              <filters>
-                <filter>
-                  <artifact>*:*</artifact>
-                  <excludes>
-                    <exclude>META-INF/MANIFEST.MF</exclude>
-                  </excludes>
-                </filter>
-              </filters>
-            </configuration>
-          </execution>
-          <execution>
             <!-- SourceName: shade-smaller-plantuml-jar -->
             <id>shade-plantuml-min</id>
             <goals>
               <goal>shade</goal>
             </goals>
             <configuration>
-              <filters>
+              <filters
+                  combine.children="append">
                 <filter>
-                  <artifact>*:*</artifact>
+                  <artifact>net.sourceforge.plantuml:plantuml-asl</artifact>
                   <excludes>
+                    <exclude>META-INF/LICENSE.txt</exclude>
                     <exclude>META-INF/MANIFEST.MF</exclude>
                     <exclude>stdlib/**</exclude>
                     <exclude>sprites/archimate/**</exclude>

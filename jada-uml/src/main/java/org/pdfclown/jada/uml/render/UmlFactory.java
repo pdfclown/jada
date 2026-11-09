@@ -1,19 +1,4 @@
 /*
-  SPDX-FileCopyrightText: 2025-2026 Stefano Chizzolini and contributors
-
-  SPDX-License-Identifier: LGPL-3.0-only
-
-  This file (UmlFactory.java) is part of jada-uml module in Jada project
-  <https://github.com/pdfclown/jada>
-
-  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER. If you reuse (entirely or partially)
-  this file, you MUST add your own copyright notice in a separate comment block above this file
-  header, listing the main changes you applied to the original source.
- */
-/*
-  Changes: Adaptation and redesign for Jada.
- */
-/*
  * Copyright 2016-2026 Talsma ICT
  *
  * SPDX-License-Identifier: Apache-2.0
@@ -29,6 +14,22 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ */
+/*
+  CHANGES TO THE ORIGINAL FILE
+
+  SPDX-FileCopyrightText: 2025-2026 Stefano Chizzolini and contributors
+
+  SPDX-License-Identifier: LGPL-3.0-only
+
+  This file (UmlFactory.java) is part of jada-uml module in Jada project
+  <https://github.com/pdfclown/jada>
+
+  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER. If you reuse (entirely or partially)
+  this file, you MUST add your own copyright notice in a separate comment block below this file
+  header, listing the main changes you applied to the original source.
+
+  Changes: Adaptation and redesign for Jada.
  */
 package org.pdfclown.jada.uml.render;
 
@@ -466,7 +467,7 @@ public class UmlFactory {
     Boolean varargs = null;
     for (VariableElement param : params) {
       if (varargs == null) {
-        result = result.varargs(varargs = isVarArgsMethod(
+        result = result.setVarArgs(varargs = isVarArgsMethod(
             requireNonNull(param.getEnclosingElement())));
       }
       result = result.add(param.getSimpleName().toString(),
@@ -529,7 +530,7 @@ public class UmlFactory {
             Reference.from(type.getName().getQualifiedName(separator), null),
             interfaceReferenceTypeFrom(type),
             Reference.to(interfaceName.getQualifiedName(separator), null)));
-        // TODO Figure out what to do IF the interface is found BUT has a different typename
+        // TODO: Figure out what to do IF the interface is found BUT has a different typename.
         if (!namespace.contains(interfaceName)) {
           addForeignType(foreignTypes, extension.getEnv().getTypeUtils().asElement($interfaceType));
         }
@@ -608,8 +609,9 @@ public class UmlFactory {
   private boolean includeSuperclass(TypeElement superclass) {
     if (extension.getEnv().isIncluded(superclass))
       return true;
-    // TODO Make configurable:
-    // See https://github.com/talsma-ict/umldoclet/issues/148
+    /*
+     * TODO: Make configurable (see <https://github.com/talsma-ict/umldoclet/issues/148>).
+     */
     return superclass.getModifiers().contains(Modifier.PUBLIC)
         || superclass.getModifiers().contains(Modifier.PROTECTED);
   }

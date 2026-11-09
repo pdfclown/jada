@@ -1,23 +1,14 @@
 Jada <https://github.com/pdfclown/jada>
-Copyright 2025-2026 Stefano Chizzolini and others
+Copyright 2025-2026 Stefano Chizzolini and contributors
 
-This product includes software developed by third parties, as listed
-below. Each section reproduces the attribution notices supplied by the
-respective upstream project, pruned of parts unrelated to this product
-("Only bundled bits matter.").
+This product includes source code derived from third-party projects. The
+attribution notices of those projects are reproduced below, omitting parts that
+relate to code not included in this product. For a comprehensive list of
+third-party attributions, including those outside the legal requirements of the
+Apache License, see `THIRD-PARTY-NOTICES.txt`.
 
------------------------------------------------------------------------
+Resources Optimizer Maven Plugin
+Copyright PrimeFaces Extensions
 
-Resources Optimizer Maven Plugin <https://github.com/primefaces-extensions/resources-optimizer-maven-plugin>
-Copyright 2011-2015 PrimeFaces Extensions
-
-[no NOTICE]
-
------------------------------------------------------------------------
-
-UMLDoclet <https://github.com/talsma-ict/umldoclet>
+UMLDoclet
 Copyright 2016-2026 Talsma ICT
-
-[no NOTICE]
-
------------------------------------------------------------------------

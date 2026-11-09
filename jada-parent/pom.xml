@@ -35,9 +35,17 @@
       cross-compilation mode, which disallows any access to JDK internals, even if `add-exports`
       options are explicitly set. Since Jada requires access to those JDK internals, `release`
       option is not viable, forcing us to fall back to old `source`+`target` options which, in turn,
-      require also `system` option (see `target.jdk.home` property) -->
-    <maven.compiler.release
-        combine.self="override"/>
+      require also `system` option (see `target.jdk.home` property)
+
+      HACK: `maven.compiler.release` is overridden to an arbitrary undefined parameter (`NULL`) in
+      order to force its interpolation to `null`. This is necessary as overriding just to an empty
+      string would cause `maven-javadoc-plugin` (in particular,
+      `AbstractJavadocMojo::getDefaultJavadocApiLink`) to evaluate it as a legit value, failing;
+      conversely, `null` is ignored, as expected.
+      TODO: This bug was reported and fixed (see
+      <https://github.com/apache/maven-javadoc-plugin/issues/1376>); as soon as the next
+      `maven-javadoc-plugin` version (> 3.12.0) is released, revert to empty assignment. -->
+    <maven.compiler.release>${NULL}</maven.compiler.release>
     <maven.compiler.source>${target.jdk}</maven.compiler.source>
     <maven.compiler.target>${target.jdk}</maven.compiler.target>
 
