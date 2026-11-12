@@ -3,9 +3,12 @@ Jada <https://github.com/pdfclown/jada>
 THIRD-PARTY NOTICES
 
 This product (see `NOTICE.txt` for its own notice) includes material from the
-third-party components listed below. Each component is provided under its own
-license; the full text of every license identified here below is in
-`LICENSES/<SPDX-id>.txt`.
+third-party components listed below.
+
+Each component is provided under its own license; the full text of every license
+identified here below is in `LICENSES/<SPDX-id>.txt`. FOR ANY MATERIAL OFFERING
+A CHOICE OF LICENSES, THIS PRODUCT ELECTS THE PERMISSIVE OPTION (SUCH AS
+APACHE-2.0, BSD, MIT) AND DECLINES THE RESTRICTIVE TERMS (SUCH AS GPL).
 
 This file contains the attribution notices as required by the respective
 licenses. Attribution notices for components licensed under the Apache License
@@ -33,40 +36,46 @@ Component:   PlantUML
 Copyright:   2009-2024 Arnaud Roques
 License:     LGPL-3.0-only
 Homepage:    https://github.com/plantuml/plantuml
-Note:        Object code shaded in jada-uml
+Modules:     jada-uml
+Asset-Type:  OBJECT_CODE
 
 -------------------------------------------------------------------------------
 Component:   Resources Optimizer Maven Plugin
 Copyright:   PrimeFaces Extensions
 License:     Apache-2.0
 Homepage:    https://github.com/primefaces-extensions/resources-optimizer-maven-plugin
-Note:        Source code in jada-core
+Modules:     jada-core
+Asset-Type:  SOURCE_CODE
 
 -------------------------------------------------------------------------------
 Component:   SVGInject
 Copyright:   (C) 2018 INCORS, the creators of iconfu.com
 License:     MIT
 Homepage:    https://github.com/iconfu/svg-inject
-Note:        Resource in jada-uml
+Modules:     jada-uml
+Asset-Type:  RESOURCE
 
 -------------------------------------------------------------------------------
 Component:   svg-pan-zoom
 Copyright:   2009-2010 Andrea Leofreddi <a.leofreddi@vleo.net>. All rights reserved.
 License:     BSD-2-Clause-Views
 Homepage:    https://github.com/ariutta/svg-pan-zoom
-Note:        Resource in jada-uml
+Modules:     jada-uml
+Asset-Type:  RESOURCE
 
 -------------------------------------------------------------------------------
 Component:   UMLDoclet
 Copyright:   2016-2026 Talsma ICT
 License:     Apache-2.0
 Homepage:    https://github.com/talsma-ict/umldoclet
-Note:        Source code in jada-uml
+Modules:     jada-uml
+Asset-Type:  SOURCE_CODE
 
 -------------------------------------------------------------------------------
-Component:        YUI Compressor
-Copyright:        (C) 2013 Yahoo! Inc.  All rights reserved.
-License:          LicenseRef-YUI-BSD
-License-Source:   https://github.com/yui/yuicompressor/blob/cf0497e53fffe4ddbd50e71518c40e0c07d120de/LICENSE.TXT
-Homepage:         https://github.com/yui/yuicompressor
-Note:             Source code in jada-core
+Component:       YUI Compressor
+Copyright:       (C) 2013 Yahoo! Inc.  All rights reserved.
+License:         LicenseRef-YUI-BSD
+License-Source:  https://github.com/yui/yuicompressor/blob/cf0497e53fffe4ddbd50e71518c40e0c07d120de/LICENSE.TXT
+Homepage:        https://github.com/yui/yuicompressor
+Modules:         jada-core
+Asset-Type:      SOURCE_CODE
