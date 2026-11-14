@@ -30,7 +30,6 @@ flexible and convenient ways</description>
       OVERRIDDEN PROPERTIES
     -->
     <projectJpmsName>org.pdfclown.jada.core</projectJpmsName>
-    <rootdir>${project.basedir}/..</rootdir>
     <testJarFiles>org/pdfclown/jada/core/test/**</testJarFiles>
     <testJarPackages>org.pdfclown.jada.core.test</testJarPackages>
 

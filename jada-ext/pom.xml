@@ -28,7 +28,6 @@
       OVERRIDDEN PROPERTIES
     -->
     <projectJpmsName>org.pdfclown.jada.ext</projectJpmsName>
-    <rootdir>${project.basedir}/..</rootdir>
 
     <!--
       VERSIONS

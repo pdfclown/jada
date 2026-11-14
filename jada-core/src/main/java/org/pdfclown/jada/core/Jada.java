@@ -184,7 +184,7 @@ import org.pdfclown.jada.core.util.Nameable;
  *           &lt;additionalOptions&gt;
  *             <span style=
 "background-color:yellow;color:black;">&lt;option&gt;-jada-doclet Standard&lt;/option&gt;
- *             &lt;option&gt;-jada-dir ${rootdir}/src/main/javadoc/jada&lt;/option&gt;
+ *             &lt;option&gt;-jada-dir ${maven.multiModuleProjectDirectory}/src/main/javadoc/jada&lt;/option&gt;
  *             &lt;!--
  *               TIP: Uncomment the following option to list all the available options on next
  *               `mvn javadoc` execution.

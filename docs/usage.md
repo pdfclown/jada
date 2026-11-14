@@ -27,7 +27,7 @@ configuration (replace `${jada.version}` with the latest release version of Jada
           </docletArtifacts>
           <additionalOptions>
             <option>-jada-doclet Standard</option>
-            <option>-jada-dir ${rootdir}/src/main/javadoc/jada</option>
+            <option>-jada-dir ${maven.multiModuleProjectDirectory}/src/main/javadoc/jada</option>
             <!--
               TIP: Uncomment the following option to list all the available options on next
               `mvn javadoc` execution.

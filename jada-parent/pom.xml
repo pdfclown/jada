@@ -222,7 +222,7 @@
                 generated (`offlineLinks/link/location`) -->
               <link>
                 <url>https://javadoc.io/doc/org.pdfclown/jada-core/${project.version}</url>
-                <location>${rootdir}/jada-core/target/reports/apidocs</location>
+                <location>${maven.multiModuleProjectDirectory}/jada-core/target/reports/apidocs</location>
               </link>
             </offlineLinks>
           </configuration>
