@@ -10,5 +10,8 @@ Apache License, see `THIRD-PARTY-NOTICES.txt`.
 Resources Optimizer Maven Plugin
 Copyright PrimeFaces Extensions
 
+PlantUML
+2009-2024 Arnaud Roques
+
 UMLDoclet
 Copyright 2016-2026 Talsma ICT
