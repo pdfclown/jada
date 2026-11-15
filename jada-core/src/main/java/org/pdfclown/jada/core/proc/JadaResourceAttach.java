@@ -206,7 +206,7 @@ public class JadaResourceAttach implements JadaOperation<Void> {
 
       /*
        * NOTE: Missing detection on overview file may be caused either by an unknown stylesheet
-       * version or by placeholder overview file (i.e., empty file containing a redirect to a
+       * version or by placeholder overview file (that is, empty file containing a redirect to a
        * package -- such collapse occurs if the project contains just a single package).
        */
       Document doc = Jsoups.parse(content);
