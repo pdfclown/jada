@@ -16,6 +16,7 @@ import static java.nio.file.Files.writeString;
 import static java.util.Objects.requireNonNull;
 import static org.pdfclown.common.util.Chars.HYPHEN;
 import static org.pdfclown.common.util.Exceptions.runtime;
+import static org.pdfclown.common.util.Objects.resourceStream;
 import static org.pdfclown.common.util.Strings.S;
 import static org.pdfclown.common.util.io.Files.FILE_EXTENSION__XSL;
 import static org.pdfclown.common.util.xml.Xmls.fragmentTransformer;
@@ -122,8 +123,7 @@ public class BiblioRenderer {
         {
           var source = new DOMSource(biblioConfig.getBiblio());
           var target = new StreamResult(targetStream);
-          var style = new StreamSource(getClass().getResourceAsStream(
-              FORMAT__BIBLIO_XSL.formatted("html")));
+          var style = new StreamSource(resourceStream(FORMAT__BIBLIO_XSL.formatted("html"), this));
           try {
             fragmentTransformer(style).transform(source, target);
           } catch (SecurityFeatureException | TransformerException ex) {

@@ -42,11 +42,13 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.pdfclown.common.build.test.assertion.Executions.interceptSystemStreams;
+import static org.pdfclown.common.util.Objects.resourceStream;
 import static org.pdfclown.common.util.Strings.lcase;
 import static org.pdfclown.common.util.io.Files.FILE_EXTENSION__SVG;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Path;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
@@ -64,7 +66,7 @@ public class Issue267_DiagramWithNestedNamespaceIT extends BaseIT {
   @Test
   void _main() throws IOException {
     String puml;
-    try (var pumlStream = getClass().getResourceAsStream("issue-267-example.puml")) {
+    try (InputStream pumlStream = resourceStream("issue-267-example.puml", this)) {
       puml = new String(pumlStream.readAllBytes(), UTF_8);
     }
     Path svgDiagram = getEnv().outputPath("example" + FILE_EXTENSION__SVG);

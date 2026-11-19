@@ -12,6 +12,7 @@
  */
 package org.pdfclown.jada.biblio.util;
 
+import static org.pdfclown.common.util.Objects.resourceStream;
 import static org.pdfclown.common.util.io.Files.FILE_EXTENSION__XSD;
 import static org.pdfclown.common.util.xml.Xmls.documentFactory;
 import static org.pdfclown.common.util.xml.Xmls.schemaFactory;
@@ -44,7 +45,7 @@ public final class Biblios {
       SecurityFeatureException, IOException {
     var factory = DocumentFactoryProfile.COMPACT.apply(documentFactory());
     factory.setSchema(schemaFactory().newSchema(new StreamSource(
-        BiblioExtension.class.getResourceAsStream(FILENAME__BIBLIO_SCHEMA))));
+        resourceStream(FILENAME__BIBLIO_SCHEMA, BiblioExtension.class))));
     return xml(file, factory);
   }
 
