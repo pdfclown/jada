@@ -4,6 +4,7 @@
 
   SPDX-License-Identifier: LGPL-3.0-only
 -->
+
 <!--
   This stylesheet transforms bibliographic data (XML) into a bibliographic list (HTML).
 -->

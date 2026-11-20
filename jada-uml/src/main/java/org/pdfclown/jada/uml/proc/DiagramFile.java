@@ -1,8 +1,6 @@
 /*
  * Copyright 2016-2026 Talsma ICT
  *
- * SPDX-License-Identifier: Apache-2.0
- *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -15,6 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+// SPDX-License-Identifier: Apache-2.0
+// Component: UMLDoclet @ 6374a7c
+// SourceName: nl.talsmasoftware.umldoclet.html.DiagramFile
+
 /*
   CHANGES TO THE ORIGINAL FILE
 
@@ -29,14 +31,13 @@
   this file, you MUST add your own copyright notice in a separate comment block below this file
   header, listing the main changes you applied to the original source.
 
-  Changes: Adaptation and redesign for Jada.
+  Changes: adaptation and redesign for Jada.
  */
 package org.pdfclown.jada.uml.proc;
 
 import java.nio.file.Path;
 import org.pdfclown.jada.uml.UmlConfig.ImageConfig;
 
-// SourceName: nl.talsmasoftware.umldoclet.html.DiagramFile
 /**
  * Generated diagram file.
  * <p>

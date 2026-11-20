@@ -113,6 +113,15 @@
 
         SPDX-License-Identifier: Apache-2.0
       -->
+      <!--
+        CHANGES TO THE ORIGINAL SNIPPET
+
+        SPDX-SnippetCopyrightText: 2025-2026 Stefano Chizzolini and contributors
+
+        SPDX-License-Identifier: LGPL-3.0-only
+
+        Changes: adaptation to Jada.
+      -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>

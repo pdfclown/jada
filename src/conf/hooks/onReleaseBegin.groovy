@@ -15,7 +15,6 @@
   This script updates project release version references in the documentation, so they are aligned
   to the release underway.
  */
-
 import static java.nio.file.Files.readString
 import static java.nio.file.Files.walkFileTree
 import static java.nio.file.Files.writeString

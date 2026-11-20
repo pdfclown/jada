@@ -8,20 +8,18 @@
  * Copyright (C) 2013 Yahoo! Inc.  All rights reserved.
  * The copyrights embodied in the content of this file are licensed
  * by Yahoo! Inc. under the BSD (revised) open source license.
- *
- * SPDX-License-Identifier: LicenseRef-YUI-BSD
  */
-/*
-  CHANGES TO THE ORIGINAL FILE
+// SPDX-License-Identifier: LicenseRef-YUI-BSD
+// Component: YUI Compressor
+// SourceName: com.yahoo.platform.yui.compressor.CssCompressor
 
-  SPDX-FileCopyrightText: PrimeFaces Extensions
+// CHANGES TO THE ORIGINAL FILE
+// SPDX-FileCopyrightText: PrimeFaces Extensions
+// SPDX-License-Identifier: Apache-2.0
+// Component: Resources Optimizer Maven Plugin @ 0da49f4
+// SourceName: org.primefaces.extensions.optimizerplugin.optimizer.CssCompressor
+// Changes: forked from YUI Compressor after that project stopped being supported by Yahoo! Inc.
 
-  SPDX-License-Identifier: Apache-2.0
-
-  Source: https://github.com/yui/yuicompressor/blob/cf0497e53fffe4ddbd50e71518c40e0c07d120de/src/com/yahoo/platform/yui/compressor/CssCompressor.java
-
-  Changes: Forked from YUI Compressor after that project stopped being supported by Yahoo! Inc.
- */
 /*
   CHANGES TO THE ORIGINAL FILE
 
@@ -36,9 +34,7 @@
   this file, you MUST add your own copyright notice in a separate comment block below this file
   header, listing the main changes you applied to the original source.
 
-  Source: https://github.com/primefaces-extensions/resources-optimizer-maven-plugin/blob/b7d3c10106ade68e54d001a146939485f1f0bc59/src/main/java/org/primefaces/extensions/optimizerplugin/optimizer/CssCompressor.java
-
-  Changes: Adaptation to Jada.
+  Changes: adaptation to Jada.
  */
 package org.pdfclown.jada.core.proc;
 
