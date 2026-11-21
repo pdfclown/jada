@@ -22,7 +22,7 @@
 
   SPDX-FileCopyrightText: 2025-2026 Stefano Chizzolini and contributors
 
-  SPDX-License-Identifier: LGPL-3.0-only
+  SPDX-License-Identifier: LGPL-3.0-or-later
 
   This file (Parameters.java) is part of jada-uml module in Jada project
   <https://github.com/pdfclown/jada>
