@@ -45,7 +45,6 @@ import static org.pdfclown.common.util.Chars.DOT;
 import static org.pdfclown.common.util.Chars.HYPHEN;
 import static org.pdfclown.common.util.Chars.LF;
 import static org.pdfclown.common.util.Chars.SPACE;
-import static org.pdfclown.common.util.Objects.resource;
 import static org.pdfclown.common.util.Strings.EMPTY;
 import static org.pdfclown.common.util.Strings.EOL;
 import static org.pdfclown.common.util.Strings.S;
@@ -223,8 +222,7 @@ public class UmlExtension extends JadaExtension {
   }
 
   private void attachScript(String resourceName) {
-    getConfig().addScriptAttachment(Attachment.resource(Resource.of(resource(resourceName, this)),
-        NAME));
+    getConfig().addScriptAttachment(Attachment.resource(Resource.of(resourceName, this), NAME));
   }
 
   private @Nullable Diagram generateDiagram(Element element, UmlFactory factory) {
