@@ -682,9 +682,9 @@ public class DocReuseTagletProcessor extends JavaProcessor {
               // [Name resolution 1] Local member (simple name; class scope).
               {
                 TypeDeclaration<?> containerNode = null;
-                if ($ instanceof TypeDeclaration) {
+                if ($ instanceof TypeDeclaration<?> d) {
                   // [Name resolution 1.1] Child member.
-                  containerNode = (TypeDeclaration<?>) $;
+                  containerNode = d;
                 } else if ($ instanceof BodyDeclaration) {
                   // [Name resolution 1.2] Sibling member.
                   containerNode = (TypeDeclaration<?>) $.getParentNode().orElseThrow();

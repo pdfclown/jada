@@ -481,6 +481,7 @@ public abstract class FileProcess<T extends FileProcessor<?>> implements SystemO
     @SuppressWarnings("unchecked")
     var p = (FileProcessor<A>) processor;
 
+    @SuppressWarnings("StreamResourceLeak" /* `Stream.flatMap` closes each mapped stream */)
     Stream<Path> files = directories.stream()
         .filter($ -> {
           if (!Files.exists($)) {
