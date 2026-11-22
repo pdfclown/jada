@@ -3,7 +3,8 @@
 # <https://github.com/commit-check/commit-check>
 #
 [branch]
-# See <docs/maintenance.md#branches> for more information.
+# See <https://github.com/pdfclown/pdfclown-common/blob/main/docs/common/scm.md#branches> for more
+# information.
 conventional_branch = true
 allow_branch_types = [
     "build", "bump",
@@ -12,6 +13,6 @@ allow_branch_types = [
     "feat", "fix",
     "perf",
     "r", "refactor", "release", "revert",
-    "style",
+    "style", "sync",
     "test"
 ]
