@@ -1,3 +1,5 @@
 excludes:
-  - "**/src/conf/**"
-  - "mvn*"
+  - '**/src/conf/**'
+  - 'mvn*'
+forbidden-licenses:
+  - '{A,}GPL*'
